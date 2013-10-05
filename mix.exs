@@ -18,7 +18,11 @@ defmodule Rinket.Mixfile do
   end
 
   defp deps do
-    [ { :cowboy, github: "extend/cowboy" },
-      { :dynamo, "0.1.0-dev", github: "elixir-lang/dynamo" } ]
+    [
+     { :cowboy, github: "extend/cowboy" },
+     { :dynamo, "0.1.0-dev", github: "elixir-lang/dynamo" },
+     { :jsx,    github: "talentdeficit/jsx", tag: "v1.4.3" },
+     { :riak_pool,  github: "HashNuke/riak-pool"}
+    ]
   end
 end
