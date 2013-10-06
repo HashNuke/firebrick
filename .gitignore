@@ -2,4 +2,5 @@
 /deps
 /tmp/dev
 /tmp/test
+/priv/static/assets
 erl_crash.dump
