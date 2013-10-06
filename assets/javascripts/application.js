@@ -1,1 +1,1 @@
-window.Rinket = {}
+window.Rinket = {};
