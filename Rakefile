@@ -1,21 +1,19 @@
 require 'sprockets'
 require 'rake/sprocketstask'
 
+task :assets do
+  sprockets = Sprockets::Environment.new("./") do |env|
+    env.logger = Logger.new(STDOUT)
+    env.append_path 'assets/javascripts'
+    env.append_path 'assets/stylesheets'
+  end
 
+  assets = %w( application.js application.css )
+  output = "./priv/static/assets"
 
-# assets = Sprockets::Environment.new(project_root) do |env|
-#   env.logger = Logger.new(STDOUT)
-# end
-# 
-# assets.append_path 'assets/javascripts'
-# assets.append_path 'assets/stylesheets'
-
-Rake::SprocketsTask.new do |t|
-  t.environment = Sprockets::Environment.new
-
-  t.environment.append_path 'assets/javascripts'
-  t.environment.append_path 'assets/stylesheets'
-  t.environment.logger = Logger.new(STDOUT)
-  t.output      = "./priv/static/assets"
-  t.assets      = %w( application.js application.css )
+  assets.each do |asset|
+    puts asset
+    puts sprockets[asset]
+    sprockets[asset].write_to "#{output}/#{asset}"
+  end
 end
