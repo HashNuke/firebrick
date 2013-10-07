@@ -10,10 +10,10 @@ defmodule Rinket.Supervisor do
     dynamo_options = [max_restarts: 5, max_seconds: 5]
 
     children = [
-      worker(Rinket.Dynamo, [dynamo_options]),
-      worker(RiakPool, ['127.0.0.1', 8087])
+      worker(Rinket.DynamoSupervisor, [], restart: :temporary),
+      worker(Rinket.RiakSupervisor, [], restart: :temporary)
     ]
 
-    supervise(children, strategy: :one_for_one)
+    supervise(children, strategy: :one_for_one, restart: :temporary)
   end
 end
