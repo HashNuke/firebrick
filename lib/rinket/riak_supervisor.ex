@@ -11,6 +11,6 @@ defmodule Rinket.RiakSupervisor do
       worker(RiakPool, ['127.0.0.1', 8087], restart: :transient)
     ]
 
-    supervise(children, strategy: :one_for_one, restart: :transient)
+    supervise(children, strategy: :one_for_one)
   end
 end

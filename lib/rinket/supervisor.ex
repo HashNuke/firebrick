@@ -14,6 +14,6 @@ defmodule Rinket.Supervisor do
       worker(Rinket.RiakSupervisor, [], restart: :temporary)
     ]
 
-    supervise(children, strategy: :one_for_one, restart: :temporary)
+    supervise(children, strategy: :one_for_one)
   end
 end
