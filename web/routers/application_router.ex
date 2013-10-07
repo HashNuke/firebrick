@@ -12,6 +12,9 @@ defmodule ApplicationRouter do
   # routers, forwarding the requests between them:
   # forward "/posts", to: PostsRouter
 
+  forward "/sessions", to: SessionsRouter
+  forward "/teams",    to: TeamsRouter
+
   get "/" do
     conn = conn.assign(:title, "Welcome to Dynamo!")
     render conn, "index.html"

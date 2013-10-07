@@ -13,6 +13,7 @@ Run the following commands to install the `bundler` rubygem and then the other d
 * `gem install bundler` - installs the bundler rubygem
 * `bundle install` - Other ruby dependencies
 
+
 #### Asset compilation
 
 After installing the Ruby dependencies, you can compile assets using any of the following commands:
