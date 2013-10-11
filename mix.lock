@@ -8,5 +8,5 @@
   "protobuffs": {:git, "git://github.com/basho/erlang_protobuffs.git", "0b00f9031cda5ffe83a3d183e14f2dc918bc2932", [{:tag, "0.8.1p2"}]},
   "ranch": {:git, "git://github.com/extend/ranch.git", "41705752ffc7e3ecb96eef8374015ead4ca7f699", [{:ref, "0.8.5"}]},
   "riak_pb": {:git, "git://github.com/basho/riak_pb", "2adf207d053738559811eb17f62f7ce6b6f5cc95", [{:tag, "2.0.0.7"}]},
-  "riak_pool": {:git, "git://github.com/HashNuke/riak_pool.git", "3580204af0fa7383e104ba54cd9c9892169171ce", [{:tag, "0.2.1"}]},
+  "riak_pool": {:git, "git://github.com/HashNuke/riak_pool.git", "3580204af0fa7383e104ba54cd9c9892169171ce", [{:tag, "0.2.2"}]},
   "riakc": {:git, "git://github.com/basho/riak-erlang-client.git", "3b223a7ff0f17acc72e7d365966a93368cde771b", []} ]
