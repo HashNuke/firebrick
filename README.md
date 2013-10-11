@@ -22,3 +22,7 @@ After installing the Ruby dependencies, you can compile assets using any of the 
 
 * `bundle exec rake assets:watch` - Watch assets for changes during development and compile them.
 
+
+## Notes for development
+
+* Do not handle db connection errors.

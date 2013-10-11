@@ -1,28 +1,45 @@
 defmodule Rinket.Db do
 
   def create(bucket, data) do
-    #TODO create object
-    riak_obj = :riakc_obj.new bucket, :undefined, data
-    RiakPool.put(riak_obj)
+    json = :jsx.encode(data)
+    :riakc_obj.new(bucket, :undefined, json, "application/json")
+      |> RiakPool.put
+      |> :riakc_obj.key
   end
+
 
   def get(bucket, key) do
-    riak_obj = RiakPool.get(bucket, key)
-    json = :riakc_obj.get_values(riak_obj)
-    :jsx.decode(json)
+    RiakPool.get(bucket, key)
+      |> :riakc_obj.get_values
+      |> :jsx.decode
   end
+
 
   def update(bucket, key, data) do
-    riak_obj = :riakc_obj.new(bucket, key, data)
-    RiakPool.put(riak_obj)
+    :riakc_obj.new(bucket, key, data) |> RiakPool.put
   end
 
+
   def patch(bucket, key, patch_data) do
-    old_data = __MODULE__.get(bucket, key)
-    new_data = Dict.merge(old_data, patch_data)
-    new_riak_obj = :riakc_obj.new(bucket, key, new_data)
-    RiakPool.put(new_riak_obj)
+    new_data = get(bucket, key) |> Dict.merge(patch_data)
+
+    :riakc_obj.new(bucket, key, :jsx.encode(new_data))
+      |> RiakPool.put
   end
+
+
+  def search(bucket, query) do
+    {:ok, {:search_results, results, _, _count}} = RiakPool.run(fn(worker)->
+      :riakc_pb_socket.search(worker, bucket, query)
+    end)
+
+    # Cleans up, by removing the bucket names from the results
+    :lists.map(fn(item)->
+      {bucket, obj} = item
+      obj
+    end, results)
+  end
+
 
   def delete(bucket, key) do
     RiakPool.delete(bucket, key)
