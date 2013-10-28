@@ -26,3 +26,8 @@ After installing the Ruby dependencies, you can compile assets using any of the 
 ## Notes for development
 
 * Do not handle db connection errors.
+* Reference for email threading - http://www.jwz.org/doc/threading.html
+* Forward port-25 to 2525
+
+      sudo iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25 -j REDIRECT --to-ports 2525
+
