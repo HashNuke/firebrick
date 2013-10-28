@@ -13,7 +13,7 @@ defmodule ApplicationRouter do
   # forward "/posts", to: PostsRouter
 
   forward "/sessions", to: SessionsRouter
-  forward "/teams",    to: TeamsRouter
+  forward "/api",    to: ApiRouter
 
   get "/" do
     conn = conn.assign(:title, "Welcome to Dynamo!")

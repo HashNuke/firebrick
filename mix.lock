@@ -1,5 +1,6 @@
 [ "cowboy": {:git, "git://github.com/extend/cowboy.git", "bbee34fe1638b742796b00b39c0859395a752167", []},
   "dynamo": {:git, "git://github.com/elixir-lang/dynamo.git", "cc11aa6817399b623b7d5edcc94db179948257a1", []},
+  "gen_smtp": {:git, "git://github.com/Vagabond/gen_smtp.git", "2d75ba1ae5484443c1aae38aec6343f9b6e24870", []},
   "hackney": {:git, "git://github.com/benoitc/hackney.git", "5b0f7eb949ebebd6fabfbc4e08a7b7231850606a", []},
   "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [{:tag, "v1.4.3"}]},
   "meck": {:git, "git://github.com/basho/meck.git", "2b25a30a8688f94106d07f23a9f1fb523ac00f08", [{:tag, "0.8.1"}]},

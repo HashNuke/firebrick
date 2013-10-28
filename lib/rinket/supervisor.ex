@@ -11,7 +11,8 @@ defmodule Rinket.Supervisor do
 
     children = [
       worker(Rinket.DynamoSupervisor, [], restart: :temporary),
-      worker(Rinket.RiakSupervisor, [], restart: :temporary)
+      worker(Rinket.RiakSupervisor, [], restart: :temporary),
+      worker(Rinket.Smtp, [], restart: :temporary)
     ]
 
     supervise(children, strategy: :one_for_one)
