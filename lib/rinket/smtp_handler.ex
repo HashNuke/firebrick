@@ -1,5 +1,5 @@
 defmodule Rinket.SmtpHandler do
-  # @behaviour :gen_smtp_server_session
+  @behaviour :gen_smtp_server_session
 
 
 # -export([init/4, handle_HELO/2, handle_EHLO/3, handle_MAIL/2, handle_MAIL_extension/2,
@@ -55,12 +55,12 @@ defmodule Rinket.SmtpHandler do
     {:error, "554 invalid hostname", state}
   end
 
-  def handle_HELO("trusted_host", state) do
-    {:ok, state} # no size limit because we trust them.
-  end
+  # def handle_HELO("trusted_host", state) do
+  #   {:ok, state} # no size limit because we trust them.
+  # end
 
   def handle_HELO(hostname, state) do
-    :io.format("HELO from ~s~n", [hostname])
+    :io.format("250 HELO from #{hostname}~n")
     {:ok, 655360, state} # 640kb of HELO should be enough for anyone.
     # If {ok, state} was returned here, we'd use the default 10mb limit
   end
@@ -112,7 +112,6 @@ defmodule Rinket.SmtpHandler do
   # @doc Handle an extension to the MAIL verb. Return either `{ok, State}' or `error' to reject
   # the option.
   @spec handle_MAIL_extension(binary, State.t) :: {:ok, State.t} | :error
-  #TODO
   def handle_MAIL_extension("X-SomeExtension" = extension, state) do
     :io.format("Mail from extension ~s~n", [extension])
     # any MAIL extensions can be handled here
@@ -124,25 +123,31 @@ defmodule Rinket.SmtpHandler do
     :error
   end
 
-@spec handle_RCPT(binary(), State.t) :: {:ok, State.t} | {:error, String.t, State.t}
-def handle_RCPT("nobody@example.com", state) do
-  {:error, "550 No such recipient", state}
-end
 
-def handle_RCPT(to, state) do
-  :io.format("Mail to ~s~n", [to])
-  # you can accept or reject RCPT TO addesses here, one per call
-  {:ok, state}
-end
+  @spec handle_RCPT(binary(), State.t) :: {:ok, State.t} | {:error, String.t, State.t}
+  def handle_RCPT("nobody@example.com", state) do
+    {:error, "550 No such recipient", state}
+  end
 
-# -spec handle_RCPT_extension(Extension :: binary(), State :: #state{}) -> {'ok', #state{}} | 'error'.
-# handle_RCPT_extension(<<"X-SomeExtension">> = Extension, State) ->
-#   % any RCPT TO extensions can be handled here
-#   io:format("Mail to extension ~s~n", [Extension]),
-#   {ok, State};
-# handle_RCPT_extension(Extension, _State) ->
-#   io:format("Unknown RCPT TO extension ~s~n", [Extension]),
-#   error.
+  def handle_RCPT(to, state) do
+    :io.format("Mail to ~s~n", [to])
+    # you can accept or reject RCPT TO addesses here, one per call
+    {:ok, state}
+  end
+
+
+  @spec handle_RCPT_extension(binary, State.t) :: {:ok, State.t} | :error
+  def handle_RCPT_extension("X-SomeExtension" = extension, state) do
+    # any RCPT TO extensions can be handled here
+    :io.format("Mail to extension ~s~n", [extension])
+    {:ok, state}
+  end
+
+  def handle_RCPT_extension(extension, _state) do
+    :io.format("Unknown RCPT TO extension ~s~n", [extension])
+    :error
+  end
+
 
   @spec handle_DATA(binary, [binary,...], binary, State.t) :: {:ok, String.t, State.t} | {:error, String.t, State.t}
   def handle_DATA(_from, _to, "", state) do
@@ -150,50 +155,23 @@ end
   end
 
   def handle_DATA(from, to, data, state) do
-    # some kind of unique id
-    ref_list = Kernel.bitstring_to_list(:erlang.md5(term_to_binary(:erlang.now())))
-    reference = :lists.flatten Enum.map(ref_list, fn(n)-> :io_lib.format("~2.16.0b", [n]) end)
-
-    IO.inspect "TODO Still cant handle data"
+    unique_id = create_unique_id()
     IO.inspect data
 
-    # if RELAY is true, then relay email to email address, else send email data to console
-    # case :proplists.get_value(relay, state.options, false) do
-    #   true  -> relay(from, to, data)
-    #   false ->
+    relay = :proplists.get_value(:relay, state.options, false)
+    parse = :proplists.get_value(:parse, state.options, false)
 
-    #     :io.format("message from ~s to ~p queued as ~s, body length ~p~n", [from, to, reference, byte_size(data)])
-    #     case :proplists.get_value(parse, state.options, false) do
-    #       false -> :ok
-    #       true ->
-    #         try do
-    #           result = :mimemail.decode(data)
-    #           :io.format("Message decoded successfully!~n")
-    #         rescue
-    #           [reason] ->
-    #             :io.format("Message decode FAILED with ~p:~n", [reason])
-    #             case :proplists.get_value(dump, state.options, false) do
-    #             false -> :ok
-    #             true ->
-    #               # optionally dump the failed email somewhere for analysis
-    #               file = "dump/#{reference}",
-    #               case :filelib.ensure_dir(file) do
-    #                 :ok ->
-    #                   :file.write_file(file, data)
-    #                 _ ->
-    #                   :ok
-    #               end
-    #             end
-    #           end
-    #         end
-    #       end
-    #     end
-    #   end
-    # end
+    cond do
+      relay == true -> relay(from, to, data)
+      relay == false && parse == true ->
+        :io.format("message from ~s to ~p queued as ~s, body length ~p~n", [from, to, unique_id, byte_size(data)])
+        parse_mail(data, state, unique_id)
+    end
 
     # At this point, if we return ok, we've accepted responsibility for the email
-    {:ok, reference, state}
+    {:ok, unique_id, state}
   end
+
 
   @spec handle_RSET(State.t) :: State.t
   def handle_RSET(state) do
@@ -255,6 +233,38 @@ end
 
 
   # Internal Functions
+
+  defp parse_mail(data, state, unique_id) do
+    try do
+      result = :mimemail.decode(data)
+      :io.format("Message decoded successfully!~n")
+    rescue
+      [reason] ->
+        :io.format("Message decode FAILED with ~p:~n", [reason])
+        case :proplists.get_value(:dump, state.options, false) do
+          false -> :ok
+          true  -> dump_mail(data, unique_id)
+        end
+    end
+  end
+
+
+  defp dump_mail(data, unique_id) do
+    file = "dump/#{unique_id}"
+    case :filelib.ensure_dir(file) do
+      :ok ->
+        :file.write_file(file, data)
+      _ ->
+        :ok  # don't care about errors
+    end
+  end
+
+
+  defp create_unique_id do
+    ref_list = Kernel.bitstring_to_list(:erlang.md5(term_to_binary(:erlang.now())))
+    :lists.flatten Enum.map(ref_list, fn(n)-> :io_lib.format("~2.16.0b", [n]) end)
+  end
+
 
   defp relay(_, [], _) do
     :ok

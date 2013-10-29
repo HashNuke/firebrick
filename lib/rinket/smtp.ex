@@ -1,7 +1,7 @@
 defmodule Rinket.Smtp do
 
   def start_link do
-    :gen_smtp_server.start(:smtp_server_example, [[port: 2525]])
+    :gen_smtp_server.start(Rinket.SmtpHandler, [[port: 2525]])
   end
 
 
