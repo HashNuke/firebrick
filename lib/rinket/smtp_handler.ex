@@ -156,8 +156,6 @@ defmodule Rinket.SmtpHandler do
 
   def handle_DATA(from, to, data, state) do
     unique_id = create_unique_id()
-    IO.inspect data
-
     relay = :proplists.get_value(:relay, state.options, false)
     parse = :proplists.get_value(:parse, state.options, false)
     :io.format("message from ~s to ~p queued as ~s, body length ~p~n", [from, to, unique_id, byte_size(data)])
@@ -271,7 +269,9 @@ defmodule Rinket.SmtpHandler do
   end
 
   defp relay_mail(from, [to|rest], data) do
+    IO.inspect "here man"
     [_user, host] = :string.tokens(to, "@")
+    IO.inspect "this didnt happen"
     :gen_smtp_client.send({from, [to], :erlang.binary_to_list(data)}, [relay: host])
     relay_mail(from, rest, data)
   end
