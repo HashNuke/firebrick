@@ -160,11 +160,11 @@ defmodule Rinket.SmtpHandler do
 
     relay = :proplists.get_value(:relay, state.options, false)
     parse = :proplists.get_value(:parse, state.options, false)
+    :io.format("message from ~s to ~p queued as ~s, body length ~p~n", [from, to, unique_id, byte_size(data)])
 
     cond do
-      relay == true -> relay(from, to, data)
+      relay == true -> relay_mail(from, to, data)
       relay == false && parse == true ->
-        :io.format("message from ~s to ~p queued as ~s, body length ~p~n", [from, to, unique_id, byte_size(data)])
         parse_mail(data, state, unique_id)
     end
 
@@ -266,12 +266,11 @@ defmodule Rinket.SmtpHandler do
   end
 
 
-  defp relay(_, [], _) do
+  defp relay_mail(_, [], _) do
     :ok
   end
 
-  defp relay(from, [to|rest], data) do
-    # relay message to email address
+  defp relay_mail(from, [to|rest], data) do
     [_user, host] = :string.tokens(to, "@")
     :gen_smtp_client.send({from, [to], :erlang.binary_to_list(data)}, [relay: host])
     relay(from, rest, data)
