@@ -157,13 +157,14 @@ defmodule Rinket.SmtpHandler do
   def handle_DATA(from, to, data, state) do
     unique_id = create_unique_id()
     relay = :proplists.get_value(:relay, state.options, false)
-    parse = :proplists.get_value(:parse, state.options, false)
-    :io.format("message from ~s to ~p queued as ~s, body length ~p~n", [from, to, unique_id, byte_size(data)])
 
     cond do
       relay == true -> relay_mail(from, to, data)
-      relay == false && parse == true ->
-        parse_mail(data, state, unique_id)
+      relay == false ->
+        :io.format("message from ~s to ~p queued as ~s, body length ~p~n", [from, to, unique_id, byte_size(data)])
+        if :proplists.get_value(:parse, state.options, false) do
+          parse_mail(data, state, unique_id)
+        end
     end
 
     # At this point, if we return ok, we've accepted responsibility for the email
