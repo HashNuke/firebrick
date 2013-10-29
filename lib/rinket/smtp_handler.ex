@@ -273,7 +273,7 @@ defmodule Rinket.SmtpHandler do
   defp relay_mail(from, [to|rest], data) do
     [_user, host] = :string.tokens(to, "@")
     :gen_smtp_client.send({from, [to], :erlang.binary_to_list(data)}, [relay: host])
-    relay(from, rest, data)
+    relay_mail(from, rest, data)
   end
 
 end
