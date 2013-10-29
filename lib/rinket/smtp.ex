@@ -7,8 +7,7 @@ defmodule Rinket.Smtp do
 
 
   def send_test_mail() do
-    {:ok, hostname} = :inet.gethostname
-    host = "#{hostname}.local"
+    host = :net_adm.localhost
     sender = "rinket_rambler@#{host}"
     recepients = ["john@#{host}"]
     client_options = [relay: host, username: sender, password: "mypassword", port: 2525]
