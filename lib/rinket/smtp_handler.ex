@@ -1,4 +1,4 @@
-defmodule SmtpHandler do
+defmodule Rinket.SmtpHandler do
   # @behaviour :gen_smtp_server_session
 
 
