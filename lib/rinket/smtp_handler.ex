@@ -235,7 +235,7 @@ defmodule Rinket.SmtpHandler do
 
   defp parse_mail(data, state, unique_id) do
     try do
-      result = :mimemail.decode(data)
+      Rinket.Mail.save( :mimemail.decode(data) )
       :io.format("Message decoded successfully!~n")
     rescue
       [reason] ->
