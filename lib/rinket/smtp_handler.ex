@@ -80,7 +80,6 @@ defmodule Rinket.SmtpHandler do
   end
 
   def handle_EHLO(hostname, extensions, state) do
-    :io.format("EHLO from ~s~n", [hostname])
     # You can advertise additional extensions, or remove some defaults
     my_extensions = case :proplists.get_value(:auth, state.options, false) do
       true ->
@@ -236,7 +235,6 @@ defmodule Rinket.SmtpHandler do
   defp parse_mail(data, state, unique_id) do
     try do
       Rinket.Mail.save( :mimemail.decode(data) )
-      :io.format("Message decoded successfully!~n")
     rescue
       [reason] ->
         :io.format("Message decode FAILED with ~p:~n", [reason])
@@ -270,9 +268,7 @@ defmodule Rinket.SmtpHandler do
   end
 
   defp relay_mail(from, [to|rest], data) do
-    IO.inspect "here man"
     [_user, host] = String.split(to, "@")
-    IO.inspect "this didnt happen"
     :gen_smtp_client.send({from, [to], :erlang.binary_to_list(data)}, [relay: host])
     relay_mail(from, rest, data)
   end
