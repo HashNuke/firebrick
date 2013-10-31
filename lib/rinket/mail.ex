@@ -80,12 +80,12 @@ defmodule Rinket.Mail do
     IO.inspect mail
 
     mail = mail.add_fields([
-      to: parse_address_list(mail.fields[:to]),
-      from: parse_address_list(mail.fields[:from])
+      "to": parse_address_list(mail.fields["to"]),
+      "from": parse_address_list(mail.fields["from"])
     ])
 
-    if mail.fields[:cc] != nil do
-      mail = mail.add_fields([cc: parse_address_list(mail.fields[:cc]) ])
+    if mail.fields["cc"] != nil do
+      mail = mail.add_fields(["cc": parse_address_list(mail.fields["cc"]) ])
     end
 
     mail
