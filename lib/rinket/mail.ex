@@ -2,6 +2,11 @@ defmodule Rinket.Mail do
 
   defrecord MailObject, fields: [], raw_data: nil do
     def add_fields(new_fields, mail) do
+      IO.inspect "------"
+      IO.inspect mail.fields
+      IO.inspect new_fields
+      IO.inspect mail.fields( ListDict.merge(mail.fields, new_fields) )
+      IO.inspect "------"
       mail.fields( ListDict.merge(mail.fields, new_fields) )
     end
 
@@ -31,7 +36,7 @@ defmodule Rinket.Mail do
 
 
   defp parse_mail({type, sub_type, headers, properties, body}) do
-    mail = parse_headers(headers, MailObject)
+    mail = parse_headers(headers, MailObject[])
 
     mail = mail.raw_data([
       type: type,
@@ -59,24 +64,27 @@ defmodule Rinket.Mail do
       message_id: "message-id"
     ]
 
-    Enum.reduce(headers, mail, fn({header, value}, mail)->
-      IO.inspect "Inside loop"
+    understood_headers = ListDict.values(fields)
 
-      Enum.reduce(fields, mail, fn({field, field_name}, mail)->
-        if field_name == String.downcase(header) do
-          mail.add_fields(ListDict.put([], field, value))
-        else
-          mail
-        end
-      end)
+    mail = Enum.reduce(headers, mail, fn({header, value}, modified_mail)->
+      downcased_header = String.downcase(header)
+      if :lists.member(downcased_header, understood_headers) do
+        modified_mail.add_fields(ListDict.put([], downcased_header, value))
+      else
+        modified_mail
+      end
     end)
+
+
+    IO.inspect headers
+    IO.inspect mail
 
     mail = mail.add_fields([
       to: parse_address_list(mail.fields[:to]),
       from: parse_address_list(mail.fields[:from])
     ])
 
-    if mail.fields[:cc] do
+    if mail.fields[:cc] != nil do
       mail = mail.add_fields([cc: parse_address_list(mail.fields[:cc]) ])
     end
 
