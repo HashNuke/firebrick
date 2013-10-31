@@ -6,7 +6,7 @@ defmodule Rinket.Mail do
     end
 
     def data(mail) do
-      [fields: mail.fields, raw: mail.raw_data]
+      [fields: mail.fields]
     end
   end
 
@@ -39,7 +39,7 @@ defmodule Rinket.Mail do
     ])
 
     if String.downcase(type) == "text" && String.downcase(sub_type) == "plain" do
-      mail.add_fields([plain_body: body])
+      mail.add_fields(["plain_body": body])
     else
       parse_multipart_body(body, mail)
     end
@@ -141,9 +141,9 @@ defmodule Rinket.Mail do
     Enum.reduce(mail_parts, mail, fn({type, sub_type, _headers, _properties, body}, mail)->
       case {String.downcase(type), String.downcase(sub_type)} do
         {"text", "plain"} ->
-          mail.add_fields([plain_body: body])
+          mail.add_fields(["plain_body": body])
         {"text", "html"} ->
-          mail.add_fields([html_body: body])
+          mail.add_fields(["html_body": "#{bitstring_to_list(body)}"])
         _ -> #TODO cannot parse anything else as of now
           mail
       end
