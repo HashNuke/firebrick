@@ -1,6 +1,22 @@
 # Rinket
 
-TODO
+
+## Usage (temporary)
+
+These usage instructions are temporary. Expect major changes to installation/usage instructions
+
+I would suggest using a linux machine (even a virtual machine is fine).
+
+* Clone this repository
+* Run `mix deps.get` to install dependencies
+* Run the following command to redirect port 25 traffic to port 2525.
+
+        sudo iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25 -j REDIRECT --to-ports 2525
+
+* Start Riak with `riak start`
+* Start the app with `iex -S mix server`. You will also get a console.
+* To send a test mail, run `Rinket.Smtp.send_test_mail`
+
 
 ## Development
 
