@@ -17,6 +17,8 @@ I would suggest using a linux machine (even a virtual machine is fine).
 * Start the app with `iex -S mix server`. You will also get a console.
 * To send a test mail, run `Rinket.Smtp.send_test_mail`
 
+* Turn on Riak search in Riak's `app.config`
+* Install Riak search hook by running `search-cmd install rinket_mails`
 
 ## Development
 
