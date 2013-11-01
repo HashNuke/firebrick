@@ -48,23 +48,23 @@ defmodule Rinket.Mail do
 
   defp parse_headers(headers, mail) do
     fields = [
-      from: "from",
-      to: "to",
-      cc: "cc",
-      subject: "subject",
-      date: "date",
-      message_id: "message-id",
-      reply_to: "reply-to",
-      in_reply_to: "in-reply-to",
-      references: "references"
+      "from":        "from",
+      "to":          "to",
+      "cc":          "cc",
+      "date":        "date",
+      "subject":     "subject",
+      "reply-to":    "reply_to",
+      "message-id":  "message_id",
+      "in-reply-to": "in_reply_to",
+      "references":  "references"
     ]
 
-    understood_headers = ListDict.values(fields)
+    understood_headers = ListDict.keys(fields)
 
     Enum.reduce(headers, mail, fn({header, value}, modified_mail)->
       downcased_header = String.downcase(header)
       if :lists.member(downcased_header, understood_headers) do
-        modified_mail.add_fields(ListDict.put([], downcased_header, value))
+        modified_mail.add_fields(ListDict.put([], fields[downcased_header], value))
       else
         modified_mail
       end
@@ -163,9 +163,9 @@ defmodule Rinket.Mail do
     {:ok, addresses} = :smtp_util.parse_rfc822_addresses(address_string)
     Enum.map(addresses, fn({name, address})->
       if name == :undefined do
-        [email: address]
+        [email: "#{address}"]
       else
-        [name: name, email: address]
+        [name: "#{name}", email: "#{address}"]
       end
     end)
   end
