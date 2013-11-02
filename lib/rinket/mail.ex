@@ -6,7 +6,7 @@ defmodule Rinket.Mail do
     end
 
     def data(mail) do
-      [fields: mail.fields]
+      [mail: mail.fields]
     end
   end
 
@@ -29,10 +29,10 @@ defmodule Rinket.Mail do
 
   defp parse_mail({type, sub_type, headers, properties, body}) do
     mail = parse_headers(headers, MailObject[])
+    mail = mail.add_fields([sent_as: "#{type}/#{sub_type}"])
 
     mail = mail.raw_data([
-      type: type,
-      sub_type: sub_type,
+      sent_as: "#{type}/#{sub_type}",
       headers: headers,
       properties: properties,
       body: body
