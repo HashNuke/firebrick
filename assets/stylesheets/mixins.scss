@@ -1,0 +1,49 @@
+@mixin menu ($icon_size: 1.5em) {
+  .menu-wrapper {
+    float: left;
+    cursor: pointer;
+
+    // todo disable this for mobile
+    &:hover {
+      .menu {
+        display: inline;
+      }
+    }
+
+    .nav-icon {
+      width: $icon_size;
+    }
+
+    .menu {
+      float: left;
+      padding: 0em;
+      margin: 0em;
+      display: none;
+      position: absolute;
+      z-index: 2;
+      background: #f1f1f1;
+
+    }
+  }
+}
+
+
+@mixin search-query($width: 16em) {
+  .search-query {
+    width: $width;
+    margin: 0.2em 1em 0.2em 1em;
+    font-size: 0.75em;
+  }
+}
+
+
+@mixin sidebar($width: 25%) {
+  .sidebar {
+    float: left;
+    width: $width;
+    height: 100%;
+    box-shadow: 0.1em 0em 0em 0.2em #F1F1F1;
+    background: #FFF;
+    border-right: 1px solid #DDD;
+  }
+}
