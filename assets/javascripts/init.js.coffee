@@ -1,4 +1,7 @@
-$ ->
-  window.Rinket = Ember.Application.create()
-  Rinket.Router.map ->
-    @resource('users')
+window.Rinket = Ember.Application.create()
+
+Rinket.Router.map ->
+  @resource('users')
+
+# Rinket.Router.map ->
+#   @resource('users')
