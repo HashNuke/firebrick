@@ -42,7 +42,7 @@ a {
 
   .list-label {
     font-size: 140%;
-    padding-left: 1em;
+    padding-left: 0.25em;
     margin-top: 0.1em;
     margin-bottom: 0.1em;
   }
@@ -55,6 +55,10 @@ a {
 
     .logout {
       float: right;
+      margin-top: 0.2em;
+      margin-bottom: 0.2em;
+      font-size: 120%;
+      color: #D04648;
     }
 
     li {
