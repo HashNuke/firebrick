@@ -3,6 +3,7 @@
 <head>
   <title><%= content_for(:title) || "Rinket" %></title>
   <script type="text/javascript" src="/static/assets/application.js"></script>
+  <link rel="stylesheet" href="/static/assets/application.css"/>
 </head>
 <body>
   <%= content_for(:template) %>
