@@ -7,7 +7,7 @@ Watchman is one such program. <https://github.com/facebook/watchman>. It is cros
 
 #### Add rinket assets dir to watch list
 
-    watchman -- trigger ~/projects/rinket/assets/ rinket_build '*.*' -- bundle exec rake assets:compile
+    watchman -- trigger ~/projects/rinket/assets/ rinket_asset_compile '*.*' -- bundle exec rake assets:compile
 
 On changes to any files in the assets dir, the assets will be compiled.
 
