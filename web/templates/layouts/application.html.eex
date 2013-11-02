@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= "#{content_for(:title)} &laquo;" || "Rinket" %></title>
+  <title><%= content_for(:title) || "Rinket" %></title>
+  <script type="text/javascript" src="/static/assets/application.js"></script>
 </head>
 <body>
   <%= content_for(:template) %>

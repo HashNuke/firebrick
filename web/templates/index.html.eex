@@ -1,0 +1,8 @@
+<script type="text/x-handlebars" id="users">
+This is the users page
+</script>
+
+<script type="text/x-handlebars">
+  This is the layout
+  {{outlet}}
+</script>
