@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= "#{content_for(:title)} &laquo;" || "Rinket" %></title>
+</head>
+<body>
+  <%= content_for(:template) %>
+</body>
+</html>
