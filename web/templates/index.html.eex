@@ -1,8 +1,31 @@
 <script type="text/x-handlebars" id="users">
-This is the users page
+  This is the users page
 </script>
 
+
+<script type="text/x-handlebars" data-template-name="navigation">
+  <div class="nav-wrapper">
+    <ul class="nav">
+      <li class="menu-wrapper">
+        <img class="nav-icon" src="/static/assets/navicon.png"/>
+
+        <ul class="menu">
+          <li>{{#link-to "users"}}Users{{/link-to}}</li>
+        </ul>
+      </li>
+
+      <li><input type="text" name="search-query" class="search-query"/></li>
+    </ul>
+  </div>
+</script>
+
+
 <script type="text/x-handlebars">
-  This is the layout
-  {{outlet}}
+  <div class="sidebar">
+    {{render "navigation"}}
+  </div>
+
+  <div class="content">
+    {{outlet}}
+  </div>
 </script>
