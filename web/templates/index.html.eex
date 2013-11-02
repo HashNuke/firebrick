@@ -10,11 +10,20 @@
         <img class="nav-icon" src="/static/assets/navicon.png"/>
 
         <ul class="menu">
+          <li>{{#link-to "users"}}Inbox{{/link-to}}</li>
+          <li>{{#link-to "account"}}Sent mail{{/link-to}}</li>
+          <li>{{#link-to "account"}}Trash{{/link-to}}</li>
+          <li class="section-label">Your account</li>
+          <li>{{#link-to "account"}}Settings{{/link-to}}</li>
+          <li class="section-label">Site</li>
           <li>{{#link-to "users"}}Users{{/link-to}}</li>
+          <li>{{#link-to "account"}}Application settings{{/link-to}}</li>
         </ul>
       </li>
 
-      <li><input type="text" name="search-query" class="search-query"/></li>
+      <li class="list-label">Inbox</li>
+      <!-- <li><input type="text" name="search-query" class="search-query"/></li> -->
+      <li class="logout">Logout</li>
     </ul>
   </div>
 </script>

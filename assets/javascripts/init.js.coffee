@@ -5,3 +5,6 @@ Rinket.ApplicationView = Ember.View.extend
 
 Rinket.Router.map ->
   @resource('users')
+
+Rinket.Router.map ->
+  @resource('account')
