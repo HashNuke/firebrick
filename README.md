@@ -40,6 +40,13 @@ After installing the Ruby dependencies, you can compile assets using any of the 
 
 * `bundle exec rake assets:watch` - Watch assets for changes during development and compile them.
 
+To compile changes automatically during development, use a file-watcher program like `watchman`.
+
+If you are using watchman, run this:
+
+    watchman -- trigger ~/projects/rinket/assets/ rinket_build '*.*' -- bundle exec rake assets:compile
+
+On changes to any files in the assets dir, the assets will be compiled.
 
 ## Notes for development
 
