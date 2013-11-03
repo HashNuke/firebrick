@@ -5,6 +5,9 @@ Rinket.ApplicationView = Ember.View.extend
 
 Rinket.Router.map ->
   @resource('users')
-
-Rinket.Router.map ->
   @resource('account')
+
+
+Rinket.MenuControl = Ember.View.extend
+  click: (evt)->
+    $(".menu-pane").toggleClass('show-sidebar')

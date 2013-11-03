@@ -1,63 +1,12 @@
 @mixin menu ($icon_size: 1.5em) {
   .menu-wrapper {
-    float: left;
     cursor: pointer;
-
-    // todo disable this for mobile
-    &:hover {
-      background: #f1f1f1;
-      border-top-left-radius: 0.25em;
-      border-top-right-radius: 0.25em;
-
-      .menu {
-        display: inline;
-      }
-
-      .nav-icon {
-        background: #DDD;
-        border-right: 1px solid #ddd;
-        border-top: 1px solid #eee;
-        border-left: 1px solid #eee;
-      }
-    }
 
     .nav-icon {
       width: $icon_size;
       margin-left: 0.25em;
       margin-top: 0.25em;
       margin-right: 0.25em;
-    }
-
-    .menu {
-      float: left;
-      padding: 0.5em;
-      margin: 0em;
-      display: none;
-      position: absolute;
-      z-index: 2;
-      background: #FBFBFB;
-      box-shadow: 0.15em 0.1em 0em 0em #F1F1F1;
-      border-right: 1px solid #ddd;
-      border-bottom: 1px solid #ddd;
-      border-top: 1px solid #eee;
-      border-left: 1px solid #eee;
-      border-bottom-left-radius: 0.25em;
-      border-bottom-right-radius: 0.25em;
-
-
-      .section-label {
-        font-size: 90%;
-        font-weight: bold;
-        color: #666;
-        margin-top: 1em;
-        border-bottom: 1px solid #EEE;
-        width: 100%;
-      }
-
-      li {
-        clear: both;
-        padding: 0.25em;
-      }
     }
   }
 }
@@ -71,14 +20,35 @@
   }
 }
 
+@mixin menu-pane() {
+  .menu-pane {
+    width: 20%;
+    height: 100%;
+    display: none;
+    background: #575568;
+  }
+}
 
-@mixin sidebar($width: 25%) {
+@mixin sidebar() {
   .sidebar {
-    float: left;
-    width: $width;
+    width: 25%;
     height: 100%;
     background: #FFF;
-    box-shadow: 0.1em 0em 0em 0.2em #F1F1F1;
+    box-shadow: 0.2em 0em 0em 0.1em #F1F1F1;
     border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    display: table-cell;
+    vertical-align: top;
+  }
+}
+
+
+@mixin content() {
+  .content {
+    width: 75%;
+    height: 100%;
+    padding-left: 1em; // padding only needed on phone
+    display: table-cell;
+    vertical-align: top;
   }
 }

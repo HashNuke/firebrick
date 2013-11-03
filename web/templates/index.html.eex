@@ -7,18 +7,9 @@
   <div class="nav-wrapper">
     <ul class="nav">
       <li class="menu-wrapper">
-        <img class="nav-icon" src="/static/assets/navicon.png"/>
-
-        <ul class="menu">
-          <li>{{#link-to "users"}}Inbox{{/link-to}}</li>
-          <li>{{#link-to "account"}}Sent mail{{/link-to}}</li>
-          <li>{{#link-to "account"}}Trash{{/link-to}}</li>
-          <li class="section-label">Your account</li>
-          <li>{{#link-to "account"}}Settings{{/link-to}}</li>
-          <li class="section-label">Site</li>
-          <li>{{#link-to "users"}}Users{{/link-to}}</li>
-          <li>{{#link-to "account"}}Application settings{{/link-to}}</li>
-        </ul>
+        {{#view Rinket.MenuControl}}
+          <img class="nav-icon" src="/static/assets/navicon.png"/>
+        {{/view}}
       </li>
 
       <li class="list-label">Inbox</li>
@@ -30,11 +21,24 @@
 
 
 <script type="text/x-handlebars">
-  <div class="sidebar">
-    {{render "navigation"}}
-  </div>
+<div class="menu-pane">
+  <ul class="menu">
+    <li>{{#link-to "users"}}Inbox{{/link-to}}</li>
+    <li>{{#link-to "account"}}Sent mail{{/link-to}}</li>
+    <li>{{#link-to "account"}}Trash{{/link-to}}</li>
+    <li class="section-label">Your account</li>
+    <li>{{#link-to "account"}}Settings{{/link-to}}</li>
+    <li class="section-label">Site</li>
+    <li>{{#link-to "users"}}Users{{/link-to}}</li>
+    <li>{{#link-to "account"}}Application settings{{/link-to}}</li>
+  </ul>
+</div>
 
-  <div class="content">
-    {{outlet}}
-  </div>
+<div class="sidebar">
+  {{render "navigation"}}
+</div>
+
+<div class="content">
+  {{outlet}}
+</div>
 </script>
