@@ -87,12 +87,11 @@ a {
   float: left;
   padding: 0.5em;
   margin: 0em;
-
+  list-style-type: none;
 
   .section-label {
-    font-size: 90%;
-    font-weight: bold;
-    color: #999;
+    font-size: 0.95em;
+    color: #DDD;
     margin-top: 1em;
     border-bottom: 1px solid #666;
     width: 100%;
@@ -102,6 +101,10 @@ a {
     clear: both;
     padding: 0.25em;
 
-    a { color: #f1f1f1; }
+    a {
+      color: #F1F1F1;
+      font-size: 1.1em;
+      text-decoration: none;
+    }
   }
 }
