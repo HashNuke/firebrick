@@ -62,6 +62,9 @@ a {
 
   .unread {
     background: #f1f2f3 !important;
+    .timestamp {
+      font-weight:bold;
+    }
   }
 
   .mail {
