@@ -94,9 +94,10 @@
     <div class="logout">Logout</div>
   </div>
 
-
-  <div class="mails">
-    {{render "mail"}}
+  <div class="mails-wrapper">
+    <div class="mails">
+      {{render "mail"}}
+    </div>
   </div>
 
   <div class="detail">
