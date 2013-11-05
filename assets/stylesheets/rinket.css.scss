@@ -52,12 +52,10 @@ a {
   background: #FFF;
   box-shadow: 0.2em 0em 0em 0.1em #F1F1F1;
   border-right: 1px solid #ddd;
+  overflow-y: scroll;
 
   .unread {
     background: #f1f2f3 !important;
-    .sender {
-      font-weight: bold;
-    }
   }
 
   .mail {
@@ -83,6 +81,7 @@ a {
       color: #333;
       padding: 0.5em 0.5em 0.2em 0.5em;
       width: 70%;
+      font-weight: bold;
     }
 
 

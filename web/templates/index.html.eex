@@ -10,9 +10,6 @@
 
 <script type="text/x-handlebars" id="mail">
 <div class="mail">
-  <div class="controls">
-    <input type="checkbox"/>
-  </div>
 
   <div class="sender">John Appleseed</div>
   <div class="timestamp">1:46 am</div>
@@ -26,10 +23,6 @@
 </div>
 
 <div class="mail unread">
-  <div class="controls">
-    <input type="checkbox"/>
-  </div>
-
   <div class="sender">John Appleseed</div>
   <div class="timestamp">1:46 am</div>
 
@@ -42,9 +35,6 @@
 </div>
 
 <div class="mail unread">
-  <div class="controls">
-    <input type="checkbox"/>
-  </div>
 
   <div class="sender">John Appleseed</div>
   <div class="timestamp">1:46 am</div>
@@ -58,10 +48,6 @@
 </div>
 
 <div class="mail">
-  <div class="controls">
-    <input type="checkbox"/>
-  </div>
-
   <div class="sender">John Appleseed</div>
   <div class="timestamp">1:46 am</div>
 
@@ -113,5 +99,8 @@
     {{render "mail"}}
   </div>
 
+  <div class="detail">
+    {{outlet}}
+  </div>
 </div>
 </script>
