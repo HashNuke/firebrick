@@ -4,41 +4,113 @@
 
 
 <script type="text/x-handlebars" data-template-name="navigation">
-  <div class="nav-wrapper">
-    <ul class="nav">
-      <li class="menu-wrapper">
-        {{#view Rinket.MenuControl}}
-          <img class="nav-icon" src="/static/assets/navicon.png"/>
-        {{/view}}
-      </li>
 
-      <li class="list-label">Inbox</li>
-      <!-- <li><input type="text" name="search-query" class="search-query"/></li> -->
-      <li class="logout">Logout</li>
-    </ul>
+</script>
+
+
+<script type="text/x-handlebars" id="mail">
+<div class="mail">
+  <div class="controls">
+    <input type="checkbox"/>
   </div>
+
+  <div class="sender">John Appleseed</div>
+  <div class="timestamp">1:46 am</div>
+
+  <div class="preview">
+    <div class="subject">
+      It has survived not only five centuries, but also the leap into electronic typesetting
+    </div>
+    <div class="summary">Summary</div>
+  </div>
+</div>
+
+<div class="mail unread">
+  <div class="controls">
+    <input type="checkbox"/>
+  </div>
+
+  <div class="sender">John Appleseed</div>
+  <div class="timestamp">1:46 am</div>
+
+  <div class="preview">
+    <div class="subject">
+      It has survived not only five centuries, but also the leap into electronic typesetting
+    </div>
+    <div class="summary">Summary</div>
+  </div>
+</div>
+
+<div class="mail">
+  <div class="controls">
+    <input type="checkbox"/>
+  </div>
+
+  <div class="sender">John Appleseed</div>
+  <div class="timestamp">1:46 am</div>
+
+  <div class="preview">
+    <div class="subject">
+      It has survived not only five centuries, but also the leap into electronic typesetting
+    </div>
+    <div class="summary">Summary</div>
+  </div>
+</div>
+
+<div class="mail unread">
+  <div class="controls">
+    <input type="checkbox"/>
+  </div>
+
+  <div class="sender">John Appleseed</div>
+  <div class="timestamp">1:46 am</div>
+
+  <div class="preview">
+    <div class="subject">
+      It has survived not only five centuries, but also the leap into electronic typesetting
+    </div>
+    <div class="summary">Summary</div>
+  </div>
+</div>
 </script>
 
 
 <script type="text/x-handlebars">
 <div class="menu-pane">
-  <ul class="menu">
-    <li>{{#link-to "users"}}Inbox{{/link-to}}</li>
-    <li>{{#link-to "account"}}Sent mail{{/link-to}}</li>
-    <li>{{#link-to "account"}}Trash{{/link-to}}</li>
-    <li class="section-label">Your account</li>
-    <li>{{#link-to "account"}}Settings{{/link-to}}</li>
-    <li class="section-label">Site</li>
-    <li>{{#link-to "users"}}Users{{/link-to}}</li>
-    <li>{{#link-to "account"}}Application settings{{/link-to}}</li>
-  </ul>
+  <dl class="menu">
+    <!-- <dd class="compose">{{#link-to "users"}}Compose{{/link-to}}</dd> -->
+    <dd>{{#link-to "users"}}Inbox{{/link-to}}</dd>
+    <dd>{{#link-to "account"}}Sent mail{{/link-to}}</dd>
+    <dd>{{#link-to "account"}}Trash{{/link-to}}</dd>
+    <dt>Your account</dt>
+    <dd>{{#link-to "account"}}Settings{{/link-to}}</dd>
+    <dt>Site</dt>
+    <dd>{{#link-to "users"}}Users{{/link-to}}</dd>
+    <dd>{{#link-to "account"}}Application settings{{/link-to}}</dd>
+  </dl>
 </div>
 
-<div class="sidebar">
-  {{render "navigation"}}
-</div>
 
-<div class="content">
-  {{outlet}}
+<div class="content-pane">
+  <div class="header">
+    <div class="menu-control">
+      {{#view Rinket.MenuControl}}
+        <img src="/static/assets/navicon.png"/>
+      {{/view}}
+    </div>
+
+    <div class="list-label">
+      Inbox
+      <span class="red-notification">5</span>
+    </div>
+    <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
+    <div class="logout">Logout</div>
+  </div>
+
+
+  <div class="mails">
+    {{render "mail"}}
+  </div>
+
 </div>
 </script>

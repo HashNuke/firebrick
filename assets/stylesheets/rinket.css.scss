@@ -52,12 +52,19 @@ a {
   background: #FFF;
   box-shadow: 0.2em 0em 0em 0.1em #F1F1F1;
   border-right: 1px solid #ddd;
-  
+
+  .unread {
+    background: #f1f2f3 !important;
+    .sender {
+      font-weight: bold;
+    }
+  }
+
   .mail {
     float: left;
     width: 100%;
     padding: 0.5em 0.5em 0.5em 0.2em;
-    background: #E7F3F9;
+    background: #FFF;
 
     &:hover {
       cursor: pointer;
@@ -67,29 +74,54 @@ a {
     .controls {
       float: left;
       width: 2em;
-      padding: 0.5em;
-    }
-
-    .preview {
-      float: left;
+      padding: 0.5em 0.5em 0.2em 0.5em;
     }
 
     .sender {
-      clear: both;
       float: left;
-      font-weight: bold;
-      font-size: 1.1em;
+      color: #333;
+      padding: 0.5em 0.5em 0.2em 0.5em;
+      width: 70%;
     }
-    .subject {
-      clear: both;
+
+
+    .preview {
       float: left;
+      padding: 0.2em 0.5em 0.2em 0.5em;
+      width: 100%;
+
+      .subject {
+        float: left;
+        clear: left;
+        margin-right: 1em;
+        color: #777;
+        text-overflow: clip;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+      }
+      .summary {
+        float: left;
+        color: #999;
+        width: 100%;
+      }
     }
-    .summary {
-      clear: both;
-      float: left;
-      color: #999;
+
+    .timestamp {
+      float: right;
+      padding: 0.5em;
+      color: #06c;
     }
   }
+}
+
+.red-notification {
+  background: #D04648;
+  font-size: 0.6em;
+  color: #FFF;
+  padding: 0.15em 0.4em 0.15em 0.4em;
+  margin-bottom: 0.5em;
+  vertical-align: super;
 }
 
 .detail {
