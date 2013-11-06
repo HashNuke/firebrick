@@ -22,6 +22,14 @@ I would suggest using a linux machine (even a virtual machine is fine).
 
 ## Development
 
+#### Data models
+
+* Users
+* Threads
+* Mails
+
+
+
 #### Ruby
 
 You'll have to install Ruby if you are touching any of the assets (coffeescripts or stylesheets).

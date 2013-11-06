@@ -8,8 +8,8 @@
 </script>
 
 
-<script type="text/x-handlebars" id="mail">
-<div class="mail">
+<script type="text/x-handlebars" id="thread">
+<div class="thread">
 
   <div class="sender">John Appleseed</div>
   <div class="timestamp">1:46 am</div>
@@ -22,7 +22,7 @@
   </div>
 </div>
 
-<div class="mail unread">
+<div class="thread unread">
   <div class="sender">John Appleseed</div>
   <div class="timestamp">1:46 am</div>
 
@@ -34,7 +34,7 @@
   </div>
 </div>
 
-<div class="mail unread">
+<div class="thread unread">
 
   <div class="sender">John Appleseed</div>
   <div class="timestamp">1:46 am</div>
@@ -47,7 +47,7 @@
   </div>
 </div>
 
-<div class="mail">
+<div class="thread">
   <div class="sender">John Appleseed</div>
   <div class="timestamp">1:46 am</div>
 
@@ -94,13 +94,55 @@
     <div class="logout">Logout</div>
   </div>
 
-  <div class="mails-wrapper">
-    <div class="mails">
-      {{render "mail"}}
+  <div class="threads-wrapper">
+    <div class="threads">
+      {{render "thread"}}
     </div>
   </div>
 
   <div class="detail">
+
+    <div class="thread-info">
+      <div class="subject">Lorem Ipsum is not nice to read</div>
+      <div class="people-info">John, Jane and 6 people in conversation. 3 others are watching</div>
+    </div>
+
+
+    <div class="mails">
+      <div class="mail">
+        <div class="meta">
+          <div class="sender">John Appleseed</div>
+          <div class="timestamp">1:46am</div>
+        </div>
+        <div class="body">
+          <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </p>
+        </div>
+        <div class="controls">
+          <a href="#">Reply</a>
+          <a href="#">Reply to all</a>
+        </div>
+      </div>
+
+
+      <div class="mail">
+        <div class="meta">
+          <div class="sender">Jane Appleseed</div>
+          <div class="timestamp">1:46am</div>
+        </div>
+        <div class="body">
+          <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </p>
+        </div>
+        <div class="controls">
+          <a href="#">Reply</a>
+          <a href="#">Reply to all</a>
+        </div>
+      </div>
+    </div>
+
     {{outlet}}
   </div>
 </div>
