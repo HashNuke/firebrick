@@ -1,8 +1,9 @@
 [ "chronos": {:git, "git://github.com/nurugger07/chronos.git", "1603a719b4023afa4e1465ee791274a11fe3afbd", []},
   "cowboy": {:git, "git://github.com/extend/cowboy.git", "bbee34fe1638b742796b00b39c0859395a752167", []},
-  "dynamo": {:git, "git://github.com/elixir-lang/dynamo.git", "cc11aa6817399b623b7d5edcc94db179948257a1", []},
+  "dynamo": {:git, "git://github.com/elixir-lang/dynamo.git", "bdbb6063f7bdb500d1e7c8ce452819bf2baecbfb", []},
   "erlang_localtime": {:git, "git://github.com/choptastic/erlang_localtime.git", "ebcafb02326e4b2e2ea8fb9a8ba1abacf6426a57", [{:branch, "master"}]},
   "erlware_commons": {:git, "git://github.com/erlware/erlware_commons.git", "96cdc0e6237bfc834d144750e7fbef09016be084", [{:branch, "master"}]},
+  "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "3be009f28fa6012688138abe34b74d3fb394e4a6", []},
   "gen_smtp": {:git, "git://github.com/Vagabond/gen_smtp.git", "2d75ba1ae5484443c1aae38aec6343f9b6e24870", []},
   "hackney": {:git, "git://github.com/benoitc/hackney.git", "5b0f7eb949ebebd6fabfbc4e08a7b7231850606a", []},
   "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [{:tag, "v1.4.3"}]},
@@ -14,5 +15,5 @@
   "ranch": {:git, "git://github.com/extend/ranch.git", "41705752ffc7e3ecb96eef8374015ead4ca7f699", [{:ref, "0.8.5"}]},
   "rebar_vsn_plugin": {:git, "https://github.com/erlware/rebar_vsn_plugin.git", "0d954d923275305c62a81e9c2bf60a60977a9d29", [{:branch, "master"}]},
   "riak_pb": {:git, "git://github.com/basho/riak_pb", "2adf207d053738559811eb17f62f7ce6b6f5cc95", [{:tag, "2.0.0.7"}]},
-  "riak_pool": {:git, "git://github.com/HashNuke/riak_pool.git", "3580204af0fa7383e104ba54cd9c9892169171ce", [{:tag, "0.2.2"}]},
+  "riak_pool": {:git, "git://github.com/HashNuke/riak_pool.git", "f746ab0331c2ef67db24c78f53d46469055abda7", []},
   "riakc": {:git, "git://github.com/basho/riak-erlang-client.git", "3b223a7ff0f17acc72e7d365966a93368cde771b", []} ]
