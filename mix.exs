@@ -23,7 +23,7 @@ defmodule Rinket.Mixfile do
      { :dynamo, "0.1.0-dev", github: "elixir-lang/dynamo" },
      { :jsx,    github: "talentdeficit/jsx", tag: "v1.4.3" },
      { :gen_smtp, github: "Vagabond/gen_smtp" },
-     { :riak_pool,  github: "HashNuke/riak_pool", tag: "0.2.2" },
+     { :riak_pool,  github: "HashNuke/riak_pool" },
      { :qdate, github: "choptastic/qdate" }
     ]
   end
