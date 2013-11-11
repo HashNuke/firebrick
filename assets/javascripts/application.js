@@ -1,6 +1,7 @@
 //= require "libs/angular"
 //= require "libs/angular-route"
 //= require "libs/angular-resource"
+//= require "libs/angular-touch"
 //= require "libs/angular-animate"
 //= require "libs/angular-sanitize"
 //= require "init"

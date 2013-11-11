@@ -1,13 +1,19 @@
-window.Rinket = Ember.Application.create()
+window.app = angular.module('Rinket', ['ngRoute', 'ngResource', 'ngSanitize'])
 
-Rinket.ApplicationView = Ember.View.extend
-  classNames: ['container']
+routes = ($routeProvider)->
+  $routeProvider.when('/',
+      templateUrl: '/static/partials/hello.html',
+      controller: "MailsCtrl"
+    ).when('/mails/:category',
+      templateUrl: '/static/partials/mails.html',
+      controller: 'MailsCtrl'
+    ).when('/users/:user_id',
+      templateUrl: '/static/partials/users.html'
+      controller: 'UsersCtrl'
+    ).otherwise(redirectTo: '/not_found')
 
-Rinket.Router.map ->
-  @resource('users')
-  @resource('account')
 
+app.config ['$routeProvider', routes]
 
-Rinket.MenuControl = Ember.View.extend
-  click: (evt)->
-    $(".menu-pane").toggleClass('show-sidebar')
+app.controller 'MailsCtrl', ($scope)->
+  console.log "mail controller"

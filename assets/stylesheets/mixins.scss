@@ -110,12 +110,13 @@
 }
 
 
-@mixin content-pane() {
-  .content-pane {
+@mixin content() {
+  .content {
     width: 100%;
     height: 100%;
     float: left;
-    
+    padding-top: 2.6em;
+
     @include list();
   }
 }

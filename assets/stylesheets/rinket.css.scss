@@ -33,8 +33,8 @@ a {
   float: left;
 
   @include header();
-  @include menu-pane();
-  @include content-pane();
+  // @include menu-pane();
+  @include content();
 }
 
 
