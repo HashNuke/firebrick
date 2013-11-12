@@ -1,6 +1,7 @@
 window.app = angular.module('Rinket', ['ngRoute', 'ngResource', 'ngSanitize'])
 
-routes = ($routeProvider)->
+config = ($routeProvider, $locationProvider)->
+  $locationProvider.html5Mode(true)
   $routeProvider.when('/',
       templateUrl: '/static/partials/hello.html',
       controller: "MailsCtrl"
@@ -16,7 +17,7 @@ routes = ($routeProvider)->
     ).otherwise(redirectTo: '/not_found')
 
 
-app.config ['$routeProvider', routes]
+app.config ['$routeProvider', '$locationProvider', config]
 
 app.factory 'SharedData', ()->
   {notification: 0, title: "Inbox"}
@@ -33,24 +34,33 @@ app.factory 'User', ($resource)->
 
 
 app.controller 'RootCtrl', ($scope, SharedData)->
-  $scope.shared_data = SharedData
+  $scope.sharedData = SharedData
 
 app.controller 'MailsCtrl', ($scope, SharedData)->
-  $scope.shared_data = SharedData
-  $scope.shared_data.title = "Main"
-  console.log $scope.shared_data
+  $scope.sharedData = SharedData
+  $scope.sharedData.title = "Main"
+  console.log $scope.sharedData
   console.log "mails controller"
 
 app.controller 'UsersListCtrl', ($scope, SharedData, User)->
-  $scope.shared_data = SharedData
-  $scope.shared_data.title = "Users"
+  $scope.sharedData = SharedData
+  $scope.sharedData.title = "Users"
+
+  $scope.removeUser = (index)->
+    successCallback = ->
+      $scope.users.splice(index, 1)
+
+    errorCallback = ->
+      #TODO handle errors
+
+    $scope.users[index].$delete(successCallback, errorCallback)
+
 
   successCallback = (data)->
     $scope.users = data
 
   errorCallback   = ()-> console.log("error")
   User.query(successCallback, errorCallback)
-  console.log $scope.shared_data
   console.log "users controller"
 
 app.controller 'UserCtrl', ($scope, SharedData)->

@@ -42,7 +42,8 @@ defmodule UsersApiRouter do
 
 
   delete "/:user_id" do
-    #TODO delete user
+    Rinket.Db.delete("rinket_config", conn.params["user_id"])
+    json_response(conn, [ok: conn.params["user_id"]])
   end
 
 

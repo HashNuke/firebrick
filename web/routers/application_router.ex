@@ -17,8 +17,18 @@ defmodule ApplicationRouter do
 
   forward "/sessions", to: SessionsRouter
 
+
   get "/" do
     conn = conn.assign(:title, "Rinket Mail")
     render conn, "index.html"
   end
+
+
+  Enum.map ["/users/*", "/mails/*"], fn(route)->
+    get route do
+      conn = conn.assign(:title, "Rinket Mail")
+      render conn, "index.html"
+    end
+  end
+
 end
