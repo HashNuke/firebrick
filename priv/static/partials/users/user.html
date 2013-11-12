@@ -1,1 +1,11 @@
-particular user
+<div class="page">
+  <form ng-submit="saveUser()">
+    <input type="text" ng-model="user.first_name"/>
+    <input type="text" ng-model="user.last_name"/>
+    <input type="text" ng-model="user.username"/>
+  </form>
+
+  <input type="button" ng-click="saveUser()" value="Save">
+  or
+  <a href="/users">cancel</a>
+</div>

@@ -2,8 +2,8 @@ defmodule UsersApiRouter do
   use Dynamo.Router
 
 
-  def json_response(conn, data) do
-    conn.resp 200, :jsx.encode(data)
+  def json_response(conn, data, status // 200) do
+    conn.resp status, :jsx.encode(data)
   end
 
 
@@ -32,12 +32,27 @@ defmodule UsersApiRouter do
 
 
   get "/:user_id" do
-    #TODO get a particular user id
+    user_id = conn.params["user_id"]
+    attributes = Rinket.Db.get("rinket_config", user_id)
+    json_response conn, ListDict.merge(attributes, [id: user_id])
   end
 
 
-  put "/:user_id" do
-    #TODO update user
+  post "/:user_id" do
+    user_params = whitelist_params(["first_name", "last_name", "username", "password", "role"], conn.params)
+    errors = validate_user(user_params)
+
+    if ListDict.size(errors) == 0 do
+      user_params = ListDict.merge(user_params, [
+        "config_type": "user",
+        "password": hash_password(Dict.get(user_params, "password"))
+      ])
+
+      key = Rinket.Db.patch("rinket_config", conn.params["user_id"], user_params)
+      json_response conn, [ok: key]
+    else
+      json_response conn, [errors: errors]
+    end
   end
 
 
