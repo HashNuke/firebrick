@@ -1,16 +1,16 @@
 <div class="container" ng-app="Rinket">
-  <div class="header">
+  <div class="header" ng-controller="RootCtrl">
     <div class="menu-control">
       <img src="/static/assets/navicon.png"/>
     </div>
 
     <div class="list-label">
-      Inbox
-      <span class="red-notification">5</span>
+      {{shared_data.title}}
+      <span class="red-notification" ng-show="shared_data.notification">{{shared_data.notification}}</span>
     </div>
     <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
     <div class="logout">Logout</div>
   </div>
 
-  <div class="content" ng-view>sdfsd</div>
+  <div class="content" ng-view></div>
 </div>
