@@ -13,7 +13,7 @@ defmodule Rinket.Mixfile do
 
   # Configuration for the OTP application
   def application do
-    [ applications: [:cowboy, :dynamo],
+    [ applications: [:cowboy, :dynamo, :bcrypt],
       mod: { Rinket, [] } ]
   end
 
@@ -22,6 +22,7 @@ defmodule Rinket.Mixfile do
      { :cowboy, github: "extend/cowboy" },
      { :dynamo, "0.1.0-dev", github: "elixir-lang/dynamo" },
      { :jsx,    github: "talentdeficit/jsx", tag: "v1.4.3" },
+     { :bcrypt, github: "Feuerlabs/erlang-bcrypt" },
      { :gen_smtp, github: "Vagabond/gen_smtp" },
      { :riak_pool,  github: "HashNuke/riak_pool" },
      { :qdate, github: "choptastic/qdate" }

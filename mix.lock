@@ -1,4 +1,5 @@
-[ "chronos": {:git, "git://github.com/nurugger07/chronos.git", "1603a719b4023afa4e1465ee791274a11fe3afbd", []},
+[ "bcrypt": {:git, "git://github.com/Feuerlabs/erlang-bcrypt.git", "2f60cf4ebe3de218d52bfa176c17dba7204fdb68", []},
+  "chronos": {:git, "git://github.com/nurugger07/chronos.git", "1603a719b4023afa4e1465ee791274a11fe3afbd", []},
   "cowboy": {:git, "git://github.com/extend/cowboy.git", "bbee34fe1638b742796b00b39c0859395a752167", []},
   "dynamo": {:git, "git://github.com/elixir-lang/dynamo.git", "bdbb6063f7bdb500d1e7c8ce452819bf2baecbfb", []},
   "erlang_localtime": {:git, "git://github.com/choptastic/erlang_localtime.git", "ebcafb02326e4b2e2ea8fb9a8ba1abacf6426a57", [{:branch, "master"}]},
