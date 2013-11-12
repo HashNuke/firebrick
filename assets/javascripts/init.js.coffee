@@ -41,9 +41,15 @@ app.controller 'MailsCtrl', ($scope, SharedData)->
   console.log $scope.shared_data
   console.log "mails controller"
 
-app.controller 'UsersListCtrl', ($scope, SharedData)->
+app.controller 'UsersListCtrl', ($scope, SharedData, User)->
   $scope.shared_data = SharedData
   $scope.shared_data.title = "Users"
+
+  successCallback = (data)->
+    $scope.users = data
+
+  errorCallback   = ()-> console.log("error")
+  User.query(successCallback, errorCallback)
   console.log $scope.shared_data
   console.log "users controller"
 

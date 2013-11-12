@@ -207,3 +207,34 @@ a {
     width: 100%;
   }
 }
+
+.page {
+  background: #FFF;
+  margin: 1em;
+  padding: 1em;
+  float: left;
+}
+
+.users {
+  .user {
+    width: 100%;
+    float: left;
+    border-left: 0.15em solid #E08587;
+    padding: 0.5em;
+    background: #fafafa;
+    margin-top: 1em;
+    margin-bottom: 1em;
+
+    .name {
+      font-weight: bold;
+    }
+
+    .controls {
+      clear: left;
+      margin-top: 0.5em;
+      a {
+        margin-right: 1em;
+      }
+    }
+  }
+}

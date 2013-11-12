@@ -1,1 +1,10 @@
-list users
+<div class="users page">
+  <div class="user" ng-repeat="user in users">
+    <span class="name">{{user.first_name}} {{user.last_name}}</span>
+    (<span class="email">{{user.username}}@thingswith.me</span>)
+    <div class="controls">
+      <a href="/users/{{user.id}}/edit">Edit</a>
+      <a href="/users/{{user.id}}/delete">Delete</a>
+    </div>
+  </div>
+</div>
