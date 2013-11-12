@@ -20,8 +20,9 @@ defmodule UsersApiRouter do
     if ListDict.size(errors) == 0 do
       user_params = ListDict.merge(user_params, [
         "config_type": "user",
-        "password": hash_password(Dict.get(user_params, "password"))
+        "encrypted_password": hash_password(Dict.get(user_params, "password"))
       ])
+        |> ListDict.delete("password")
 
       key = Rinket.Db.create("rinket_config", user_params)
       json_response [ok: key], conn
@@ -41,17 +42,23 @@ defmodule UsersApiRouter do
 
 
   post "/:user_id" do
-    user_params = whitelist_params(conn.params, ["first_name", "last_name", "username", "password", "role"])
+    user_id = conn.params[:user_id]
+    user_params = conn.req_body
+      |> :jsx.decode
+      |> whitelist_params(["first_name", "last_name", "username", "password", "role"])
+
+    user_params = Rinket.Db.get("rinket_config", user_id)
+      |> ListDict.merge(user_params)
+
     errors = validate_user(user_params)
 
     if ListDict.size(errors) == 0 do
       user_params = ListDict.merge(user_params, [
-        "config_type": "user",
-        "password": hash_password(Dict.get(user_params, "password"))
+        "config_type": "user"
       ])
 
-      key = Rinket.Db.patch("rinket_config", conn.params["user_id"], user_params)
-      json_response [ok: key], conn
+      Rinket.Db.patch("rinket_config", conn.params["user_id"], user_params)
+      json_response [ok: user_id], conn
     else
       json_response [errors: errors], conn
     end
@@ -81,13 +88,13 @@ defmodule UsersApiRouter do
   end
 
 
-  defp validate_user(data) do
+  def validate_user(data) do
     errors = []
     if size(Dict.get(data, "username")) == 0 do
       errors = ListDict.merge errors, [username: "must be atleast 1 character"]
     end
 
-    if size(Dict.get(data, "password")) < 5 do
+    if Dict.get(data, "password") && size(Dict.get(data, "password")) < 5 do
       errors = ListDict.merge errors, [password: "must be atleast 5 characters long"]
     end
 

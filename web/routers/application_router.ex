@@ -5,7 +5,7 @@ defmodule ApplicationRouter do
     # Pick which parts of the request you want to fetch
     # You can comment the line below if you don't need
     # any of them or move them to a forwarded router
-    conn.fetch([:cookies, :params]).assign :layout, "application"
+    conn.fetch([:cookies, :params, :body]).assign :layout, "application"
   end
 
   # It is common to break your Dynamo into many

@@ -23,10 +23,9 @@ defmodule Rinket.Db do
 
   def patch(bucket, key, patch_data) do
     new_data = get(bucket, key) |> Dict.merge(patch_data)
-    {:ok, obj} = :riakc_obj.new(bucket, key, :jsx.encode(new_data))
+    :ok = :riakc_obj.new(bucket, key, :jsx.encode(new_data), "application/json")
       |> RiakPool.put
-
-    :riakc_obj.key(obj)
+    key
   end
 
 

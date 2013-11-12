@@ -73,7 +73,7 @@ app.controller 'UsersListCtrl', ($scope, SharedData, User)->
   User.query(successCallback, errorCallback)
 
 
-app.controller 'UserCtrl', ($scope, SharedData, User, user)->
+app.controller 'UserCtrl', ($scope, $location, SharedData, User, user)->
   $scope.sharedData = SharedData
   $scope.sharedData.title = "Users"
   $scope.user = user
