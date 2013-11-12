@@ -59,3 +59,9 @@ Check `docs/asset-compilation-using-watchman.md` for notes on auto-compilation o
 
       sudo iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25 -j REDIRECT --to-ports 2525
 
+### Angular routes workout
+
+* AppCtrl (for everything on the navigation bar))
+* /categories/:category_name - categories controller
+
+/ will render roo

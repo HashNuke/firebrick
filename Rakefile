@@ -13,14 +13,13 @@ end
 
 assets = %w( application.js application.css )
 asset_output = "priv/static/assets"
-extra_dirs = ["images"]
+extra_dirs = ["images", "partials"]
 
 extra_dirs.each do |dir|
   Dir.glob("assets/#{dir}/*.*") do |f|
     assets.push File.basename(f)
   end
 end
-
 
 
 namespace :assets do
@@ -37,7 +36,7 @@ namespace :assets do
     end
   end
 
-  
+
   desc "Watch assets for changes and compile"
   task :watch do
     watch_list = ["assets/javascripts/", "assets/stylesheets/"]
