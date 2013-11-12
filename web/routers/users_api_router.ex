@@ -2,19 +2,19 @@ defmodule UsersApiRouter do
   use Dynamo.Router
 
 
-  def json_response(conn, data, status // 200) do
+  def json_response(data, conn, status // 200) do
     conn.resp status, :jsx.encode(data)
   end
 
 
   get "/" do
-    users = Rinket.Db.search("rinket_config", "config_type:user", [rows: 50])
-    json_response(conn, users)
+    Rinket.Db.search("rinket_config", "config_type:user", [rows: 50])
+    |> json_response(conn)
   end
 
 
   post "/" do
-    user_params = whitelist_params(["first_name", "last_name", "username", "password", "role"], conn.params)
+    user_params = whitelist_params(conn.params, ["first_name", "last_name", "username", "password", "role"])
     errors = validate_user(user_params)
 
     if ListDict.size(errors) == 0 do
@@ -24,9 +24,9 @@ defmodule UsersApiRouter do
       ])
 
       key = Rinket.Db.create("rinket_config", user_params)
-      json_response conn, [ok: key]
+      json_response [ok: key], conn
     else
-      json_response conn, [errors: errors]
+      json_response [errors: errors], conn
     end
   end
 
@@ -34,12 +34,14 @@ defmodule UsersApiRouter do
   get "/:user_id" do
     user_id = conn.params["user_id"]
     attributes = Rinket.Db.get("rinket_config", user_id)
-    json_response conn, ListDict.merge(attributes, [id: user_id])
+      |> whitelist_params(["first_name", "last_name", "username", "role"])
+      |> ListDict.merge([id: user_id])
+      |> json_response conn
   end
 
 
   post "/:user_id" do
-    user_params = whitelist_params(["first_name", "last_name", "username", "password", "role"], conn.params)
+    user_params = whitelist_params(conn.params, ["first_name", "last_name", "username", "password", "role"])
     errors = validate_user(user_params)
 
     if ListDict.size(errors) == 0 do
@@ -49,33 +51,33 @@ defmodule UsersApiRouter do
       ])
 
       key = Rinket.Db.patch("rinket_config", conn.params["user_id"], user_params)
-      json_response conn, [ok: key]
+      json_response [ok: key], conn
     else
-      json_response conn, [errors: errors]
+      json_response [errors: errors], conn
     end
   end
 
 
   delete "/:user_id" do
     Rinket.Db.delete("rinket_config", conn.params["user_id"])
-    json_response(conn, [ok: conn.params["user_id"]])
+    json_response([ok: conn.params["user_id"]], conn)
   end
 
 
-  defp whitelist_params(allowed, params) do
-    whitelist_params(allowed, params, [])
+  defp whitelist_params(params, allowed) do
+    whitelist_params(params, allowed, [])
   end
 
-  defp whitelist_params([], params, collected) do
+  defp whitelist_params(params, [], collected) do
     collected
   end
 
-  defp whitelist_params(allowed, params, collected) do
+  defp whitelist_params(params, allowed, collected) do
     [field | rest] = allowed
     if Dict.has_key?(params, field) do
       collected = ListDict.merge collected, [{ field, Dict.get(params, field) }]
     end
-    whitelist_params(rest, params, collected)
+    whitelist_params(params, rest, collected)
   end
 
 
