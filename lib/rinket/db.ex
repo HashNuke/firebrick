@@ -29,9 +29,9 @@ defmodule Rinket.Db do
   end
 
 
-  def search(bucket, query) do
+  def search(bucket, query, options // []) do
     {:ok, {:search_results, results, _, _count}} = RiakPool.run(fn(worker)->
-      :riakc_pb_socket.search(worker, bucket, query)
+      :riakc_pb_socket.search(worker, bucket, query, options)
     end)
 
     # Cleans up, by removing the bucket names from the results

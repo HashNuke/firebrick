@@ -8,7 +8,7 @@ defmodule UsersApiRouter do
 
 
   get "/" do
-    users = Rinket.Db.search("rinket_config", "config_type:user")
+    users = Rinket.Db.search("rinket_config", "config_type:user", [rows: 50])
     json_response(conn, users)
   end
 
