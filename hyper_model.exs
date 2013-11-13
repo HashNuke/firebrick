@@ -1,8 +1,12 @@
-defmodule HyperModel do
+defmodule Validations do
   defmacro __using__([]) do
-
     quote do
-      Record.deffunctions [attributes: [], errors: [], validations: []], __ENV__
+
+      unless is_list @record_fields[:errors] do
+        raise "In order to use Realm, you need to define an :errors field with a list as default"
+      end
+
+      import Validations
 
       def valid?(record) do
         true
@@ -10,81 +14,103 @@ defmodule HyperModel do
 
       defoverridable [valid?: 1]
 
-
-      def add_error(record, field, error) do
-        record.errors( ListDict.merge record.errors, [{field, error}] )
-      end
-
-      def clear_errors(record) do
-        record.errors([])
-      end
-
-
-      def validates_inclusion(record, field, options, condition) do
-        if apply(condition, [record]) do
-          validates_inclusion(record, field, options)
-        end
-      end
-
-
-      def validates_inclusion(record, field, options) do
-        error_message = "does not contain #{Enum.join options[:in], ", "}"
-        unless :lists.member(record.attributes[field], options[:in]) do
-          add_error(record, field, error_message)
-        end
-      end
-
-
-      def validates_length(record, field, options, condition) do
-        if apply(condition, [record]) do
-          validates_length(record, field, options)
-        end
-      end
-
-
-      def validates_length(record, field, options) do
-        if options[:message] do
-          min_message = max_message = options[:message]
-        else
-          min_message = "must be more than #{options[:min]}"
-          max_message = "must be less than #{options[:max]}"
-        end
-
-        cond do
-          is_binary(record) ->
-            result_record = record
-            if options[:min] && size(result_record.attributes[field]) < options[:min] do
-              result_record = add_error(result_record, field, min_message)
-            end
-            if options[:max] && size(result_record.attributes[field]) > options[:max] do
-              result_record = add_error(result_record, field, max_message)
-            end
-
-          is_list(record) ->
-            result_record = record
-            if options[:min] && length(result_record.attributes[field]) < options[:min] do
-              result_record = add_error(result_record, field, min_message)
-            end
-            if options[:max] && length(result_record.attributes[field]) > options[:max] do
-              result_record = add_error(result_record, field, max_message)
-            end
-
-          true ->
-            add_error(record, field, "unsupported data")
-        end
-      end
-
     end
   end
+
+
+  def validates_inclusion(record, field, options, condition) do
+    if apply(condition, [record]) do
+      validates_inclusion(record, field, options)
+    end
+  end
+
+
+  def validates_inclusion(record, field, options) do
+    error_message = "does not contain #{Enum.join options[:in], ", "}"
+    unless :lists.member(apply(record, :"#{field}", []), options[:in]) do
+      add_error(record, field, error_message)
+    end
+  end
+
+
+  def validates_length(record, field, options, condition) do
+    if apply(condition, [record]) do
+      validates_length(record, field, options)
+    end
+  end
+
+
+  def validates_length(record, field, options) do
+    if options[:message] do
+      min_message = max_message = options[:message]
+    else
+      min_message = "must be more than #{options[:min]}"
+      max_message = "must be less than #{options[:max]}"
+    end
+
+    field_value = apply(record, :"#{field}", [])
+
+    cond do
+      is_binary(field_value) ->
+        field_size = size field_value
+
+        if options[:min] && field_size < options[:min] do
+          record = add_error(record, field, min_message)
+        end
+        if options[:max] && field_size > options[:max] do
+          record = add_error(record, field, max_message)
+        end
+
+      is_list(field_value) ->
+        field_size = length field_value
+
+        if options[:min] && field_size < options[:min] do
+          record = add_error(record, field, min_message)
+        end
+        if options[:max] && field_size > options[:max] do
+          record = add_error(record, field, max_message)
+        end
+
+      field_value == :nil ->
+        record = add_error(record, field, min_message)
+
+      true ->
+        add_error(record, field, "unsupported data")
+    end
+  end
+
+
+  def add_error(record, field, error) do
+    record.errors( [{field, error} | record.errors] )
+  end
+
+
+  def clear_errors(record) do
+    record.errors([])
+  end
+
 end
 
 
-defmodule User do
+defmodule HyperModel do
+
+  defmacro __using__([]) do
+    quote do
+      use Validations
+    end
+  end
+
+end
+
+
+defrecord User, errors: [], username: nil, password: nil, password_confirmation: nil, first_name: nil, last_name: nil, role: "member" do
   use HyperModel
 
   def valid?(record) do
-    record
-    |> validates_length(:username, [min: 1])
-    |> validates_inclusion(:role, [in: ["admin", "member"]])
+    IO.inspect record
+    record = record
+      |> validates_length(:username, [min: 1])
+      |> validates_inclusion(:role, [in: ["admin", "member"]])
+    length(record.errors) == 0
   end
 end
