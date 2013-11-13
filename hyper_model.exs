@@ -1,12 +1,11 @@
 defmodule HyperModel do
   defmacro __using__([]) do
-    IO.inspect "using HyperModel"
 
     quote do
       Record.deffunctions [attributes: [], errors: [], validations: []], __ENV__
 
       def valid?(record) do
-        #TODO run thru validations list
+        true
       end
 
       defoverridable [valid?: 1]
