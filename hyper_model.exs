@@ -21,6 +21,8 @@ defmodule Validations do
   def validates_inclusion(record, field, options, condition) do
     if apply(condition, [record]) do
       validates_inclusion(record, field, options)
+    else
+      record
     end
   end
 
@@ -28,14 +30,17 @@ defmodule Validations do
   def validates_inclusion(record, field, options) do
     error_message = "does not contain #{Enum.join options[:in], ", "}"
     unless :lists.member(apply(record, :"#{field}", []), options[:in]) do
-      add_error(record, field, error_message)
+      record = add_error(record, field, error_message)
     end
+    record
   end
 
 
   def validates_length(record, field, options, condition) do
     if apply(condition, [record]) do
       validates_length(record, field, options)
+    else
+      record
     end
   end
 
@@ -60,6 +65,7 @@ defmodule Validations do
         if options[:max] && field_size > options[:max] do
           record = add_error(record, field, max_message)
         end
+        record
 
       is_list(field_value) ->
         field_size = length field_value
@@ -70,9 +76,10 @@ defmodule Validations do
         if options[:max] && field_size > options[:max] do
           record = add_error(record, field, max_message)
         end
+        record
 
       field_value == :nil ->
-        record = add_error(record, field, min_message)
+        add_error(record, field, min_message)
 
       true ->
         add_error(record, field, "unsupported data")
@@ -107,7 +114,6 @@ defrecord User, errors: [], username: nil, password: nil, password_confirmation:
   use HyperModel
 
   def valid?(record) do
-    IO.inspect record
     record = record
       |> validates_length(:username, [min: 1])
       |> validates_inclusion(:role, [in: ["admin", "member"]])
