@@ -1,6 +1,6 @@
 defmodule HyperModel do
   defmacro __using__([]) do
-    IO.inspect "using whatever"
+    IO.inspect "using HyperModel"
 
     quote do
       Record.deffunctions [attributes: [], errors: [], validations: []], __ENV__
@@ -13,8 +13,7 @@ defmodule HyperModel do
 
 
       def add_error(record, field, error) do
-        field_error = ListDict.get(record.errors, field, "")
-        record.errors( ListDict.merge record.errors, [{field, field_error}] )
+        record.errors( ListDict.merge record.errors, [{field, error}] )
       end
 
       def clear_errors(record) do
@@ -54,23 +53,25 @@ defmodule HyperModel do
 
         cond do
           is_binary(record) ->
-            if options[:max] && size(record.attributes[field]) > options[:max] do
-              add_error(record, field, max_message)
+            result_record = record
+            if options[:min] && size(result_record.attributes[field]) < options[:min] do
+              result_record = add_error(result_record, field, min_message)
             end
-            if options[:min] && size(record.attributes[field]) < options[:min] do
-              add_error(record, field, min_message)
+            if options[:max] && size(result_record.attributes[field]) > options[:max] do
+              result_record = add_error(result_record, field, max_message)
             end
 
           is_list(record) ->
-            if options[:max] && length(record.attributes[field]) > options[:max] do
-              add_error(record, field, max_message)
+            result_record = record
+            if options[:min] && length(result_record.attributes[field]) < options[:min] do
+              result_record = add_error(result_record, field, min_message)
             end
-            if options[:min] && length(record.attributes[field]) < options[:min] do
-              add_error(record, field, min_message)
+            if options[:max] && length(result_record.attributes[field]) > options[:max] do
+              result_record = add_error(result_record, field, max_message)
             end
 
           true ->
-            {:error, :unsupported_data_type}
+            add_error(record, field, "unsupported data")
         end
       end
 
@@ -81,4 +82,10 @@ end
 
 defmodule User do
   use HyperModel
+
+  def valid?(record) do
+    record
+    |> validates_length(:username, [min: 1])
+    |> validates_inclusion(:role, [in: ["admin", "member"]])
+  end
 end
