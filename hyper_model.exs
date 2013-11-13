@@ -1,19 +1,23 @@
-defmodule Validations do
+defmodule Realm.Validations do
   defmacro __using__([]) do
     quote do
 
-      unless is_list @record_fields[:errors] do
-        raise "In order to use Realm, you need to define an :errors field with a list as default"
+      unless is_list @record_fields[:__errors__] do
+        raise "In order to use Realm, you need to define an :__errors__ field with an empty list as default value"
       end
 
-      import Validations
+      import Realm.Validations
 
       def valid?(record) do
-        true
+        validate(record).__errors__
+          |> length == 0
       end
 
-      defoverridable [valid?: 1]
+      def validate(record) do
+        record
+      end
 
+      defoverridable [validate: 1]
     end
   end
 
@@ -49,8 +53,8 @@ defmodule Validations do
     if options[:message] do
       min_message = max_message = options[:message]
     else
-      min_message = "must be more than #{options[:min]}"
-      max_message = "must be less than #{options[:max]}"
+      min_message = "must be more than #{options[:min]} character long"
+      max_message = "must be less than #{options[:max]} character long"
     end
 
     field_value = apply(record, :"#{field}", [])
@@ -88,35 +92,27 @@ defmodule Validations do
 
 
   def add_error(record, field, error) do
-    record.errors( [{field, error} | record.errors] )
+    record.__errors__( [{field, error} | record.__errors__] )
   end
 
 
   def clear_errors(record) do
-    record.errors([])
+    record.__errors__([])
   end
 
+
+  def errors(record) do
+    record.__errors__
+  end
 end
 
 
-defmodule HyperModel do
+defmodule Realm do
 
   defmacro __using__([]) do
     quote do
-      use Validations
+      use Realm.Validations
     end
   end
 
-end
-
-
-defrecord User, errors: [], username: nil, password: nil, password_confirmation: nil, first_name: nil, last_name: nil, role: "member" do
-  use HyperModel
-
-  def valid?(record) do
-    record = record
-      |> validates_length(:username, [min: 1])
-      |> validates_inclusion(:role, [in: ["admin", "member"]])
-    length(record.errors) == 0
-  end
 end
