@@ -24,6 +24,7 @@ defmodule Rinket.Mixfile do
      { :jsx,    github: "talentdeficit/jsx", tag: "v1.4.3" },
      { :bcrypt, github: "Feuerlabs/erlang-bcrypt" },
      { :gen_smtp, github: "Vagabond/gen_smtp" },
+     { :realm, github: "HashNuke/realm" },
      { :riak_pool,  github: "HashNuke/riak_pool" },
      { :qdate, github: "choptastic/qdate" }
     ]
