@@ -4,3 +4,4 @@
 /tmp/test
 /priv/static/assets
 erl_crash.dump
+_build
