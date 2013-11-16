@@ -224,13 +224,32 @@ a {
     cursor: pointer;
   }
 
+  .user-form {
+    padding: 1em;
+  }
+
   form {
+    float: left;
+    width: 100%;
+    background: #FCFCFC;
+    padding: 1em;
+    border: 1px solid #DDD;
+
     .field {
-      margin-top: 1em;
-      margin-bottom: 1em;
+      float: left;
+      width: 100%;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      clear: both;
     }
     
     .actions {
+      float: left;
+      border-top: 2px solid #EEE;
+      margin-top: 1em;
+      padding-top: 1em;
+      width: 100%;
+
       .save {
         background: #5B607E;
         padding: 0.2em 0.5em;
@@ -238,11 +257,6 @@ a {
         font-size: 1.1em;
       }
     }
-  }
-
-  .user-form {
-    padding: 1em;
-    background: white;
   }
 }
 
