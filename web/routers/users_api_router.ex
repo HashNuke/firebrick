@@ -2,33 +2,12 @@ defmodule UsersApiRouter do
   use Dynamo.Router
   import Rinket.RouterUtils
 
-  def json_response(data, conn, status // 200) do
-    conn.resp status, JSEX.encode(data)
-  end
-
-
-  defp whitelist_params(params, allowed) do
-    whitelist_params(params, allowed, [])
-  end
-
-  defp whitelist_params(params, [], collected) do
-    collected
-  end
-
-  defp whitelist_params(params, allowed, collected) do
-    [field | rest] = allowed
-    if Dict.has_key?(params, field) do
-      collected = ListDict.merge collected, [{ field, Dict.get(params, field) }]
-    end
-    whitelist_params(params, rest, collected)
-  end
-
 
   get "/" do
-    users = lc user inlist User.search("config_type:user", [rows: 50]) do
+    lc user inlist User.search("config_type:user", [rows: 50]) do
       user.public_attributes
     end
-    json_response(users, conn)
+    |> json_response(conn)
   end
 
 
