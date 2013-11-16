@@ -9,7 +9,7 @@ defmodule UsersApiRouter do
 
   get "/" do
     lc user inlist User.find_all([rows: 50]) do
-      user.public_attrs
+      user.public_attributes
     end
     |> json_response(conn)
   end
@@ -17,7 +17,7 @@ defmodule UsersApiRouter do
 
   post "/" do
     user_params = whitelist_params(conn.params, ["first_name", "last_name", "username", "password", "role"])
-    user = User.assign_attrs(User[], user_params)
+    user = User.assign_attributes(User[], user_params)
     case user.save do
       {:ok, key} ->
         json_response [ok: key], conn
@@ -29,7 +29,7 @@ defmodule UsersApiRouter do
 
   get "/:user_id" do
     user_id = conn.params["user_id"]
-    User.find(user_id).public_attrs
+    User.find(user_id).public_attributes
     |> json_response conn
   end
 
@@ -41,7 +41,7 @@ defmodule UsersApiRouter do
       |> whitelist_params(["first_name", "last_name", "username", "password", "role"])
 
     user = User.find(user_id)
-    |> User.assign_attrs(user_params)
+    |> User.assign_attributes(user_params)
 
     case user.save() do
       {:ok, key} ->
@@ -53,8 +53,9 @@ defmodule UsersApiRouter do
 
 
   delete "/:user_id" do
-    Rinket.Db.delete("rinket_config", conn.params["user_id"])
-    json_response([ok: conn.params["user_id"]], conn)
+    user_id = conn.params["user_id"]
+    User.destroy user_id
+    json_response([ok: user_id], conn)
   end
 
 

@@ -1,0 +1,65 @@
+defmodule Rinket.RiakRealm do
+  defmacro __using__([]) do
+    quote do
+
+      def assign_attributes(record, params) do
+        Enum.reduce(params, record, fn({param, value}, updated_record)->
+          apply(updated_record, :"#{param}", [value])
+        end)
+      end
+      defoverridable [assign_attributes: 2]
+
+
+      def public_attributes(record) do
+        lc attr inlist __MODULE__.safe_attributes do
+          { "#{attr}", apply(record, :"#{attr}", []) }
+        end
+      end
+
+
+      def find(obj_id) do
+        data = Rinket.Db.get(__MODULE__.bucket, obj_id)
+        __MODULE__.assign_attributes(__MODULE__[id: obj_id], data)
+      end
+
+
+      def saveable_attributes(record) do
+        clean_attrs = Enum.reduce skip_attributes, record.attributes, fn(attr, attrs)->
+          ListDict.delete(attrs, attr)
+        end
+        Enum.filter(clean_attrs, fn({attr, value})-> value != nil end)
+      end
+
+
+      def save(record) do
+        record = record.validate
+        if length(record.errors) == 0 do
+          id = record.id || :undefined
+          bucket = tuple_to_list(record) |> hd |> apply(:bucket, [])
+
+          case record.id do
+            nil ->
+              {:ok, Rinket.Db.put(bucket, :undefined, record.saveable_attributes) }
+            _ ->
+              {:ok, Rinket.Db.patch(bucket, id, record.saveable_attributes) }
+          end
+        else
+          {:error, record}
+        end
+      end
+
+
+      def destroy(arg1) do
+        cond do
+          is_binary(arg1) ->
+            RiakPool.delete(__MODULE__.bucket, arg1)
+          is_record(arg1) && arg1.id != nil ->
+            RiakPool.delete(__MODULE__.bucket, arg1.id)
+          true ->
+            :ok
+        end
+      end
+
+    end
+  end
+end

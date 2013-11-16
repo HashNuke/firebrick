@@ -48,8 +48,4 @@ defmodule Rinket.Db do
   end
 
 
-  def delete(bucket, key) do
-    RiakPool.delete(bucket, key)
-  end
-
 end
