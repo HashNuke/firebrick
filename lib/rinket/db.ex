@@ -3,28 +3,34 @@ defmodule Rinket.Db do
   def create(bucket, data) do
     json = :jsx.encode(data)
     {:ok, obj} = :riakc_obj.new(bucket, :undefined, json, "application/json")
-      |> RiakPool.put
+    |> RiakPool.put
+
     :riakc_obj.key(obj)
   end
-
 
   def get(bucket, key) do
     {:ok, obj} = RiakPool.get(bucket, key)
     :riakc_obj.get_values(obj)
-      |> hd
-      |> :jsx.decode
+    |> hd
+    |> :jsx.decode
   end
 
 
-  def update(bucket, key, data) do
-    :riakc_obj.new(bucket, key, data) |> RiakPool.put
+  def put(bucket, key, data) do
+    result = :riakc_obj.new(bucket, key, data) |> RiakPool.put
+    cond do
+      key == :undefined ->
+        :riakc_obj.key([result][:ok])
+      true ->
+        key
+    end
   end
 
 
   def patch(bucket, key, patch_data) do
     new_data = get(bucket, key) |> Dict.merge(patch_data)
     :ok = :riakc_obj.new(bucket, key, :jsx.encode(new_data), "application/json")
-      |> RiakPool.put
+    |> RiakPool.put
     key
   end
 
