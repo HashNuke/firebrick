@@ -50,7 +50,16 @@ defmodule Rinket.RiakRealm do
 
 
       def search(query, options // []) do
-        results = Rinket.Db.search(bucket, query, options)
+        {:ok, {:search_results, search_results, _, _count}} = RiakPool.run(fn(worker)->
+          :riakc_pb_socket.search(worker, bucket, query, options)
+        end)
+
+        # Cleans up, by removing the bucket names from the results
+        results = :lists.map(fn(item)->
+          {_, obj} = item
+          obj
+        end, search_results)
+
         lc result inlist results do
           assign_attributes(__MODULE__[], result)
         end
