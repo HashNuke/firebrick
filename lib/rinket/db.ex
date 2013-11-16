@@ -1,13 +1,5 @@
 defmodule Rinket.Db do
 
-  def create(bucket, data) do
-    {:ok, json} = JSEX.encode(data)
-    {:ok, obj} = :riakc_obj.new(bucket, :undefined, json, "application/json")
-    |> RiakPool.put
-
-    :riakc_obj.key(obj)
-  end
-
   def get(bucket, key) do
     {:ok, obj} = RiakPool.get(bucket, key)
     {:ok, data} = :riakc_obj.get_values(obj)
