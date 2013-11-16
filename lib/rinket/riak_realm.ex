@@ -2,6 +2,8 @@ defmodule Rinket.RiakRealm do
   defmacro __using__([]) do
     quote do
 
+      import Rinket.RiakRealm
+
       def assign_attributes(record, params) do
         Enum.reduce(params, record, fn({param, value}, updated_record)->
           apply(updated_record, :"#{param}", [value])
@@ -18,7 +20,7 @@ defmodule Rinket.RiakRealm do
 
 
       def find(obj_id) do
-        data = Rinket.Db.get(bucket, obj_id)
+        data = get(bucket, obj_id)
         assign_attributes(__MODULE__[id: obj_id], data)
       end
 
@@ -39,9 +41,9 @@ defmodule Rinket.RiakRealm do
 
           case record.id do
             nil ->
-              {:ok, Rinket.Db.put(bucket, :undefined, record.saveable_attributes) }
+              {:ok, put(bucket, :undefined, record.saveable_attributes) }
             _ ->
-              {:ok, Rinket.Db.patch(bucket, id, record.saveable_attributes) }
+              {:ok, patch(bucket, id, record.saveable_attributes) }
           end
         else
           {:error, record}
@@ -78,5 +80,35 @@ defmodule Rinket.RiakRealm do
       end
 
     end
+  end
+
+
+  def put(bucket, key, data) do
+    {:ok, json} = JSEX.encode data
+    result = :riakc_obj.new(bucket, key, json, "application/json") |> RiakPool.put
+    cond do
+      key == :undefined ->
+        :riakc_obj.key([result][:ok])
+      true ->
+        key
+    end
+  end
+
+
+  def get(bucket, key) do
+    {:ok, obj} = RiakPool.get(bucket, key)
+    {:ok, data} = :riakc_obj.get_values(obj)
+    |> hd
+    |> JSEX.decode
+    data
+  end
+
+
+  def patch(bucket, key, patch_data) do
+    new_data = get(bucket, key) |> Dict.merge(patch_data)
+    {:ok, json} = JSEX.encode(new_data)
+    :ok = :riakc_obj.new(bucket, key, json, "application/json")
+    |> RiakPool.put
+    key
   end
 end
