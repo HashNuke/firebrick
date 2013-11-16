@@ -8,6 +8,7 @@
       {{sharedData.title}}
       <span class="red-notification" ng-show="sharedData.notification">{{sharedData.notification}}</span>
     </div>
+
     <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
     <div class="logout">Logout</div>
   </div>

@@ -12,8 +12,14 @@ defmodule UsersApiRouter do
 
 
   post "/" do
-    user_params = whitelist_params(conn.params, ["first_name", "last_name", "username", "password", "role"])
+    user_id = conn.params[:user_id]
+    {:ok, params} = conn.req_body
+    |> JSEX.decode
+
+    user_params = whitelist_params(params, ["first_name", "last_name", "username", "password", "role"])
+
     user = User.assign_attributes(User[], user_params)
+    IO.inspect user
     case user.save do
       {:ok, key} ->
         json_response [ok: key], conn

@@ -1,5 +1,7 @@
 <div class="page">
   <div class="users">
+    <a class="add" href="/users/new">+ Add</a>
+    
     <div class="user" ng-repeat="user in users" id="user-{{user.id}}">
       <span class="name">{{user.first_name}} {{user.last_name}}</span>
       (<span class="email">{{user.username}}@thingswith.me</span>)

@@ -14,7 +14,7 @@ app.factory 'User', ($resource)->
 
 
 app.resolvers.user = (User, $q, $route)->
-  return {role: "user"} if !$route.current.params.user_id
+  return {role: "member"} if !$route.current.params.user_id
 
   deferred = $q.defer()
   successCallback = (user)-> deferred.resolve user
@@ -37,6 +37,11 @@ config = ($routeProvider, $locationProvider)->
     ).when('/users',
       templateUrl: '/static/partials/users/list.html'
       controller: 'UsersListCtrl'
+    ).when('/users/new',
+      templateUrl: '/static/partials/users/user.html'
+      controller: 'UserCtrl'
+      resolve:
+        user: app.resolvers.user
     ).when('/users/:user_id/:edit',
       templateUrl: '/static/partials/users/user.html'
       controller: 'UserCtrl'
@@ -73,22 +78,30 @@ app.controller 'UsersListCtrl', ($scope, SharedData, User)->
   User.query(successCallback, errorCallback)
 
 
-app.controller 'UserCtrl', ($scope, $location, SharedData, User, user)->
+app.controller 'UserCtrl', ($scope, $route, $location, SharedData, User, user)->
   $scope.sharedData = SharedData
-  $scope.sharedData.title = "Users"
+
+  if !$route.current.params.user_id
+    $scope.sharedData.title = "New user"
+  else
+    $scope.sharedData.title = "Edit user"
+
+  $scope.validRoles = ['admin', 'member']
+
   $scope.user = user
   $scope.saveUser = ->
     console.log "save user"
     successCallback = (data) ->
-      $location.path("/users")
+      # $location.path("/users")
 
     errorCallback = (response) =>
       console.log "errors"
       #TODO hamdle errors
 
     if !$scope.user.id
-      User.save($scope.user, successCallback, errorCallback)
+      console.log User.save($scope.user, successCallback, errorCallback)
     else
+      console.log "I in else"
       user = $scope.user
       user.$update(successCallback, errorCallback)
 
