@@ -13,8 +13,8 @@ defrecord User,
   use Rinket.RiakRealm
 
 
+  # Tells the world which bucket this is stored in
   def bucket, do: "rinket_config"
-
 
   # These will be skipped when saving
   def skip_attributes, do: ["id", "password"]
@@ -62,12 +62,4 @@ defrecord User,
     |> apply(:encrypt_password, [])
   end
 
-
-  def find_all(options // []) do
-    options = [rows: options[:rows] || 50]
-    results = Rinket.Db.search(__MODULE__.bucket, "config_type:user", options)
-    lc result inlist results do
-      User.assign_attributes(User[], result)
-    end
-  end
 end

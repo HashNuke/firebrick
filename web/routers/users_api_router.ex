@@ -1,17 +1,34 @@
 defmodule UsersApiRouter do
   use Dynamo.Router
-
+  import Rinket.RouterUtils
 
   def json_response(data, conn, status // 200) do
-    conn.resp status, :jsx.encode(data)
+    conn.resp status, JSEX.encode(data)
+  end
+
+
+  defp whitelist_params(params, allowed) do
+    whitelist_params(params, allowed, [])
+  end
+
+  defp whitelist_params(params, [], collected) do
+    collected
+  end
+
+  defp whitelist_params(params, allowed, collected) do
+    [field | rest] = allowed
+    if Dict.has_key?(params, field) do
+      collected = ListDict.merge collected, [{ field, Dict.get(params, field) }]
+    end
+    whitelist_params(params, rest, collected)
   end
 
 
   get "/" do
-    lc user inlist User.find_all([rows: 50]) do
+    users = lc user inlist User.search("config_type:user", [rows: 50]) do
       user.public_attributes
     end
-    |> json_response(conn)
+    json_response(users, conn)
   end
 
 
@@ -56,23 +73,6 @@ defmodule UsersApiRouter do
     user_id = conn.params["user_id"]
     User.destroy user_id
     json_response([ok: user_id], conn)
-  end
-
-
-  defp whitelist_params(params, allowed) do
-    whitelist_params(params, allowed, [])
-  end
-
-  defp whitelist_params(params, [], collected) do
-    collected
-  end
-
-  defp whitelist_params(params, allowed, collected) do
-    [field | rest] = allowed
-    if Dict.has_key?(params, field) do
-      collected = ListDict.merge collected, [{ field, Dict.get(params, field) }]
-    end
-    whitelist_params(params, rest, collected)
   end
 
 end

@@ -11,15 +11,15 @@ defmodule Rinket.RiakRealm do
 
 
       def public_attributes(record) do
-        lc attr inlist __MODULE__.safe_attributes do
+        lc attr inlist safe_attributes do
           { "#{attr}", apply(record, :"#{attr}", []) }
         end
       end
 
 
       def find(obj_id) do
-        data = Rinket.Db.get(__MODULE__.bucket, obj_id)
-        __MODULE__.assign_attributes(__MODULE__[id: obj_id], data)
+        data = Rinket.Db.get(bucket, obj_id)
+        assign_attributes(__MODULE__[id: obj_id], data)
       end
 
 
@@ -39,6 +39,7 @@ defmodule Rinket.RiakRealm do
 
           case record.id do
             nil ->
+              
               {:ok, Rinket.Db.put(bucket, :undefined, record.saveable_attributes) }
             _ ->
               {:ok, Rinket.Db.patch(bucket, id, record.saveable_attributes) }
@@ -49,12 +50,20 @@ defmodule Rinket.RiakRealm do
       end
 
 
+      def search(query, options // []) do
+        results = Rinket.Db.search(bucket, query, options)
+        lc result inlist results do
+          assign_attributes(__MODULE__[], result)
+        end
+      end
+
+
       def destroy(arg1) do
         cond do
           is_binary(arg1) ->
-            RiakPool.delete(__MODULE__.bucket, arg1)
+            RiakPool.delete(bucket, arg1)
           is_record(arg1) && arg1.id != nil ->
-            RiakPool.delete(__MODULE__.bucket, arg1.id)
+            RiakPool.delete(bucket, arg1.id)
           true ->
             :ok
         end
