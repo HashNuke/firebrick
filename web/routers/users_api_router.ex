@@ -32,9 +32,10 @@ defmodule UsersApiRouter do
 
   post "/:user_id" do
     user_id = conn.params[:user_id]
-    user_params = conn.req_body
-      |> :jsx.decode
-      |> whitelist_params(["first_name", "last_name", "username", "password", "role"])
+    {:ok, params} = conn.req_body
+    |> JSEX.decode
+
+    user_params = whitelist_params(params, ["first_name", "last_name", "username", "password", "role"])
 
     user = User.find(user_id)
     |> User.assign_attributes(user_params)

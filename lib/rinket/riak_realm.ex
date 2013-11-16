@@ -39,7 +39,6 @@ defmodule Rinket.RiakRealm do
 
           case record.id do
             nil ->
-              
               {:ok, Rinket.Db.put(bucket, :undefined, record.saveable_attributes) }
             _ ->
               {:ok, Rinket.Db.patch(bucket, id, record.saveable_attributes) }
