@@ -12,6 +12,25 @@ app.factory 'User', ($resource)->
     customActions
   )
 
+app.factory 'Domain', ($resource)->
+  $resource(
+    "/api/domains/:collectionRoute:id/:memberRoute",
+    { id: "@id", collectionRoute: '@collectionRoute', memberRoute: '@memberRoute'}
+  )
+
+
+app.resolvers.domain = (Domain, $q, $route)->
+  return {} if !$route.current.params.domain_id
+
+  deferred = $q.defer()
+  successCallback = (domain)-> deferred.resolve domain
+  errorCallback   = (errorData)-> deferred.reject()
+
+  requestParams = { id: $route.current.params.domain_id }
+
+  Domain.get(requestParams, successCallback, errorCallback)
+  deferred.promise
+
 
 app.resolvers.user = (User, $q, $route)->
   return {role: "member"} if !$route.current.params.user_id
@@ -34,6 +53,9 @@ config = ($routeProvider, $locationProvider)->
     ).when('/mails/:category',
       templateUrl: '/static/partials/mails.html',
       controller: 'MailsCtrl'
+    ).when('/domains',
+      templateUrl: '/static/partials/domains.html'
+      controller: 'DomainsCtrl'
     ).when('/users',
       templateUrl: '/static/partials/users/list.html'
       controller: 'UsersListCtrl'
@@ -61,6 +83,29 @@ app.controller 'MailsCtrl', ($scope, SharedData)->
   $scope.sharedData.title = "Main"
   console.log $scope.sharedData
   console.log "mails controller"
+
+
+app.controller 'DomainsCtrl', ($scope, SharedData, Domain)->
+  $scope.sharedData = SharedData
+  $scope.sharedData.title = "Domains"
+
+  $scope.addDomain = ->
+    Domain.save $scope.newDomain, (data)->
+      if data["errors"]
+        #TODO handle errors
+      else
+        $scope.domains.push($scope.newDomain)
+        $scope.newDomain = {}
+
+  $scope.removeDomain = (index)->
+    successCallback = -> $scope.domains.splice(index, 1)
+    errorCallback = ->
+      #TODO handle errors
+    $scope.domains[index].$delete(successCallback, errorCallback)
+
+  successCallback = (data)-> $scope.domains = data
+  errorCallback   = ()-> console.log("error")
+  Domain.query(successCallback, errorCallback)
 
 
 app.controller 'UsersListCtrl', ($scope, SharedData, User)->
@@ -92,11 +137,11 @@ app.controller 'UserCtrl', ($scope, $route, $location, SharedData, User, user)->
   $scope.saveUser = ->
     console.log "save user"
     successCallback = (data) ->
-      # $location.path("/users")
+      $location.path("/users")
 
     errorCallback = (response) =>
       console.log "errors"
-      #TODO hamdle errors
+      #TODO handle errors
 
     if !$scope.user.id
       console.log User.save($scope.user, successCallback, errorCallback)

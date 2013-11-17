@@ -8,7 +8,7 @@ defmodule Rinket.RiakSupervisor do
 
   def init([]) do
     children = [
-      worker(RiakPool, ['127.0.0.1', 8087], restart: :transient)
+      worker(RiakPool, ['127.0.0.1', 8087, [retry_interval: 5]], restart: :transient)
     ]
 
     supervise(children, strategy: :one_for_one)

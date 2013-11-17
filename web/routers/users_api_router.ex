@@ -4,7 +4,8 @@ defmodule UsersApiRouter do
 
 
   get "/" do
-    lc user inlist User.search("config_type:user", [rows: 50]) do
+    {users, count} = User.search("config_type:user", [rows: 50])
+    lc user inlist users do
       user.public_attributes
     end
     |> json_response(conn)
@@ -16,8 +17,7 @@ defmodule UsersApiRouter do
     {:ok, params} = conn.req_body
     |> JSEX.decode
 
-    user_params = whitelist_params(params, ["first_name", "last_name", "username", "password", "role"])
-
+    user_params = whitelist_params(params, ["domain_id", "first_name", "last_name", "username", "password", "role"])
     user = User.assign_attributes(User[], user_params)
     IO.inspect user
     case user.save do
@@ -41,7 +41,7 @@ defmodule UsersApiRouter do
     {:ok, params} = conn.req_body
     |> JSEX.decode
 
-    user_params = whitelist_params(params, ["first_name", "last_name", "username", "password", "role"])
+    user_params = whitelist_params(params, ["domain_id", "first_name", "last_name", "username", "password", "role"])
 
     user = User.find(user_id)
     |> User.assign_attributes(user_params)

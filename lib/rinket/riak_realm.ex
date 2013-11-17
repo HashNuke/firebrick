@@ -52,7 +52,7 @@ defmodule Rinket.RiakRealm do
 
 
       def search(query, options // []) do
-        {:ok, {:search_results, search_results, _, _count}} = RiakPool.run(fn(worker)->
+        {:ok, {:search_results, search_results, _, count}} = RiakPool.run(fn(worker)->
           :riakc_pb_socket.search(worker, bucket, query, options)
         end)
 
@@ -62,9 +62,10 @@ defmodule Rinket.RiakRealm do
           obj
         end, search_results)
 
-        lc result inlist results do
-          assign_attributes(__MODULE__[], result)
-        end
+        models = lc result inlist results, do: assign_attributes(__MODULE__[], result)
+
+        # Returns {results, total_number_of_results}
+        {models, count}
       end
 
 

@@ -12,6 +12,7 @@ defmodule ApplicationRouter do
   # routers, forwarding the requests between them:
   # forward "/posts", to: PostsRouter
 
+  forward "/api/domains", to: DomainsApiRouter
   forward "/api/users", to: UsersApiRouter
   forward "/api/mails", to: MailsApiRouter
 
