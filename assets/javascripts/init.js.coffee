@@ -123,11 +123,23 @@ app.controller 'UsersListCtrl', ($scope, SharedData, User)->
 
   successCallback = (data)-> $scope.users = data
   errorCallback   = ()-> console.log("error")
+
+  #TODO should use a resolver
   User.query(successCallback, errorCallback)
 
 
-app.controller 'UserCtrl', ($scope, $route, $location, SharedData, User, user)->
+app.controller 'UserCtrl', ($scope, $route, $location, SharedData, Domain, User, user)->
   $scope.sharedData = SharedData
+  #TODO should use a resolver
+
+  domainsSuccessCallback = (data)->
+    $scope.domains = data
+    if !$scope.user.domain_id
+      $scope.user.domain_id = $scope.domains[0].id
+      console.log $scope.domains[0].id, $scope.user.domain_id
+
+  domainsErrorCallback   = ()-> console.log("error")
+  Domain.query(domainsSuccessCallback, domainsErrorCallback)
 
   if !$route.current.params.user_id
     $scope.sharedData.title = "New user"
@@ -135,8 +147,8 @@ app.controller 'UserCtrl', ($scope, $route, $location, SharedData, User, user)->
     $scope.sharedData.title = "Edit user"
 
   $scope.validRoles = ['admin', 'member']
-
   $scope.user = user
+
   $scope.saveUser = ->
     console.log "save user"
     successCallback = (data) ->
@@ -153,5 +165,4 @@ app.controller 'UserCtrl', ($scope, $route, $location, SharedData, User, user)->
       user = $scope.user
       user.$update(successCallback, errorCallback)
 
-  console.log $scope.user.id
   console.log "manage user controller"

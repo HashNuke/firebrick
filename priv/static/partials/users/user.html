@@ -23,6 +23,12 @@
       </div>
 
       <div class="field">
+        <label>Domain</label>
+        <select ng-required="true"
+          ng-model="user.domain_id" ng-options="domain.id as domain.name for domain in domains"></select>
+      </div>
+
+      <div class="field">
         <label>Role</label>
         <select ng-required="true"
           ng-model="user.role" ng-options="role for role in validRoles track by role"></select>
