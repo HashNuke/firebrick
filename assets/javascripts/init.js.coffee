@@ -19,6 +19,7 @@ app.factory 'Domain', ($resource)->
   )
 
 
+# TODO change this to domains. To fetch multiple domains
 app.resolvers.domain = (Domain, $q, $route)->
   return {} if !$route.current.params.domain_id
 
@@ -32,6 +33,7 @@ app.resolvers.domain = (Domain, $q, $route)->
   deferred.promise
 
 
+# TODO need another resolver to fetch multiple users
 app.resolvers.user = (User, $q, $route)->
   return {role: "member"} if !$route.current.params.user_id
 
@@ -97,6 +99,7 @@ app.controller 'DomainsCtrl', ($scope, SharedData, Domain)->
         $scope.domains.push($scope.newDomain)
         $scope.newDomain = {}
 
+  #TODO do not allow deleting domain if it has users
   $scope.removeDomain = (index)->
     successCallback = -> $scope.domains.splice(index, 1)
     errorCallback = ->
