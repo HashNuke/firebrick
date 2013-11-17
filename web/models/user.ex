@@ -6,6 +6,7 @@ defrecord User,
   first_name: nil,
   last_name: nil,
   role: nil,
+  domain_id: nil,
   config_type: "user",
    __errors__: [] do
 
