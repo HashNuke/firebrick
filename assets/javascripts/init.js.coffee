@@ -136,7 +136,6 @@ app.controller 'UserCtrl', ($scope, $route, $location, SharedData, Domain, User,
     $scope.domains = data
     if !$scope.user.domain_id
       $scope.user.domain_id = $scope.domains[0].id
-      console.log $scope.domains[0].id, $scope.user.domain_id
 
   domainsErrorCallback   = ()-> console.log("error")
   Domain.query(domainsSuccessCallback, domainsErrorCallback)
