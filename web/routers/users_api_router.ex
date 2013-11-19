@@ -24,7 +24,7 @@ defmodule UsersApiRouter do
       {:ok, key} ->
         json_response [ok: key], conn
       {:error, user} ->
-        json_response [errors: user.errors], conn
+        json_response [errors: user.errors], conn, 422
     end
   end
 
@@ -50,7 +50,7 @@ defmodule UsersApiRouter do
       {:ok, key} ->
         json_response [ok: user_id], conn
       {:error, user} ->
-        json_response [errors: user.errors], conn
+        json_response [errors: user.errors], conn, 422
     end
   end
 
