@@ -154,14 +154,12 @@ app.controller 'UserCtrl', ($scope, $route, $location, SharedData, Domain, User,
       $location.path("/users")
 
     errorCallback = (response) =>
-      console.log "errors"
+      console.log response.data
       #TODO handle errors
 
     if !$scope.user.id
-      console.log User.save($scope.user, successCallback, errorCallback)
+      User.save($scope.user, successCallback, errorCallback)
     else
-      console.log "I in else"
       user = $scope.user
       user.$update(successCallback, errorCallback)
 
-  console.log "manage user controller"
