@@ -10,7 +10,7 @@
     </div>
 
     <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
-    <div class="logout">Logout</div>
+    <div class="logout" ng-click="logout()">Logout</div>
   </div>
 
   <div class="content" ng-view></div>

@@ -18,6 +18,8 @@ app.factory 'Domain', ($resource)->
     { id: "@id", collectionRoute: '@collectionRoute', memberRoute: '@memberRoute'}
   )
 
+app.factory 'Session', ($resource)->
+  $resource("/api/sessions")
 
 # TODO change this to domains. To fetch multiple domains
 app.resolvers.domain = (Domain, $q, $route)->
@@ -30,6 +32,16 @@ app.resolvers.domain = (Domain, $q, $route)->
   requestParams = { id: $route.current.params.domain_id }
 
   Domain.get(requestParams, successCallback, errorCallback)
+  deferred.promise
+
+
+app.resolvers.session = (Session, $q, $route)->
+
+  deferred = $q.defer()
+  successCallback = (session)-> deferred.resolve(session)
+  errorCallback   = (error)-> deferred.reject()
+
+  Session.get({}, successCallback, errorCallback)
   deferred.promise
 
 
@@ -52,6 +64,11 @@ config = ($routeProvider, $locationProvider)->
   $routeProvider.when('/',
       templateUrl: '/static/partials/hello.html',
       controller: "MailsCtrl"
+    ).when('/login',
+      templateUrl: '/static/partials/login.html'
+      controller: 'SessionCtrl'
+      resolve:
+        session: app.resolvers.session
     ).when('/mails/:category',
       templateUrl: '/static/partials/mails.html',
       controller: 'MailsCtrl'
@@ -77,8 +94,39 @@ config = ($routeProvider, $locationProvider)->
 app.config ['$routeProvider', '$locationProvider', config]
 
 
-app.controller 'RootCtrl', ($scope, SharedData)->
+app.controller 'RootCtrl', ($scope, SharedData, Session)->
   $scope.sharedData = SharedData
+  $scope.logout = ->
+    successCallback = (data) ->
+      console.log "logging you out ~!"
+      $location.path("/login")
+
+    errorCallback = (response) =>
+      console.log response.data
+      #TODO handle errors
+
+    Session.delete({}, successCallback, errorCallback)
+
+app.controller 'SessionCtrl', ($scope, $location, SharedData, Session, session)->
+  $scope.sharedData = SharedData
+  console.log session
+  if session.user
+    $scope.sharedData.user = session.user
+    $location.path("/users")
+  else
+    $scope.session = {username: "whatever", password: "akash"}
+
+  $scope.login = ->
+    successCallback = (data) ->
+      $location.path("/users")
+
+    errorCallback = (response) =>
+      console.log response.data
+      #TODO handle errors
+
+    Session.save($scope.session, successCallback, errorCallback)
+
+
 
 app.controller 'MailsCtrl', ($scope, SharedData)->
   $scope.sharedData = SharedData

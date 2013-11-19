@@ -1,4 +1,4 @@
-# Rinket
+# Firebrick
 
 
 ## Usage (temporary)
@@ -15,10 +15,14 @@ I would suggest using a linux machine (even a virtual machine is fine).
 
 * Start Riak with `riak start`
 * Start the app with `iex -S mix server`. You will also get a console.
-* To send a test mail, run `Rinket.Smtp.send_test_mail`
+* To send a test mail, run `Firebrick.Smtp.send_test_mail`
 
 * Turn on Riak search in Riak's `app.config`
-* Install Riak search hook by running `search-cmd install rinket_mails`
+* Install Riak search hooks by running
+
+      search-cmd install firebrick_mails
+      search-cmd install firebrick_config
+
 
 ## Development
 
@@ -59,9 +63,10 @@ Check `docs/asset-compilation-using-watchman.md` for notes on auto-compilation o
 
       sudo iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25 -j REDIRECT --to-ports 2525
 
+* Tag all incoming mails with "inbox"
+
 ### Angular routes workout
 
 * AppCtrl (for everything on the navigation bar))
-* /categories/:category_name - categories controller
+* /labels/:name - categories controller
 
-/ will render roo
