@@ -49,7 +49,7 @@ defmodule UsersApiRouter do
     case user.save() do
       {:ok, key} ->
         json_response [ok: user_id], conn
-      {:errors, user} ->
+      {:error, user} ->
         json_response [errors: user.errors], conn
     end
   end

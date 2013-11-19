@@ -30,11 +30,22 @@ defrecord User,
       record.id == nil || (record.id != nil && record.password != nil && record.encrypted_password != nil)
     end
 
+    uniqueness_validation = fn(record)->
+      {results, count} = User.search("config_type:user AND username:#{record.username}")
+      if length(results) == 0 do
+        true
+      else
+        false
+      end
+    end
+
+    #TODO validations should check if the field already has an error
     record
     |> validates_length(:username, [min: 1])
     |> validates_length(:password, [min: 5], password_validation_condition)
     |> validates_length(:first_name, [min: 1])
     |> validates_inclusion(:role, [in: ["admin", "member"]])
+    |> validates_uniqueness(:username, [condition: uniqueness_validation])
   end
 
 

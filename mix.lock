@@ -15,7 +15,7 @@
   "protobuffs": {:git, "git://github.com/basho/erlang_protobuffs.git", "0b00f9031cda5ffe83a3d183e14f2dc918bc2932", [{:tag, "0.8.1p2"}]},
   "qdate": {:git, "git://github.com/choptastic/qdate.git", "4a98e54d9d678178ad8502b1667d9d66afed5806", []},
   "ranch": {:git, "git://github.com/extend/ranch.git", "41705752ffc7e3ecb96eef8374015ead4ca7f699", [{:ref, "0.8.5"}]},
-  "realm": {:git, "git://github.com/HashNuke/realm.git", "c6b0850edaec0a3dce1380adac5cc12014b54077", []},
+  "realm": {:git, "git://github.com/HashNuke/realm.git", "bcb88e74f50808ebd70cd3f9d96158918fb6b9dd", []},
   "rebar_vsn_plugin": {:git, "https://github.com/erlware/rebar_vsn_plugin.git", "0d954d923275305c62a81e9c2bf60a60977a9d29", [{:branch, "master"}]},
   "riak_pb": {:git, "git://github.com/basho/riak_pb", "2adf207d053738559811eb17f62f7ce6b6f5cc95", [{:tag, "2.0.0.7"}]},
   "riak_pool": {:git, "git://github.com/HashNuke/riak_pool.git", "f746ab0331c2ef67db24c78f53d46469055abda7", []},
