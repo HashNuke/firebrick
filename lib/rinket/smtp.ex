@@ -1,16 +1,16 @@
-defmodule Rinket.Smtp do
+defmodule Firebrick.Smtp do
 
   def start_link do
     session_options = [callbackoptions: [parse: true] ]
-    :gen_smtp_server.start(Rinket.SmtpHandler, [[port: 2525, sessionoptions: session_options]])
+    :gen_smtp_server.start(Firebrick.SmtpHandler, [[port: 2525, sessionoptions: session_options]])
   end
 
 
   def send_test_mail() do
     host = :net_adm.localhost
-    sender = "rinket_rambler@#{host}"
+    sender = "firebrick_tester@#{host}"
     recepients = ["john@#{host}"]
-    sender_address = "Rinker Rambler <rinket_rambler@#{host}>"
+    sender_address = "Firebrick Tester <firebrick_tester@#{host}>"
     recepient_addresses = ["John Appleseed <john@#{host}>"]
     client_options = [relay: host, username: sender, password: "mypassword", port: 2525]
     mail = {

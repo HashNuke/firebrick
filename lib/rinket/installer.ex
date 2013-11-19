@@ -1,5 +1,5 @@
-defmodule Rinket.Installer do
+defmodule Firebrick.Installer do
   def add_admin_user do
-    RiakPool
+    #TODO
   end
 end

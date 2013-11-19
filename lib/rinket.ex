@@ -1,4 +1,4 @@
-defmodule Rinket do
+defmodule Firebrick do
   use Application.Behaviour
 
   @doc """
@@ -6,6 +6,6 @@ defmodule Rinket do
   application and its Dynamos.
   """
   def start(_type, _args) do
-    Rinket.Supervisor.start_link
+    Firebrick.Supervisor.start_link
   end
 end

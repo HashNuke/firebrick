@@ -1,8 +1,8 @@
-defmodule Rinket.RiakRealm do
+defmodule Firebrick.RiakRealm do
   defmacro __using__([]) do
     quote do
 
-      import Rinket.RiakRealm
+      import Firebrick.RiakRealm
 
       def assign_attributes(record, params) do
         Enum.reduce(params, record, fn({param, value}, updated_record)->

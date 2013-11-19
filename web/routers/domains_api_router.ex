@@ -1,6 +1,6 @@
 defmodule DomainsApiRouter do
   use Dynamo.Router
-  import Rinket.RouterUtils
+  import Firebrick.RouterUtils
 
 
   get "/" do

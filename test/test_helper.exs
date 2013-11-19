@@ -1,8 +1,8 @@
-Dynamo.under_test(Rinket.Dynamo)
+Dynamo.under_test(Firebrick.Dynamo)
 Dynamo.Loader.enable
 ExUnit.start
 
-defmodule Rinket.TestCase do
+defmodule Firebrick.TestCase do
   use ExUnit.CaseTemplate
 
   # Enable code reloading on test cases

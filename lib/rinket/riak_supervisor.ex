@@ -1,4 +1,4 @@
-defmodule Rinket.RiakSupervisor do
+defmodule Firebrick.RiakSupervisor do
   use Supervisor.Behaviour
 
   def start_link do

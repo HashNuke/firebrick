@@ -1,4 +1,4 @@
-defmodule Rinket.SmtpHandler do
+defmodule Firebrick.SmtpHandler do
   @behaviour :gen_smtp_server_session
 
 
@@ -234,7 +234,7 @@ defmodule Rinket.SmtpHandler do
 
   defp parse_mail(data, state, unique_id) do
     try do
-      Rinket.Mail.save( :mimemail.decode(data) )
+      Firebrick.Mail.save( :mimemail.decode(data) )
     rescue
       [reason] ->
         :io.format("Message decode FAILED with ~p:~n", [reason])

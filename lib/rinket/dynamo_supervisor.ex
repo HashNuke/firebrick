@@ -1,4 +1,4 @@
-defmodule Rinket.DynamoSupervisor do
+defmodule Firebrick.DynamoSupervisor do
   use Supervisor.Behaviour
 
   def start_link do
@@ -10,7 +10,7 @@ defmodule Rinket.DynamoSupervisor do
     dynamo_options = [max_restarts: 5, max_seconds: 5]
 
     children = [
-      worker(Rinket.Dynamo, [dynamo_options], restart: :transient)
+      worker(Firebrick.Dynamo, [dynamo_options], restart: :transient)
     ]
 
     supervise(children, strategy: :one_for_one, restart: :transient)

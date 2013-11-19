@@ -11,10 +11,11 @@ defrecord User,
    __errors__: [] do
 
   use Realm
-  use Rinket.RiakRealm
+  use Firebrick.RiakRealm
 
 
   # Tells the world which bucket this is stored in
+  #TODO change to firebrick_config
   def bucket, do: "rinket_config"
 
   # These will be skipped when saving

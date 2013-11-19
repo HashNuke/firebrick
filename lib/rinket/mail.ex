@@ -1,4 +1,4 @@
-defmodule Rinket.Mail do
+defmodule Firebrick.Mail do
 
   defrecord MailObject, fields: [], raw_data: nil do
     def add_fields(new_fields, mail) do
@@ -14,7 +14,7 @@ defmodule Rinket.Mail do
   def save(mail_fields) do
     mail = parse_mail(mail_fields)
     obj  = :riakc_obj.new(
-      "rinket_mails",
+      "firebrick_mails",
       :undefined,
       :jsx.encode(mail.data),
       "application/json"

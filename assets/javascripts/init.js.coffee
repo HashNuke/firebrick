@@ -1,4 +1,4 @@
-window.app = angular.module('Rinket', ['ngRoute', 'ngResource', 'ngSanitize'])
+window.app = angular.module('Firebrick', ['ngRoute', 'ngResource', 'ngSanitize'])
 app.resolvers = {}
 
 app.factory 'SharedData', ()-> {notification: 0, title: ""}
@@ -149,7 +149,6 @@ app.controller 'UserCtrl', ($scope, $route, $location, SharedData, Domain, User,
   $scope.user = user
 
   $scope.saveUser = ->
-    console.log "save user"
     successCallback = (data) ->
       $location.path("/users")
 

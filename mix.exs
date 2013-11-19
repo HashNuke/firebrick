@@ -1,20 +1,20 @@
-defmodule Rinket.Mixfile do
+defmodule Firebrick.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :rinket,
+    [ app: :firebrick,
       version: "0.0.1",
-      dynamos: [Rinket.Dynamo],
+      dynamos: [Firebrick.Dynamo],
       compilers: [:elixir, :dynamo, :app],
       env: [prod: [compile_path: "ebin"]],
-      compile_path: "tmp/#{Mix.env}/rinket/ebin",
+      compile_path: "tmp/#{Mix.env}/firebrick/ebin",
       deps: deps ]
   end
 
   # Configuration for the OTP application
   def application do
     [ applications: [:cowboy, :dynamo, :bcrypt],
-      mod: { Rinket, [] } ]
+      mod: { Firebrick, [] } ]
   end
 
   defp deps do

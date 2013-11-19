@@ -1,4 +1,4 @@
-defmodule Rinket.RouterUtils do
+defmodule Firebrick.RouterUtils do
 
   def json_response(data, conn, status // 200) do
     {:ok, json} = JSEX.encode(data)

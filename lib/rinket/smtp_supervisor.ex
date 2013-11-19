@@ -1,4 +1,4 @@
-defmodule Rinket.SmtpSupervisor do
+defmodule Firebrick.SmtpSupervisor do
   use Supervisor.Behaviour
 
   def start_link do
@@ -8,7 +8,7 @@ defmodule Rinket.SmtpSupervisor do
 
   def init([]) do
     children = [
-      worker(Rinket.Smtp, [], restart: :transient)
+      worker(Firebrick.Smtp, [], restart: :transient)
     ]
 
     supervise(children, strategy: :one_for_one)

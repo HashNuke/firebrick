@@ -1,4 +1,4 @@
-defmodule Rinket.Dynamo do
+defmodule Firebrick.Dynamo do
   use Dynamo
 
   config :dynamo,
@@ -6,7 +6,7 @@ defmodule Rinket.Dynamo do
     env: Mix.env,
 
     # The OTP application associated with this Dynamo
-    otp_app: :rinket,
+    otp_app: :firebrick,
 
     # The endpoint to dispatch requests to
     endpoint: ApplicationRouter,
@@ -19,7 +19,7 @@ defmodule Rinket.Dynamo do
   # config :dynamo,
   #   session_store: Session.CookieStore,
   #   session_options:
-  #     [ key: "_rinket_session",
+  #     [ key: "_firebrick_session",
   #       secret: "dPFxY9JxtCRtXUpWOEd0+YRIUwlnG4tcuYbUza5AIKXxhFhiCAyR4NYCDD1C5YLt"]
 
   # Default functionality available in templates
