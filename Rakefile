@@ -42,10 +42,16 @@ namespace :assets do
     watch_list = ["assets/javascripts/", "assets/stylesheets/"]
 
     FileWatcher.new(watch_list, "Watching assets for compliation...").watch do |filename|
-      assets.each do |asset|
-        puts asset
-        sprockets[asset].write_to "#{asset_output}/#{asset}"
+
+      begin
+        assets.each do |asset|
+          puts asset
+          sprockets[asset].write_to "#{asset_output}/#{asset}"
+        end
+      rescue => e
+        puts "Error #{e.inspect}"
       end
+
     end
   end
 
