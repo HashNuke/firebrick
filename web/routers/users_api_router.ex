@@ -23,7 +23,6 @@ defmodule UsersApiRouter do
 
     user_params = whitelist_params(params, ["domain_id", "first_name", "last_name", "username", "password", "role"])
     user = User.assign_attributes(User[], user_params)
-    IO.inspect user
     case user.save do
       {:ok, key} ->
         json_response [ok: key], conn
