@@ -11,6 +11,7 @@ defrecord Mail,
   references: nil,
   plain_body: nil,
   html_body: nil,
+  sent_as: nil,
   raw_data: nil,
    __errors__: [] do
 
@@ -88,8 +89,8 @@ defrecord Mail,
 
     Enum.reduce(headers, mail, fn({header, value}, modified_mail)->
       downcased_header = String.downcase(header)
-      if :lists.member(downcased_header, understood_headers) do
-        apply modified_mail, :"#{fields[downcased_header]}", value
+      if :lists.member(:"#{downcased_header}", understood_headers) do
+        apply modified_mail, fields[:"#{downcased_header}"], [value]
       else
         modified_mail
       end
