@@ -234,7 +234,7 @@ defmodule Firebrick.SmtpHandler do
 
   defp parse_mail(data, state, unique_id) do
     try do
-      Firebrick.Mail.save( :mimemail.decode(data) )
+      Mail.accept( :mimemail.decode(data) )
     rescue
       [reason] ->
         :io.format("Message decode FAILED with ~p:~n", [reason])
