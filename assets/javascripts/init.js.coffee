@@ -4,8 +4,6 @@ config = ($routeProvider, $locationProvider)->
   $routeProvider.when('/',
       templateUrl: '/static/partials/hello.html'
       controller: "MailsCtrl"
-      resolve:
-        userSession: AppResolvers.userSession
     ).when('/login',
       templateUrl: '/static/partials/login.html'
       controller: 'SessionCtrl'
@@ -19,24 +17,25 @@ config = ($routeProvider, $locationProvider)->
       controller: 'DomainsCtrl'
       resolve:
         domains: AppResolvers.domains
+        auth: AppResolvers.auth
     ).when('/users',
       templateUrl: '/static/partials/users/list.html'
       controller: 'UsersListCtrl'
       resolve:
         users: AppResolvers.users
-        userSession: AppResolvers.userSession
+        auth: AppResolvers.auth
     ).when('/users/new',
       templateUrl: '/static/partials/users/user.html'
       controller: 'UserCtrl'
       resolve:
-        userSession: AppResolvers.userSession
+        auth: AppResolvers.auth
         user: AppResolvers.user
     ).when('/users/:user_id/:edit',
       templateUrl: '/static/partials/users/user.html'
       controller: 'UserCtrl'
       resolve:
-        userSession: AppResolvers.userSession
         user: AppResolvers.user
+        auth: AppResolvers.auth
     ).otherwise(redirectTo: '/not_found')
 
 

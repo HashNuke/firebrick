@@ -1,5 +1,6 @@
 app.controller 'RootCtrl', ($scope, $location, SharedData, Session)->
   $scope.sharedData = SharedData
+
   $scope.logout = ->
     successCallback = (data) ->
       console.log "logging you out ~!"

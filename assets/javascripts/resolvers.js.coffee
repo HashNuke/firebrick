@@ -1,13 +1,13 @@
 window.AppResolvers = {}
 
-AppResolvers.userSession = ($location, $q, SharedData) ->
-  return true if SharedData.user
-  $location.path("/login")
 
+AppResolvers.auth = (Session, SharedData, $q, $route)->
+  return true if SharedData.user?
 
-AppResolvers.auth = (Session, $q, $route)->
   deferred = $q.defer()
-  successCallback = (session)->  deferred.resolve(session)
+  successCallback = (user)->
+    SharedData.user = user
+    deferred.resolve(user)
   errorCallback   = (response)-> deferred.reject()
   Session.get({}, successCallback, errorCallback)
   deferred.promise

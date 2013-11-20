@@ -1,5 +1,7 @@
 app.controller 'SessionCtrl', ($scope, $location, SharedData, Session, auth)->
   $scope.sharedData = SharedData
+  $scope.sharedData.title = "Firebrick"
+
   if auth.user
     $scope.sharedData.user = auth.user
     $location.path("/users")
