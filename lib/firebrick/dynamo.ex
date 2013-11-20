@@ -15,12 +15,18 @@ defmodule Firebrick.Dynamo do
     # You can turn off static assets by setting it to false
     static_route: "/static"
 
-  #TODO switch to a different session store, maybe ets or riak based
+  # config :dynamo,
+  #   session_store: Session.CookieStore,
+  #   session_options:
+  #     [ key: "_firebrick_session",
+  #       secret: "dPFxY9JxtCRtXUpWOEd0+YRIUwlnG4tcuYbUza5AIKXxhFhiCAyR4NYCDD1C5YLt"]
+
   config :dynamo,
-    session_store: Session.CookieStore,
-    session_options:
-      [ key: "_firebrick_session",
-        secret: "dPFxY9JxtCRtXUpWOEd0+YRIUwlnG4tcuYbUza5AIKXxhFhiCAyR4NYCDD1C5YLt"]
+    session_store: Session.ETSStore,
+    session_options: [
+      table: :firebrick_sessions,
+      key: "_firebrick_session"
+    ]
 
   # Default functionality available in templates
   templates do

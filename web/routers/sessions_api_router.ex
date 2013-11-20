@@ -6,11 +6,8 @@ defmodule SessionsApiRouter do
   get "/" do
     user_id = get_session conn, :user_id
 
-    IO.inspect get_session(conn)
-
     if user_id do
-      IO.inspect User.get(user_id).public_attributes
-      json_response [user: User.get(user_id).public_attributes], conn
+      json_response [user: User.find(user_id).public_attributes], conn
     else
       json_response [error: "no session"], conn
     end
