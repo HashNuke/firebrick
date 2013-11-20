@@ -1,7 +1,6 @@
 defmodule SessionsApiRouter do
   use Dynamo.Router
   import Firebrick.RouterUtils
-  import Dynamo.HTTP.Session
 
 
   get "/" do
@@ -27,7 +26,10 @@ defmodule SessionsApiRouter do
     if length(results) > 0 do
       result = results |> hd
       if User.valid_password?(result, params["password"]) do
-        json_response [user: result.public_attributes], put_session(conn, :user_id, result.id)
+        conn = put_session(conn, :user_id, result.id)
+        |> configure_session :secure, true
+
+        json_response [user: result.public_attributes], conn
       else
         json_response [error: "Please check your login credentials"], conn
       end

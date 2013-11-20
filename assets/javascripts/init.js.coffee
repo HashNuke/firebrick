@@ -38,8 +38,8 @@ app.resolvers.domain = (Domain, $q, $route)->
 app.resolvers.session = (Session, $q, $route)->
 
   deferred = $q.defer()
-  successCallback = (session)-> deferred.resolve(session)
-  errorCallback   = (error)-> deferred.reject()
+  successCallback = (session)->  deferred.resolve(session)
+  errorCallback   = (response)-> deferred.reject()
 
   Session.get({}, successCallback, errorCallback)
   deferred.promise
@@ -94,7 +94,7 @@ config = ($routeProvider, $locationProvider)->
 app.config ['$routeProvider', '$locationProvider', config]
 
 
-app.controller 'RootCtrl', ($scope, SharedData, Session)->
+app.controller 'RootCtrl', ($scope, $location, SharedData, Session)->
   $scope.sharedData = SharedData
   $scope.logout = ->
     successCallback = (data) ->
