@@ -5,6 +5,8 @@ config = ($routeProvider, $locationProvider, $httpProvider)->
   $routeProvider.when('/',
       templateUrl: '/static/partials/hello.html'
       controller: "MailsCtrl"
+      resolve:
+        auth: AppResolvers.auth
     ).when('/login',
       templateUrl: '/static/partials/login.html'
       controller: 'SessionCtrl'

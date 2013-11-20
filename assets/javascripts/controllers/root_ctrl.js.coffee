@@ -1,7 +1,6 @@
 app.controller 'RootCtrl', ($scope, $location, SharedData, Session)->
   $scope.sharedData = SharedData
 
-
   $scope.is_auth = ->
     SharedData.user?
 
