@@ -23,6 +23,7 @@ config = ($routeProvider, $locationProvider)->
       templateUrl: '/static/partials/users/list.html'
       controller: 'UsersListCtrl'
       resolve:
+        users: AppResolvers.users
         userSession: AppResolvers.userSession
     ).when('/users/new',
       templateUrl: '/static/partials/users/user.html'
