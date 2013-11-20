@@ -21,6 +21,11 @@ app.factory 'Domain', ($resource)->
 app.factory 'Session', ($resource)->
   $resource("/api/sessions")
 
+app.resolvers.userSession = ($location, $q, SharedData) ->
+  return true if SharedData.user
+  $location.path("/login")
+
+
 # TODO change this to domains. To fetch multiple domains
 app.resolvers.domain = (Domain, $q, $route)->
   return {} if !$route.current.params.domain_id
@@ -35,7 +40,7 @@ app.resolvers.domain = (Domain, $q, $route)->
   deferred.promise
 
 
-app.resolvers.session = (Session, $q, $route)->
+app.resolvers.auth = (Session, $q, $route)->
 
   deferred = $q.defer()
   successCallback = (session)->  deferred.resolve(session)
@@ -62,31 +67,39 @@ app.resolvers.user = (User, $q, $route)->
 config = ($routeProvider, $locationProvider)->
   $locationProvider.html5Mode(true)
   $routeProvider.when('/',
-      templateUrl: '/static/partials/hello.html',
+      templateUrl: '/static/partials/hello.html'
       controller: "MailsCtrl"
+      resolve:
+        userSession: app.resolvers.userSession
     ).when('/login',
       templateUrl: '/static/partials/login.html'
       controller: 'SessionCtrl'
       resolve:
-        session: app.resolvers.session
-    ).when('/mails/:category',
+        auth: app.resolvers.auth
+    ).when('/labels/:label',
       templateUrl: '/static/partials/mails.html',
       controller: 'MailsCtrl'
     ).when('/domains',
       templateUrl: '/static/partials/domains.html'
       controller: 'DomainsCtrl'
+      resolve:
+        userSession: app.resolvers.userSession
     ).when('/users',
       templateUrl: '/static/partials/users/list.html'
       controller: 'UsersListCtrl'
+      resolve:
+        userSession: app.resolvers.userSession
     ).when('/users/new',
       templateUrl: '/static/partials/users/user.html'
       controller: 'UserCtrl'
       resolve:
+        userSession: app.resolvers.userSession
         user: app.resolvers.user
     ).when('/users/:user_id/:edit',
       templateUrl: '/static/partials/users/user.html'
       controller: 'UserCtrl'
       resolve:
+        userSession: app.resolvers.userSession
         user: app.resolvers.user
     ).otherwise(redirectTo: '/not_found')
 
@@ -107,11 +120,10 @@ app.controller 'RootCtrl', ($scope, $location, SharedData, Session)->
 
     Session.delete({}, successCallback, errorCallback)
 
-app.controller 'SessionCtrl', ($scope, $location, SharedData, Session, session)->
+app.controller 'SessionCtrl', ($scope, $location, SharedData, Session, auth)->
   $scope.sharedData = SharedData
-  console.log session
-  if session.user
-    $scope.sharedData.user = session.user
+  if auth.user
+    $scope.sharedData.user = auth.user
     $location.path("/users")
   else
     $scope.session = {username: "whatever", password: "akash"}
