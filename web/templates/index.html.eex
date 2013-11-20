@@ -13,5 +13,15 @@
     <div class="logout" ng-click="logout()">Logout</div>
   </div>
 
+  <div class="menu-wrapper">
+    <div class="menu">
+      <ul>
+        <li><a href="/labels/inbox">Inbox</a></li>
+        <li><a href="/labels/sent">Sent</a></li>
+        <li><a href="/labels/trash">Trash</a></li>
+      </ul>
+    </div>
+  </div>
+
   <div class="content" ng-view></div>
 </div>
