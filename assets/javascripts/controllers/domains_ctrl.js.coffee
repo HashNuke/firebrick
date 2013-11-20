@@ -1,7 +1,7 @@
 app.controller 'DomainsCtrl', ($scope, SharedData, Domain, domains)->
-  $scope.domains = domains
   $scope.sharedData = SharedData
   $scope.sharedData.title = "Domains"
+  $scope.domains = domains
 
   $scope.addDomain = ->
     Domain.save $scope.newDomain, (data)->

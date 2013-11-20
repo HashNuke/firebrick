@@ -1,6 +1,7 @@
-app.controller 'UsersListCtrl', ($scope, SharedData, User)->
+app.controller 'UsersListCtrl', ($scope, SharedData, User, users)->
   $scope.sharedData = SharedData
   $scope.sharedData.title = "Users"
+  $scope.users = users
 
   $scope.removeUser = (index)->
     successCallback = -> $scope.users.splice(index, 1)
@@ -10,6 +11,3 @@ app.controller 'UsersListCtrl', ($scope, SharedData, User)->
 
   successCallback = (data)-> $scope.users = data
   errorCallback   = ()-> console.log("error")
-
-  #TODO should use a resolver
-  User.query(successCallback, errorCallback)
