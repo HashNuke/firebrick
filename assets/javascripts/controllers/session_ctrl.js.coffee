@@ -4,13 +4,13 @@ app.controller 'SessionCtrl', ($scope, $location, SharedData, Session, auth)->
 
   if auth.user
     $scope.sharedData.user = auth.user
-    $location.path("/users")
+    $location.path("/")
   else
     $scope.session = {username: "whatever", password: "akash"}
 
   $scope.login = ->
     successCallback = (data) ->
-      $location.path("/users")
+      $location.path("/")
 
     errorCallback = (response) =>
       console.log response.data

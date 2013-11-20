@@ -6,8 +6,12 @@ AppResolvers.auth = (Session, SharedData, $q, $route)->
 
   deferred = $q.defer()
   successCallback = (user)->
-    SharedData.user = user
-    deferred.resolve(user)
+    if user.error?
+      SharedData.user = null
+      deferred.resolve(user)
+    else
+      SharedData.user = user
+      deferred.resolve(user)
   errorCallback   = (response)-> deferred.reject()
   Session.get({}, successCallback, errorCallback)
   deferred.promise
