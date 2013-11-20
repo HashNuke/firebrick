@@ -1,0 +1,31 @@
+.list {
+  width: 100%;
+  float: left;
+  padding: 1em;
+
+  .item {
+    width: 100%;
+    float: left;
+    background: #fafafa;
+    border-left: 0.15em solid #E08587;
+    border-right: 0.1em solid #DDD;
+    border-top: 0.1em solid #DDD;
+    border-bottom: 0.1em solid #DDD;
+    padding: 0.5em;
+    margin-bottom: 1em;
+
+    .name {
+      font-weight: bold;
+    }
+
+    .controls {
+      clear: left;
+      margin-top: 0.5em;
+      a {
+        margin-right: 1em;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+  }
+}

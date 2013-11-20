@@ -1,8 +1,8 @@
 <div class="page">
-  <div class="users">
+  <div class="list">
 
 
-    <div class="user" ng-repeat="domain in domains">
+    <div class="item" ng-repeat="domain in domains">
       <span class="name">{{domain.name}}</span>
       (<a ng-click="removeDomain($index)">remove</a>)
     </div>
