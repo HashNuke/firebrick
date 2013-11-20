@@ -1,5 +1,6 @@
 defmodule ApplicationRouter do
   use Dynamo.Router
+  import Firebrick.RouterUtils
 
   prepare do
     # Pick which parts of the request you want to fetch
@@ -7,6 +8,7 @@ defmodule ApplicationRouter do
     # any of them or move them to a forwarded router
     conn.fetch([:cookies, :session, :headers, :params, :body]).assign :layout, "application"
   end
+
 
   # It is common to break your Dynamo into many
   # routers, forwarding the requests between them:
@@ -18,6 +20,7 @@ defmodule ApplicationRouter do
   forward "/api/sessions", to: SessionsApiRouter
 
 
+  @prepare :authenticate_user!
   get "/" do
     conn = conn.assign(:title, "Firebrick Mail")
     render conn, "index.html"

@@ -1,5 +1,6 @@
-config = ($routeProvider, $locationProvider)->
+config = ($routeProvider, $locationProvider, $httpProvider)->
   $locationProvider.html5Mode(true)
+  $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest'
 
   $routeProvider.when('/',
       templateUrl: '/static/partials/hello.html'
@@ -41,4 +42,4 @@ config = ($routeProvider, $locationProvider)->
 
 window.app = angular
   .module('Firebrick', ['ngRoute', 'ngResource', 'ngSanitize'])
-  .config ['$routeProvider', '$locationProvider', config]
+  .config ['$routeProvider', '$locationProvider', '$httpProvider', config]

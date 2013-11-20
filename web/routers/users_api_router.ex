@@ -2,6 +2,10 @@ defmodule UsersApiRouter do
   use Dynamo.Router
   import Firebrick.RouterUtils
 
+  prepare do
+    authorize_user!(conn, ["admin"])
+  end
+
 
   get "/" do
     {users, count} = User.search("config_type:user", [rows: 50])
