@@ -1,4 +1,5 @@
-app.controller 'DomainsCtrl', ($scope, SharedData, Domain)->
+app.controller 'DomainsCtrl', ($scope, SharedData, Domain, domains)->
+  $scope.domains = domains
   $scope.sharedData = SharedData
   $scope.sharedData.title = "Domains"
 
@@ -16,8 +17,3 @@ app.controller 'DomainsCtrl', ($scope, SharedData, Domain)->
     errorCallback = ->
       #TODO handle errors
     $scope.domains[index].$delete(successCallback, errorCallback)
-
-  successCallback = (data)-> $scope.domains = data
-  errorCallback   = ()-> console.log("error")
-  Domain.query(successCallback, errorCallback)
-

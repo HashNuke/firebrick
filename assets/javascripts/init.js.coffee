@@ -18,7 +18,7 @@ config = ($routeProvider, $locationProvider)->
       templateUrl: '/static/partials/domains.html'
       controller: 'DomainsCtrl'
       resolve:
-        userSession: AppResolvers.userSession
+        domains: AppResolvers.domains
     ).when('/users',
       templateUrl: '/static/partials/users/list.html'
       controller: 'UsersListCtrl'

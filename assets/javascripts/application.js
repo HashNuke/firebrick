@@ -4,4 +4,7 @@
 //= require "libs/angular-touch"
 //= require "libs/angular-animate"
 //= require "libs/angular-sanitize"
+//= require "resolvers"
 //= require "init"
+//= require "factories"
+//= require_tree "./controllers"

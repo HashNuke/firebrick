@@ -1,21 +1,16 @@
-AppResolvers = {}
+window.AppResolvers = {}
 
 AppResolvers.userSession = ($location, $q, SharedData) ->
   return true if SharedData.user
   $location.path("/login")
 
 
-# TODO change this to domains. To fetch multiple domains
-AppResolvers.domain = (Domain, $q, $route)->
-  return {} if !$route.current.params.domain_id
-
+AppResolvers.domains = (Domain, $q)->
   deferred = $q.defer()
-  successCallback = (domain)-> deferred.resolve domain
-  errorCallback   = (errorData)-> deferred.reject()
+  successCallback = (domains)-> deferred.resolve domains
+  errorCallback   = (response)-> deferred.reject()
 
-  requestParams = { id: $route.current.params.domain_id }
-
-  Domain.get(requestParams, successCallback, errorCallback)
+  Domain.query(successCallback, errorCallback)
   deferred.promise
 
 
