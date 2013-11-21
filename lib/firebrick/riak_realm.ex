@@ -4,12 +4,12 @@ defmodule Firebrick.RiakRealm do
 
       import Firebrick.RiakRealm
 
+
       def assign_attributes(record, params) do
         Enum.reduce(params, record, fn({param, value}, updated_record)->
           apply(updated_record, :"#{param}", [value])
         end)
       end
-      defoverridable [assign_attributes: 2]
 
 
       def public_attributes(record) do
@@ -20,7 +20,7 @@ defmodule Firebrick.RiakRealm do
 
 
       def find(obj_id) do
-        data = get(bucket, obj_id)
+        {:ok, data} = get(bucket, obj_id)
         assign_attributes(__MODULE__[id: obj_id], data)
       end
 
@@ -33,18 +33,35 @@ defmodule Firebrick.RiakRealm do
       end
 
 
+      def before_save(record), do: record
+
+
       def save(record) do
-        record = record.validate
+        record = record.before_save |> validate
+
         if length(record.errors) == 0 do
           id = record.id || :undefined
           bucket = tuple_to_list(record) |> hd |> apply(:bucket, [])
 
           case record.id do
             nil ->
-              {:ok, put(bucket, :undefined, record.saveable_attributes) }
+              put(bucket, :undefined, record.saveable_attributes)
             _ ->
-              {:ok, patch(bucket, id, record.saveable_attributes) }
+              patch(bucket, id, record.saveable_attributes)
           end
+        else
+          {:error, record}
+        end
+      end
+
+
+      def force_save(record) do
+        record = record.before_save |> validate
+
+        if length(record.errors) == 0 do
+          id = record.id || :undefined
+          bucket = tuple_to_list(record) |> hd |> apply(:bucket, [])
+          put(bucket, id, record.saveable_attributes)
         else
           {:error, record}
         end
@@ -80,6 +97,7 @@ defmodule Firebrick.RiakRealm do
         end
       end
 
+      defoverridable [assign_attributes: 2, before_save: 1]
     end
   end
 
@@ -89,9 +107,9 @@ defmodule Firebrick.RiakRealm do
     result = :riakc_obj.new(bucket, key, json, "application/json") |> RiakPool.put
     cond do
       key == :undefined ->
-        :riakc_obj.key([result][:ok])
+        {:ok, :riakc_obj.key([result][:ok])}
       true ->
-        key
+        {:ok, key}
     end
   end
 
@@ -101,7 +119,7 @@ defmodule Firebrick.RiakRealm do
     {:ok, data} = :riakc_obj.get_values(obj)
     |> hd
     |> JSEX.decode
-    data
+    {:ok, data}
   end
 
 
@@ -110,6 +128,6 @@ defmodule Firebrick.RiakRealm do
     {:ok, json} = JSEX.encode(new_data)
     :ok = :riakc_obj.new(bucket, key, json, "application/json")
     |> RiakPool.put
-    key
+    {:ok, key}
   end
 end
