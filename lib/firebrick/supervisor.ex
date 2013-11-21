@@ -7,8 +7,6 @@ defmodule Firebrick.Supervisor do
 
 
   def init([]) do
-    dynamo_options = [max_restarts: 5, max_seconds: 5]
-
     children = [
       worker(Firebrick.DynamoSupervisor, [], restart: :temporary),
       worker(Firebrick.RiakSupervisor, [], restart: :temporary),
