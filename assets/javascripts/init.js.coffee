@@ -1,6 +1,18 @@
 config = ($routeProvider, $locationProvider, $httpProvider)->
   $locationProvider.html5Mode(true)
+
+  unauthorizedInterceptor = ['$rootScope', '$q', '$location', (scope, $q, $location)->
+      success = (response)-> response
+      error   = (response)->
+        console.log "INTERCEPTER", response
+        return $q.reject(response) if response.status != 401
+        $location.path("/login") if $location.path != "/login"
+
+      return ((promise)-> promise.then(success, error))
+    ]
+  $httpProvider.responseInterceptors.push(unauthorizedInterceptor)
   $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest'
+
 
   $routeProvider.when('/',
       templateUrl: '/static/partials/hello.html'

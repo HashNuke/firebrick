@@ -27,7 +27,7 @@ defmodule SessionsApiRouter do
 
         json_response [user: result.public_attributes], conn
       else
-        json_response [error: "Please check your login credentials"], conn
+        json_response [error: "Please check your login credentials"], conn, 401
       end
     else
       json_response [error: "Maybe you don't have an account?"], conn

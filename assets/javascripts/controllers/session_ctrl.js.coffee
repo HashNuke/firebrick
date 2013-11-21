@@ -1,8 +1,9 @@
 app.controller 'SessionCtrl', ($scope, $location, SharedData, Session, auth)->
   $scope.sharedData = SharedData
   $scope.sharedData.title = "Firebrick"
+  $scope.loginLabel = "Login"
 
-  if auth.user
+  if auth.user? && !auth.user.error?
     $scope.sharedData.user = auth.user
     $location.path("/")
   else
@@ -10,10 +11,14 @@ app.controller 'SessionCtrl', ($scope, $location, SharedData, Session, auth)->
 
   $scope.login = ->
     successCallback = (data) ->
-      $location.path("/")
+      if data.user?
+        $location.path("/")
+      else
+        $scope.errorNotification = "Check your credentials"
+        $scope.loginLabel = "Login again"
 
     errorCallback = (response) =>
-      console.log response.data
-      #TODO handle errors
+      $scope.errorNotification = "Oops ~! something went wrong"
+      $scope.loginLabel = "Login again"
 
     Session.save($scope.session, successCallback, errorCallback)

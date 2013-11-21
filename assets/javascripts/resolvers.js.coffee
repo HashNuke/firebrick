@@ -1,6 +1,5 @@
 window.AppResolvers = {}
 
-
 AppResolvers.auth = (Session, SharedData, $q, $route)->
   return true if SharedData.user?
 

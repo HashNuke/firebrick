@@ -1,4 +1,5 @@
 <div class="login">
+
   <form ng-submit="login()">
 
     <div class="field">
@@ -12,7 +13,8 @@
     </div>
 
     <div class="actions">
-      <input type="submit" value="Login"/>
+      <span class="auth-error">{{errorNotification}}</span>
+      <input type="submit" value="{{loginLabel}}"/>
     </div>
 
   </form>
