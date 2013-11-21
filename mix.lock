@@ -1,7 +1,7 @@
 [ "bcrypt": {:git, "git://github.com/Feuerlabs/erlang-bcrypt.git", "2f60cf4ebe3de218d52bfa176c17dba7204fdb68", []},
   "chronos": {:git, "git://github.com/nurugger07/chronos.git", "1603a719b4023afa4e1465ee791274a11fe3afbd", []},
   "cowboy": {:git, "git://github.com/extend/cowboy.git", "bbee34fe1638b742796b00b39c0859395a752167", []},
-  "dynamo": {:git, "git://github.com/elixir-lang/dynamo.git", "c7aaad09f1f98f37b6804ab0bf8bf6ee2cce8da2", []},
+  "dynamo": {:git, "git://github.com/elixir-lang/dynamo.git", "518cb432cbdd399e7c0986d038cfa5116504fb73", []},
   "erlang_localtime": {:git, "git://github.com/choptastic/erlang_localtime.git", "ebcafb02326e4b2e2ea8fb9a8ba1abacf6426a57", [{:branch, "master"}]},
   "erlware_commons": {:git, "git://github.com/erlware/erlware_commons.git", "96cdc0e6237bfc834d144750e7fbef09016be084", [{:branch, "master"}]},
   "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "3be009f28fa6012688138abe34b74d3fb394e4a6", []},
