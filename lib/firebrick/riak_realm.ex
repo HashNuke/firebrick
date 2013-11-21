@@ -124,7 +124,8 @@ defmodule Firebrick.RiakRealm do
 
 
   def patch(bucket, key, patch_data) do
-    new_data = get(bucket, key) |> Dict.merge(patch_data)
+    {:ok, old_data} = get(bucket, key)
+    new_data = Dict.merge(old_data, patch_data)
     {:ok, json} = JSEX.encode(new_data)
     :ok = :riakc_obj.new(bucket, key, json, "application/json")
     |> RiakPool.put

@@ -23,7 +23,7 @@ defrecord User,
   def skip_attributes, do: ["id", "password"]
 
   # These will be used for public_attributes
-  def safe_attributes, do: ["id", "username", "first_name", "last_name", "role", "domain_id"]
+  def safe_attributes, do: ["id", "username", "first_name", "last_name", "role", "domain_id", "primary_address"]
 
 
   def validate(record) do
