@@ -9,9 +9,9 @@ defmodule Firebrick.Smtp do
   def send_test_mail() do
     host = :net_adm.localhost
     sender = "firebrick_tester@#{host}"
-    recepients = ["john@#{host}"]
+    recepients = ["admin@#{host}"]
     sender_address = "Firebrick Tester <firebrick_tester@#{host}>"
-    recepient_addresses = ["John Appleseed <john@#{host}>"]
+    recepient_addresses = ["Admin <admin@#{host}>"]
     client_options = [relay: host, username: sender, password: "mypassword", port: 2525]
     mail = {
             sender,
