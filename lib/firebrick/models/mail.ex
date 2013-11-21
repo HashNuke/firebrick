@@ -1,5 +1,6 @@
 defrecord Mail,
   id: nil,
+  user_id: nil,
   from: nil,
   to: nil,
   cc: nil,
@@ -21,11 +22,8 @@ defrecord Mail,
 
   def bucket, do: "firebrick_mails"
 
-
-  # These will be skipped when saving
   def skip_attributes, do: ["id"]
 
-  # These will be used for public_attributes
   def safe_attributes, do: [
     "id",
     "from",
@@ -56,6 +54,13 @@ defrecord Mail,
 
   defp parse_mail({type, sub_type, headers, properties, body}) do
     mail = parse_headers(headers, __MODULE__[])
+
+    {results, count} = User.search("config_type:user AND primary_address:#{mail.from[:email]}")
+
+    if length(results) > 0 do
+      mail = mail.id hd(results).id
+    end
+
     |> apply(:sent_as, ["#{type}/#{sub_type}"])
     |> apply(:raw_data, [[
         sent_as: "#{type}/#{sub_type}",

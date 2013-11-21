@@ -3,6 +3,7 @@ defrecord User,
   username: nil,
   password: nil,
   encrypted_password: nil,
+  primary_address: nil,
   first_name: nil,
   last_name: nil,
   role: nil,
@@ -71,12 +72,23 @@ defrecord User,
   end
 
 
+  def update_primary_address(record) do
+    domain = Domain.find(record.domain_id)
+    record.primary_address("#{record.username}@#{domain.name}")
+  end
+
+
   # Override assign_attributes
   # Merge mandatory params and encrypt password if necessary
   def assign_attributes(record, params) do
     super(record, params)
     |> apply(:config_type, ["user"])
-    |> apply(:encrypt_password, [])
   end
 
+
+  def before_save(record) do
+    record
+    |> apply(:encrypt_password, [])
+    |> update_primary_address
+  end
 end
