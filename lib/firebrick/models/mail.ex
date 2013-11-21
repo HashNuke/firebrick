@@ -52,15 +52,23 @@ defrecord Mail,
   end
 
 
+  #TODO Handle errors, bounces
   defp parse_mail({type, sub_type, headers, properties, body}) do
     mail = parse_headers(headers, __MODULE__[])
+    receiver_strings = []
 
-    {results, count} = User.search("config_type:user AND primary_address:#{mail.from[:email]}")
-
-    if length(results) > 0 do
-      mail = mail.id hd(results).id
+    receiver_strings = lc receiver inlist mail.to do
+      "primary_address:#{receiver[:email]}"
     end
 
+    query = "config_type:user AND (#{Enum.join(receiver_strings, " OR ")})"
+    {results, count} = User.search(query)
+
+    if length(results) > 0 do
+      mail = mail.user_id hd(results).id
+    end
+
+    mail
     |> apply(:sent_as, ["#{type}/#{sub_type}"])
     |> apply(:raw_data, [[
         sent_as: "#{type}/#{sub_type}",
@@ -149,7 +157,7 @@ defrecord Mail,
 
 
   defp clean_from_field(mail) do
-    mail.from parse_address_list(mail.from)
+    parse_address_list(mail.from) |> hd |> mail.from
   end
 
 
