@@ -13,7 +13,7 @@ defmodule Firebrick.DynamoSupervisor do
       worker(Firebrick.Dynamo, [dynamo_options], restart: :transient)
     ]
 
-    :ets.new(:firebrick_sessions, [:named_table, :public, {:write_concurrency, true}])
+    :ets.new(:firebrick_sessions, [:named_table, :public, {:read_concurrency, true}])
 
     supervise(children, strategy: :one_for_one, restart: :transient)
   end

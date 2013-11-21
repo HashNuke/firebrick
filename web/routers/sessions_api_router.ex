@@ -23,7 +23,6 @@ defmodule SessionsApiRouter do
       result = results |> hd
       if User.valid_password?(result, params["password"]) do
         conn = put_session(conn, :user_id, result.id)
-        |> configure_session(:secure, true)
 
         json_response [user: result.public_attributes], conn
       else
