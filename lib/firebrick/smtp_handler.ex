@@ -79,7 +79,7 @@ defmodule Firebrick.SmtpHandler do
     {:error, "554 invalid hostname", state}
   end
 
-  def handle_EHLO(hostname, extensions, state) do
+  def handle_EHLO(_hostname, extensions, state) do
     # You can advertise additional extensions, or remove some defaults
     my_extensions = case :proplists.get_value(:auth, state.options, false) do
       true ->
@@ -198,12 +198,12 @@ defmodule Firebrick.SmtpHandler do
   #   {ok, state}
   # end
 
-  def handle_AUTH('cram-md5', "username", {digest, seed}, state) do
+  def handle_AUTH('cram-md5', "username", {_digest, seed}, state) do
     case :smtp_util.compute_cram_digest("PaSSw0rd", seed) do
-      digest ->
+      _digest ->
         {:ok, state}
-      _ ->  # never comes to this, because previous case matches all
-        :error
+      # _ ->  # never comes to this, because previous case matches all
+      #   :error
     end
   end
 
