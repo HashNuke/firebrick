@@ -26,14 +26,6 @@ I would suggest using a linux machine (even a virtual machine is fine).
 
 ## Development
 
-#### Data models
-
-* Users
-* Threads
-* Mails
-
-
-
 #### Ruby
 
 You'll have to install Ruby if you are touching any of the assets (coffeescripts or stylesheets).
@@ -64,9 +56,4 @@ Check `docs/asset-compilation-using-watchman.md` for notes on auto-compilation o
       sudo iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25 -j REDIRECT --to-ports 2525
 
 * Tag all incoming mails with "inbox"
-
-### Angular routes workout
-
-* AppCtrl (for everything on the navigation bar))
-* /labels/:name - categories controller
 
