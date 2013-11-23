@@ -13,7 +13,7 @@ defmodule Firebrick.Mixfile do
 
   # Configuration for the OTP application
   def application do
-    [ applications: [:cowboy, :dynamo, :bcrypt],
+    [ applications: [:cowboy, :dynamo, :bcrypt, :qdate],
       mod: { Firebrick, [] } ]
   end
 

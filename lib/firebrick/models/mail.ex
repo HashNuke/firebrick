@@ -1,6 +1,7 @@
 defrecord Mail,
   id: nil,
   user_id: nil,
+  thread_id: nil,
   from: nil,
   to: nil,
   cc: nil,
@@ -13,6 +14,12 @@ defrecord Mail,
   plain_body: nil,
   html_body: nil,
   sent_as: nil,
+  read: false,
+  read_on: nil,
+  parsed_from: nil,
+  parsed_to: nil,
+  parsed_cc: nil,
+  parsed_references: nil,
   raw_data: nil,
    __errors__: [] do
 
@@ -24,21 +31,23 @@ defrecord Mail,
 
   def skip_attributes, do: ["id"]
 
-  def safe_attributes, do: [
-    "id",
-    "from",
-    "to",
-    "cc",
-    "date",
-    "subject",
-    "reply_to",
-    "message_id",
-    "in_reply_to",
-    :plain_body,
-    :html_body,
-    "references",
-    "raw_data"
-  ]
+  def safe_attributes do
+    [
+      "id",
+      "from",
+      "to",
+      "cc",
+      "date",
+      "subject",
+      "reply_to",
+      "message_id",
+      "in_reply_to",
+      :plain_body,
+      :html_body,
+      "references",
+      "raw_data"
+    ]
+  end
 
 
   def validate(record) do
@@ -46,9 +55,49 @@ defrecord Mail,
   end
 
 
+  def mark_as_read!(arg1) do
+    timestamp = :qdate.to_string("Ymdhms", {:erlang.date(), :erlang.time()})
+    if is_record(arg1) do
+      arg1.read(true).read_on(timestamp).save
+    else
+      Mail.find(arg1).read(true).read_on(timestamp).save
+    end
+  end
+
+
   def accept(mail_fields) do
     mail = parse_mail(mail_fields)
-    mail.save
+    current_mail_preview = [sender: mail.from, preview: summarize(mail.plain_body)]
+
+    case mail.save do
+      {:ok, key} ->
+
+        case mail.thread_id do
+          nil ->
+            thread = Thread[subject: mail.subject, mail_previews: [[current_mail_preview]]]
+            #TODO append message ids
+            thread = thread.assign_timestamps
+            {:ok, thread_id} = thread.save
+            mail.id(key).thread_id(thread_id).save
+
+          _ -> # in this case thread already exists, so only update it
+            thread = Thread.find(mail.thread_id)
+            thread = thread.mail_previews(thread.mail_previews ++ [current_mail_preview])
+            thread.assign_timestamps.read(false).save
+        end
+      _ ->
+        #TODO mail wasn't saved
+    end
+  end
+
+
+  def summarize(text) do
+    {:ok, char_list} = String.to_char_list(text)
+    if length(char_list) > 50 do
+      "#{Enum.take(char_list, 30)}..."
+    else
+      Enum.take(char_list, 50)
+    end
   end
 
 
@@ -57,16 +106,30 @@ defrecord Mail,
     mail = parse_headers(headers, __MODULE__[])
     receiver_strings = []
 
-    receiver_strings = lc receiver inlist mail.to do
+    receiver_strings = lc receiver inlist mail.parsed_to do
       "primary_address:#{receiver[:email]}"
     end
 
-    query = "config_type:user AND (#{Enum.join(receiver_strings, " OR ")})"
-    {results, count} = User.search(query)
+    user_query = "config_type:user AND (#{Enum.join(receiver_strings, " OR ")})"
+    {users, count} = User.search(user_query)
 
-    if length(results) > 0 do
-      mail = mail.user_id hd(results).id
+    if length(users) > 0 do
+      mail = mail.user_id hd(users).id
     end
+
+    if mail.parsed_references do
+      references_strings = lc reference inlist mail.parsed_references do
+        "message_id:<#{reference}> OR message_id:#{reference}"
+      end
+
+      thread_query = Enum.join(references_strings, " OR ")
+      {threads, count} = Thread.search(thread_query)
+
+      if length(users) > 0 do
+        mail = mail.thread_id hd(threads).id
+      end
+    end
+
 
     mail
     |> apply(:sent_as, ["#{type}/#{sub_type}"])
@@ -147,28 +210,29 @@ defrecord Mail,
 
 
   defp clean_headers(mail) do
-    clean_from_field(mail)
-    |> clean_to_field
-    |> clean_cc_field
+    mail
+    |> assign_parsed_to_field
+    |> assign_parsed_from_field
+    |> assign_parsed_cc_field
     |> clean_message_id_field
-    |> clean_references_field
+    |> assign_parsed_references_field
     |> clean_in_reply_to_field
   end
 
 
-  defp clean_from_field(mail) do
-    parse_address_list(mail.from) |> hd |> mail.from
+  def assign_parsed_from_field(mail) do
+    parse_address_list(mail.from) |> hd |> mail.parsed_from
   end
 
 
-  defp clean_to_field(mail) do
-    mail.to parse_address_list(mail.to)
+  def assign_parsed_to_field(mail) do
+    mail.parsed_to parse_address_list(mail.to)
   end
 
 
-  defp clean_cc_field(mail) do
-    if mail.cc do
-      mail.cc parse_address_list(mail.cc)
+  def assign_parsed_cc_field(mail) do
+    if mail.parsed_cc do
+      mail.parsed_cc parse_address_list(mail.cc)
     else
       mail
     end
@@ -185,7 +249,7 @@ defrecord Mail,
   end
 
 
-  defp clean_references_field(mail) do
+  defp assign_parsed_references_field(mail) do
     if mail.references do
       mail.references parse_message_ids(mail.references)
     else
