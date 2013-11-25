@@ -1,5 +1,6 @@
 # Firebrick
 
+[![Build Status](https://travis-ci.org/HashNuke/firebrick.png?branch=master)](https://travis-ci.org/HashNuke/firebrick)
 
 ## Usage (temporary)
 
