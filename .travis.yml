@@ -8,8 +8,7 @@ before_install:
   - cd $HOME/src/elixir && git checkout $ELIXIR_VERSION && make clean test && cd -
 
 env:
-  - PATH=$PATH:$HOME/src/elixir/bin/
-  - ELIXIR_VERSION=v0.11.2
+  - PATH=$PATH:$HOME/src/elixir/bin/ ELIXIR_VERSION=v0.11.2
 
 install: mix deps.get
 script:  mix test
