@@ -7,7 +7,7 @@ app.controller 'SessionCtrl', ($scope, $location, SharedData, Session, auth)->
     $scope.sharedData.user = auth.user
     $location.path("/")
   else
-    $scope.session = {username: "whatever", password: "akash"}
+    $scope.session = {username: "admin", password: "password"}
 
   $scope.login = ->
     successCallback = (data) ->
