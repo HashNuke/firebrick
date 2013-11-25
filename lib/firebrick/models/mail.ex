@@ -77,12 +77,14 @@ defrecord Mail,
             thread = Thread[subject: mail.subject, mail_previews: [[current_mail_preview]]]
             #TODO append message ids
             thread = thread.assign_timestamps
+            thread = thread.user_id(mail.user_id)
             {:ok, thread_id} = thread.save
             mail.id(key).thread_id(thread_id).save
 
           _ -> # in this case thread already exists, so only update it
             thread = Thread.find(mail.thread_id)
             thread = thread.mail_previews(thread.mail_previews ++ [current_mail_preview])
+            thread = thread.user_id(mail.user_id)
             thread.assign_timestamps.read(false).save
         end
       _ ->
@@ -96,7 +98,7 @@ defrecord Mail,
     if length(char_list) > 50 do
       "#{Enum.take(char_list, 30)}..."
     else
-      Enum.take(char_list, 50)
+      "#{Enum.take(char_list, 50)}"
     end
   end
 
@@ -112,6 +114,7 @@ defrecord Mail,
 
     user_query = "config_type:user AND (#{Enum.join(receiver_strings, " OR ")})"
     {users, count} = User.search(user_query)
+
 
     if length(users) > 0 do
       mail = mail.user_id hd(users).id
