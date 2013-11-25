@@ -4,10 +4,8 @@ otp_release:
 
 install:
   - mkdir $HOME/src
-  - cd $HOME/src && git clone https://github.com/elixir-lang/elixir.git
-  - git checkout v0.11.2
-  - cd elixir
-  - make clean test
+  - git clone https://github.com/elixir-lang/elixir.git $HOME/src/elixir
+  - cd $HOME/src/elixir && git checkout v0.11.2 && make clean test && cd -
 
 env:
   - PATH=$PATH:$HOME/src/elixir/bin/
