@@ -2,7 +2,7 @@ language: erlang
 otp_release:
    - R16B
 
-install:
+before_install:
   - mkdir $HOME/src
   - git clone https://github.com/elixir-lang/elixir.git $HOME/src/elixir
   - cd $HOME/src/elixir && git checkout v0.11.2 && make clean test && cd -
