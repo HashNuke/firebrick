@@ -19,7 +19,7 @@ defrecord Thread,
 
   def skip_attributes, do: ["id"]
 
-  def safe_attributes, do: ["id", "subject", "date", "user_id"]
+  def safe_attributes, do: ["id", "subject", "created_at", "updated_at", "read", "mail_previews", "user_id"]
 
 
   def assign_timestamps(record) do
