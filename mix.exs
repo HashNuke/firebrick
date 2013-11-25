@@ -5,7 +5,7 @@ defmodule Firebrick.Mixfile do
     [ app: :firebrick,
       version: "0.0.1",
       dynamos: [Firebrick.Dynamo],
-      compilers: [:elixir, :dynamo, :app],
+      compilers: [:elixir, :dynamo, :app, :erlang],
       env: [prod: [compile_path: "ebin"]],
       compile_path: "tmp/#{Mix.env}/firebrick/ebin",
       deps: deps ]
