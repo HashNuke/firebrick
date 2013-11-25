@@ -69,20 +69,32 @@ defmodule Firebrick.RiakRealm do
 
 
       def search(query, options // []) do
-        {:ok, {:search_results, search_results, _, count}} = RiakPool.run(fn(worker)->
-          :riakc_pb_socket.search(worker, bucket, query, options)
+        RiakPool.run(fn(pid)->
+          {:ok,
+            {:search_results, search_results, _, count}
+          } = :riakc_pb_socket.search(pid, bucket, query, options)
+
+          mapred_input = :lists.map(fn({_, obj})->
+            {bucket, obj["id"]}
+          end, search_results)
+
+          mapreduce_result = :riakc_pb_socket.mapred(pid, mapred_input,
+            [{:map, {:modfun, :firebrick_mapred, :map_result}, :none, false},
+             {:reduce, {:modfun, :firebrick_mapred, :reduce_result}, :none, true}]
+          )
+
+          case mapreduce_result do
+            {:ok, [{1, objs}]} ->
+              models = lc {key, json} inlist objs do
+                {:ok, data} = JSEX.decode(json)
+                assign_attributes(__MODULE__[], data).id(key)
+              end
+              {models, count}
+
+            {:ok, []} -> {[], 0}
+          end
+
         end)
-
-        # Cleans up, by removing the bucket names from the results
-        results = :lists.map(fn(item)->
-          {_, obj} = item
-          obj
-        end, search_results)
-
-        models = lc result inlist results, do: assign_attributes(__MODULE__[], result)
-
-        # Returns {results, total_number_of_results}
-        {models, count}
       end
 
 
@@ -96,6 +108,13 @@ defmodule Firebrick.RiakRealm do
             :ok
         end
       end
+
+
+    def list_keys do
+      RiakPool.run fn (pid)->
+        :riakc_pb_socket.list_keys pid, bucket
+      end
+    end
 
       defoverridable [assign_attributes: 2, before_save: 1]
     end
