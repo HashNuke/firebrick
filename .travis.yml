@@ -1,0 +1,16 @@
+language: erlang
+otp_release:
+   - R16B
+
+install:
+  - mkdir $HOME/src
+  - cd $HOME/src && git clone https://github.com/elixir-lang/elixir.git
+  - git checkout v0.11.2
+  - cd elixir
+  - make install
+
+env:
+  - PATH=$PATH:$HOME/src/elixir/bin/
+
+install: mix deps.get
+script:  mix test
