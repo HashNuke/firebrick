@@ -1,6 +1,6 @@
-app.controller 'ThreadsCtrl', ($scope, SharedData, Thread, threads)->
+app.controller 'ThreadsCtrl', ($scope, $route, SharedData, Thread, threads)->
   $scope.sharedData = SharedData
-  $scope.sharedData.title = "Threads"
+  $scope.sharedData.title = ($route.current.params.category || "inbox")
   $scope.threads = threads
   console.log threads
 

@@ -15,7 +15,7 @@ config = ($routeProvider, $locationProvider, $httpProvider)->
 
 
   $routeProvider.when('/',
-      templateUrl: '/static/partials/hello.html',
+      templateUrl: '/static/partials/threads.html',
       controller: 'ThreadsCtrl'
       resolve:
         threads: AppResolvers.threads
