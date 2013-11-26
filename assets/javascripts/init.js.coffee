@@ -15,18 +15,19 @@ config = ($routeProvider, $locationProvider, $httpProvider)->
 
 
   $routeProvider.when('/',
-      templateUrl: '/static/partials/hello.html'
-      controller: "MailsCtrl"
+      templateUrl: '/static/partials/hello.html',
+      controller: 'ThreadsCtrl'
       resolve:
+        threads: AppResolvers.threads
         auth: AppResolvers.auth
     ).when('/login',
       templateUrl: '/static/partials/login.html'
       controller: 'SessionCtrl'
       resolve:
         auth: AppResolvers.auth
-    ).when('/labels/:label',
-      templateUrl: '/static/partials/mails.html',
-      controller: 'MailsCtrl'
+    ).when('/threads/:category',
+      templateUrl: '/static/partials/threads.html',
+      controller: 'ThreadsCtrl'
     ).when('/domains',
       templateUrl: '/static/partials/domains.html'
       controller: 'DomainsCtrl'
