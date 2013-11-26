@@ -7,16 +7,11 @@ defmodule MailsApiRouter do
   end
 
 
-  get "/" do
-    user = conn.assigns[:current_user]
-    {threads, count} = Thread.search("user_id:#{user.id}")
-    thread_attributes = lc thread inlist threads, do: thread.public_attributes
-    json_response thread_attributes, conn
-  end
-
-
   get "/:mail_id" do
-    #TODO
+    #TODO make sure the mail belongs to the user
+    user = conn.assigns[:current_user]
+    mail = Mail.find(conn.params[:mail_id])
+    json_response mail.public_attributes, conn
   end
 
 
