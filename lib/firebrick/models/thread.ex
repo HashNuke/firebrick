@@ -5,6 +5,7 @@ defrecord Thread,
   updated_at: nil,
   message_ids: [],
   mail_previews: [],
+  category: nil,
   read: false,
   user_id: nil,
    __errors__: [] do

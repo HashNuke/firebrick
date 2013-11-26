@@ -73,6 +73,7 @@ defrecord Mail,
 
     #TODO categorize spam
     #TODO check for muted threads
+    #TODO check if thread is marked as spam
     mail = mail.category("inbox")
 
     case mail.save do
@@ -83,14 +84,13 @@ defrecord Mail,
             thread = Thread[subject: mail.subject, mail_previews: [[current_mail_preview]]]
             #TODO append message ids
             thread = thread.assign_timestamps
-            thread = thread.user_id(mail.user_id)
+            thread = thread.user_id(mail.user_id).category(mail.category)
             {:ok, thread_id} = thread.save
             mail.id(key).thread_id(thread_id).save
-
           _ -> # in this case thread already exists, so only update it
             thread = Thread.find(mail.thread_id)
             thread = thread.mail_previews(thread.mail_previews ++ [current_mail_preview])
-            thread = thread.user_id(mail.user_id)
+            thread = thread.user_id(mail.user_id).category(mail.category)
             thread.assign_timestamps.read(false).save
         end
       _ ->
