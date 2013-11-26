@@ -16,6 +16,7 @@ defrecord Mail,
   sent_as: nil,
   read: false,
   read_on: nil,
+  category: nil,
   parsed_from: nil,
   parsed_to: nil,
   parsed_cc: nil,
@@ -42,10 +43,11 @@ defrecord Mail,
       "reply_to",
       "message_id",
       "in_reply_to",
-      :plain_body,
-      :html_body,
+      "plain_body",
+      "html_body",
       "references",
-      "raw_data"
+      "raw_data",
+      "category"
     ]
   end
 
@@ -68,6 +70,10 @@ defrecord Mail,
   def accept(mail_fields) do
     mail = parse_mail(mail_fields)
     current_mail_preview = [sender: mail.from, preview: summarize(mail.plain_body)]
+
+    #TODO categorize spam
+    #TODO check for muted threads
+    mail = mail.category("inbox")
 
     case mail.save do
       {:ok, key} ->

@@ -4,5 +4,4 @@
 map_result(Obj, _, _)->
   [{riak_object:key(Obj), riak_object:get_value(Obj)}].
 
-reduce_result(Objs, _)->
-  Objs.
+reduce_result(Objs, _)-> Objs.
