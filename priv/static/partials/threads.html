@@ -1,97 +1,15 @@
 <div class="threads-wrapper">
-<div class="threads">
-  <div class="thread">
+  <div class="threads" ng-repeat="thread in threads">
 
-    <div class="sender">John Appleseed</div>
-    <div class="timestamp">1:46 am</div>
+    <div class="thread">
+      <div class="sender">{{thread.mail_preview["sender"]["name"] || thread.mail_preview["sender"]["email"]}}</div>
+      <div class="timestamp">{{thread.updated_at}}</div>
 
-    <div class="preview">
-      <div class="subject">
-        It has survived not only five centuries, but also the leap into electronic typesetting
+      <div class="preview">
+        <div class="subject">{{thread.subject}}</div>
+        <div class="summary">{{thread.mail_previews}}</div>
       </div>
-      <div class="summary">Summary</div>
     </div>
-  </div>
-
-  <div class="thread unread">
-    <div class="sender">John Appleseed</div>
-    <div class="timestamp">1:46 am</div>
-
-    <div class="preview">
-      <div class="subject">
-        It has survived not only five centuries, but also the leap into electronic typesetting
-      </div>
-      <div class="summary">Summary</div>
-    </div>
-  </div>
-
-  <div class="thread unread">
-
-    <div class="sender">John Appleseed</div>
-    <div class="timestamp">1:46 am</div>
-
-    <div class="preview">
-      <div class="subject">
-        It has survived not only five centuries, but also the leap into electronic typesetting
-      </div>
-      <div class="summary">Summary</div>
-    </div>
-  </div>
-
-  <div class="thread">
-    <div class="sender">John Appleseed</div>
-    <div class="timestamp">1:46 am</div>
-
-    <div class="preview">
-      <div class="subject">
-        It has survived not only five centuries, but also the leap into electronic typesetting
-      </div>
-      <div class="summ">Summary</div>
-    </div>
-  </div>
-</div>
-</div>
-
-<div class="detail">
-  <div class="thread-info">
-    <div class="subject">Lorem Ipsum is not nice to read</div>
-    <div class="people-info">John, Jane and 6 people in conversation. 3 others are watching</div>
-  </div>
-
-  <div class="mails">
-
-    <div class="mail">
-      <div class="meta">
-        <div class="sender">John Appleseed</div>
-        <div class="timestamp">1:46am</div>
-      </div>
-      <div class="body">
-        <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1
-         </p>
-       </div>
-       <div class="controls">
-         <a href="#">Reply</a>
-         <a href="#">Reply to all</a>
-       </div>
-     </div>
-
-
-     <div class="mail">
-       <div class="meta">
-         <div class="sender">Jane Appleseed</div>
-         <div class="timestamp">1:46am</div>
-       </div>
-       <div class="body">
-         <p>
-           Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1
-         </p>
-       </div>
-       <div class="controls">
-         <a href="#">Reply</a>
-         <a href="#">Reply to all</a>
-       </div>
-     </div>
 
   </div>
 </div>

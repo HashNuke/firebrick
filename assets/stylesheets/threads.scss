@@ -1,8 +1,9 @@
 .threads-wrapper {
   float: left;
-  width: 30%;
+  width: 100%;
   height: 100%;
-  // padding-top: 2.6em;
+  padding-top: 0.5em;
+  padding-left: 0.25em;
 }
 
 
@@ -16,15 +17,22 @@
   overflow-y: scroll;
 
   .unread {
-    background: #f1f1f1 !important;
+    background: #fff !important;
+    .sender { font-weight: bold; }
+    .subject {
+      font-weight: bold;
+      color: #333 !important;
+    }
   }
 
   .thread {
     float: left;
     width: 100%;
     padding: 0.5em 0.5em 0.5em 0.2em;
-    background: #FFF;
-    border-bottom: 1px solid #CCC;
+    background: #f1f1f1;
+    // border-bottom: 0.1em solid #CCC;
+    border-left: 0.25em solid #06c;
+    margin-bottom: 0.25em;
 
     &:hover {
       cursor: pointer;
@@ -40,37 +48,34 @@
     .sender {
       float: left;
       color: #333;
-      padding: 0.5em 0.5em 0.2em 0.5em;
-      width: 70%;
-      font-weight: bold;
+      padding: 0.2em 0.5em 0.2em 0.5em;
+      width: 15%;
     }
 
 
     .preview {
       float: left;
       padding: 0.2em 0.5em 0.2em 0.5em;
-      width: 100%;
+      width: 60%;
 
       .subject {
         float: left;
-        clear: left;
         margin-right: 1em;
-        color: #777;
+        color: #444;
         text-overflow: clip;
         white-space: nowrap;
         overflow: hidden;
-        width: 100%;
       }
+
       .summary {
         float: left;
         color: #999;
-        width: 100%;
       }
     }
 
     .timestamp {
       float: right;
-      padding: 0.5em;
+      padding: 0.2em;
       color: #06c;
     }
   }
