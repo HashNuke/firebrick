@@ -81,7 +81,7 @@ defrecord Mail,
 
         case mail.thread_id do
           nil ->
-            thread = Thread[subject: mail.subject, mail_previews: [[current_mail_preview]]]
+            thread = Thread[subject: mail.subject, mail_previews: [current_mail_preview]]
             #TODO append message ids
             thread = thread.assign_timestamps
             thread = thread.user_id(mail.user_id).category(mail.category)
@@ -206,7 +206,7 @@ defrecord Mail,
   end
 
 
-  defp parse_address_list(address_string) do
+  def parse_address_list(address_string) do
     {:ok, addresses} = :smtp_util.parse_rfc822_addresses(address_string)
     Enum.map(addresses, fn({name, address})->
       if name == :undefined do

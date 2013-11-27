@@ -116,7 +116,7 @@ defmodule Firebrick.RiakRealm do
       end
     end
 
-      defoverridable [assign_attributes: 2, before_save: 1]
+      defoverridable [assign_attributes: 2, before_save: 1, public_attributes: 1]
     end
   end
 

@@ -19,7 +19,6 @@ defrecord Thread,
   def bucket, do: "firebrick_threads"
 
   def skip_attributes, do: ["id"]
-
   def safe_attributes, do: ["id", "subject", "created_at", "updated_at", "read", "mail_previews", "user_id"]
 
 
@@ -40,4 +39,16 @@ defrecord Thread,
     end
   end
 
+
+  def public_attributes(record) do
+    fields = ["id", "subject", "created_at", "updated_at", "read", "user_id"]
+    attrs = lc attr inlist fields do
+      { "#{attr}", apply(record, :"#{attr}", []) }
+    end
+
+    mail_preview = :lists.last(record.mail_previews)
+    # import the function from mail instead of using full reference
+    sender = Mail.parse_address_list(mail_preview["sender"]) |> hd
+    ListDict.merge attrs, [ mail_preview: [sender: sender, preview: mail_preview["preview"]] ]
+  end
 end
