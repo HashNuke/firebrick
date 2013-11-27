@@ -1,3 +1,20 @@
+moment.lang('en', {
+  relativeTime :
+      future: "in %s",
+      past:   "%s ago",
+      s:  "seconds",
+      m:  "a min ago",
+      mm: "%d minutes",
+      h:  "an hr ago",
+      hh: "%d hrs ago",
+      d:  "a day ago",
+      dd: "%d days ago",
+      M:  "a month ago",
+      MM: "%d months ago",
+      y:  "a year ago",
+      yy: "%d years ago"
+})
+
 config = ($routeProvider, $locationProvider, $httpProvider)->
   $locationProvider.html5Mode(true)
 

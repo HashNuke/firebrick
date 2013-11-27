@@ -1,9 +1,9 @@
 <div class="threads-wrapper">
-  <div class="threads" ng-repeat="thread in threads">
+  <div class="threads">
 
-    <div class="thread">
+    <div class="thread" ng-repeat="thread in threads">
       <div class="sender">{{thread.mail_preview["sender"]["name"] || thread.mail_preview["sender"]["email"]}}</div>
-      <div class="timestamp">{{thread.updated_at}}</div>
+      <div class="timestamp">{{thread.updated_at | relativeTime}}</div>
 
       <div class="preview">
         <div class="subject">{{thread.subject}}</div>

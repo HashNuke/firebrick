@@ -1,3 +1,4 @@
+//= require "libs/moment.min"
 //= require "libs/angular"
 //= require "libs/angular-route"
 //= require "libs/angular-resource"
@@ -7,4 +8,5 @@
 //= require "resolvers"
 //= require "init"
 //= require "factories"
+//= require "filters"
 //= require_tree "./controllers"
