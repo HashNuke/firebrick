@@ -4,7 +4,6 @@ defmodule Firebrick.RiakRealm do
 
       import Firebrick.RiakRealm
 
-
       def assign_attributes(record, params) do
         Enum.reduce(params, record, fn({param, value}, updated_record)->
           apply(updated_record, :"#{param}", [value])
@@ -34,6 +33,7 @@ defmodule Firebrick.RiakRealm do
 
 
       def before_save(record), do: record
+      def intercept_obj(record, obj), do: obj
 
 
       def save(record) do
@@ -45,9 +45,19 @@ defmodule Firebrick.RiakRealm do
 
           case record.id do
             nil ->
-              put(bucket, :undefined, record.saveable_attributes)
+              {:ok, json} = JSEX.encode record.saveable_attributes
+              obj = :riakc_obj.new(bucket, :undefined, json, "application/json")
+              obj = __MODULE__.intercept_obj(record, obj)
+              {:ok, result} = RiakPool.put(obj)
+              {:ok, :riakc_obj.key(result)}
             _ ->
-              patch(bucket, id, record.saveable_attributes)
+              {:ok, old_data} = get(bucket, record.id)
+              new_data = Dict.merge(old_data, record.saveable_attributes)
+              {:ok, json} = JSEX.encode(new_data)
+              obj = :riakc_obj.new(bucket, record.id, json, "application/json")
+              obj = __MODULE__.intercept_obj(record, obj)
+              :ok = RiakPool.put(obj)
+              {:ok, record.id}
           end
         else
           {:error, record}
@@ -110,14 +120,29 @@ defmodule Firebrick.RiakRealm do
       end
 
 
-    def list_keys do
-      RiakPool.run fn (pid)->
-        :riakc_pb_socket.list_keys pid, bucket
+      def list_keys do
+        RiakPool.run fn (pid)->
+          :riakc_pb_socket.list_keys pid, bucket
+        end
       end
-    end
 
-      defoverridable [assign_attributes: 2, before_save: 1, public_attributes: 1]
+
+      defoverridable [
+        assign_attributes: 2,
+        before_save: 1,
+        public_attributes: 1,
+        intercept_obj: 2
+      ]
     end
+  end
+
+
+  def get(bucket, key) do
+    {:ok, obj} = RiakPool.get(bucket, key)
+    {:ok, data} = :riakc_obj.get_values(obj)
+    |> hd
+    |> JSEX.decode
+    {:ok, data}
   end
 
 
@@ -130,15 +155,6 @@ defmodule Firebrick.RiakRealm do
       true ->
         {:ok, key}
     end
-  end
-
-
-  def get(bucket, key) do
-    {:ok, obj} = RiakPool.get(bucket, key)
-    {:ok, data} = :riakc_obj.get_values(obj)
-    |> hd
-    |> JSEX.decode
-    {:ok, data}
   end
 
 

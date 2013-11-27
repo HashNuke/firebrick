@@ -22,6 +22,7 @@ defrecord Mail,
   parsed_cc: nil,
   parsed_references: nil,
   raw_data: nil,
+  timezone: "+0000",
    __errors__: [] do
 
   use Realm
@@ -58,7 +59,7 @@ defrecord Mail,
 
 
   def mark_as_read!(arg1) do
-    timestamp = :qdate.to_string("Ymdhms", {:erlang.date(), :erlang.time()})
+    timestamp = :qdate.to_unixtime({:erlang.date(), :erlang.time()})
     if is_record(arg1) do
       arg1.read(true).read_on(timestamp).save
     else
