@@ -2,27 +2,36 @@
 
 [![Build Status](https://travis-ci.org/HashNuke/firebrick.png?branch=master)](https://travis-ci.org/HashNuke/firebrick)
 
-## Usage (temporary)
+## Install and configuring dependencies (temporary, expect changes in the future)
 
-These usage instructions are temporary. Expect major changes to installation/usage instructions
+Firebrick requires Riak 2.0 and Elixir v0.11.2. At the time of writing, the latest version of is Riak 2.0pre5.
 
-I would suggest using a linux machine (even a virtual machine is fine).
-
-* Clone this repository
-* Run `mix deps.get` to install dependencies
 * Run the following command to redirect port 25 traffic to port 2525.
 
         sudo iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25 -j REDIRECT --to-ports 2525
 
+  The above command is for Ubuntu, figure out something else for your operating system.
+
+* Turn on Yokozuna in Riak's `riak.conf`
+
+* Create an index on Solr
+
+        curl -XPUT -i 'http://localhost:8093/yz/index/firebrick_index'
+
+* Create a bucket type which uses the index
+
+        riak-admin bucket-type create firebrick_type '{"props":{"yz_index":"firebrick_index"}}'
+
 * Start Riak with `riak start`
+
+
+## Setup
+
+* Clone this repository
+* Run `mix deps.get` to install dependencies
 * Start the app with `iex -S mix server`. You will also get a console.
-* To send a test mail, run `Firebrick.Smtp.send_test_mail`
 
-* Turn on Riak search in Riak's `app.config`
-* Install Riak search hooks by running
-
-      search-cmd install firebrick_mails
-      search-cmd install firebrick_config
+To send a test mail, run `Firebrick.Smtp.send_test_mail`
 
 
 ## Development
