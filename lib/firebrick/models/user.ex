@@ -17,13 +17,20 @@ defrecord User,
 
   # Tells the world which bucket this is stored in
   #TODO change to firebrick_config
-  def bucket, do: "rinket_config"
+  def bucket, do: {"firebrick_type", "firebrick_config"}
 
   # These will be skipped when saving
   def skip_attributes, do: ["id", "password"]
 
   # These will be used for public_attributes
   def safe_attributes, do: ["id", "username", "first_name", "last_name", "role", "domain_id", "primary_address"]
+
+
+  def intercept_obj(record, obj) do
+    metadata = :riakc_obj.get_update_metadata(obj)
+    |> :riakc_obj.set_secondary_index([ {{:binary_index, "config_type"}, ["user"]} ])
+    :riakc_obj.update_metadata(obj, metadata)
+  end
 
 
   def validate(record) do

@@ -10,7 +10,7 @@ defrecord Domain,
 
   # Tells the world which bucket this is stored in
   #TODO change this to firebrick_config
-  def bucket, do: "rinket_config"
+  def bucket, do: {"firebrick_type", "firebrick_config"}
 
   # These will be skipped when saving
   def skip_attributes, do: ["id"]
@@ -22,6 +22,13 @@ defrecord Domain,
   def validate(record) do
     record
     |> validates_length(:name, [min: 1])
+  end
+
+
+  def intercept_obj(record, obj) do
+    metadata = :riakc_obj.get_update_metadata(obj)
+    |> :riakc_obj.set_secondary_index([ {{:binary_index, "config_type"}, ["domain"]} ])
+    :riakc_obj.update_metadata(obj, metadata)
   end
 
 
