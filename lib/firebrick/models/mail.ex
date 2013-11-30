@@ -30,6 +30,7 @@ defrecord Mail,
 
 
   def bucket, do: "firebrick_mails"
+  def index_name, do: "firebrick_index"
 
   def skip_attributes, do: ["id"]
 

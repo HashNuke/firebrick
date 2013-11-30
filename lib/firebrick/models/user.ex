@@ -19,6 +19,8 @@ defrecord User,
   #TODO change to firebrick_config
   def bucket, do: {"firebrick_type", "firebrick_config"}
 
+  def index_name, do: "firebrick_index"
+
   # These will be skipped when saving
   def skip_attributes, do: ["id", "password"]
 
@@ -40,16 +42,17 @@ defrecord User,
     end
 
     uniqueness_validation = fn(record)->
-      {results, count} = User.search("config_type:user AND username:#{record.username}")
-      case length(results) do
-        0 ->
-          true
-        1 ->
-          result = results |> hd
-          result.id == record.id
-        _ ->
-          false
-      end
+      # {results, count} = User.search("config_type:user AND username:#{record.username}")
+      # case length(results) do
+      #   0 ->
+      #     true
+      #   1 ->
+      #     result = results |> hd
+      #     result.id == record.id
+      #   _ ->
+      #     false
+      # end
+      true
     end
 
     #TODO validations should check if the field already has an error

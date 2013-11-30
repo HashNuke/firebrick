@@ -18,6 +18,7 @@ defrecord Thread,
   # Tells the world which bucket this is stored in
   #TODO change this to firebrick_config
   def bucket, do: "firebrick_threads"
+  def index_name, do: "firebrick_index"
 
   def skip_attributes, do: ["id"]
   def safe_attributes, do: ["id", "subject", "created_at", "updated_at", "read", "mail_previews", "user_id"]

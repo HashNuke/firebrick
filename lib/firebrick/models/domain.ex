@@ -12,6 +12,8 @@ defrecord Domain,
   #TODO change this to firebrick_config
   def bucket, do: {"firebrick_type", "firebrick_config"}
 
+  def index_name, do: "firebrick_index"
+
   # These will be skipped when saving
   def skip_attributes, do: ["id"]
 
