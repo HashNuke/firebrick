@@ -16,11 +16,11 @@ Firebrick requires Riak 2.0 and Elixir v0.11.2. At the time of writing, the late
 
 * Create an index on Solr
 
-        curl -XPUT -i 'http://localhost:8093/yz/index/firebrick_index'
+        curl -XPUT -i 'http://localhost:8098/search/index/firebrick_index'
 
 * Create a bucket type which uses the index
 
-        riak-admin bucket-type create firebrick_type '{"props":{"yz_index":"firebrick_index"}}'
+        riak-admin bucket-type create firebrick_type '{"props":{"search_index":"firebrick_index"}}'
 
 * Start Riak with `riak start`
 
