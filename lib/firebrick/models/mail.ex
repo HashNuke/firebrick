@@ -29,7 +29,7 @@ defrecord Mail,
   use Firebrick.RiakRealm
 
 
-  def bucket, do: "firebrick_mails"
+  def bucket, do: {"firebrick_type", "firebrick_mails"}
   def index_name, do: "firebrick_index"
 
   def skip_attributes, do: ["id"]

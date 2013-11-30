@@ -15,9 +15,7 @@ defrecord Thread,
   use Firebrick.RiakRealm
 
 
-  # Tells the world which bucket this is stored in
-  #TODO change this to firebrick_config
-  def bucket, do: "firebrick_threads"
+  def bucket, do: {"firebrick_type", "firebrick_threads"}
   def index_name, do: "firebrick_index"
 
   def skip_attributes, do: ["id"]

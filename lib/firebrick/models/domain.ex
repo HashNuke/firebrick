@@ -8,10 +8,7 @@ defrecord Domain,
   use Firebrick.RiakRealm
 
 
-  # Tells the world which bucket this is stored in
-  #TODO change this to firebrick_config
   def bucket, do: {"firebrick_type", "firebrick_config"}
-
   def index_name, do: "firebrick_index"
 
   # These will be skipped when saving
