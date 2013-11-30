@@ -40,16 +40,16 @@ defrecord User,
     end
 
     uniqueness_validation = fn(record)->
-      # {results, count} = User.search("config_type:user AND username:#{record.username}")
-      # case length(results) do
-      #   0 ->
-      #     true
-      #   1 ->
-      #     result = results |> hd
-      #     result.id == record.id
-      #   _ ->
-      #     false
-      # end
+      {results, count, _} = User.query("config_type:user AND username:#{record.username}")
+      case length(results) do
+        0 ->
+          true
+        1 ->
+          result = results |> hd
+          result.id == record.id
+        _ ->
+          false
+      end
       true
     end
 
