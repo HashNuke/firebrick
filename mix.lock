@@ -8,6 +8,7 @@
   "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "a5ff9956feeea113509125e5b29623c1fa7e3be4", []},
   "gen_smtp": {:git, "git://github.com/Vagabond/gen_smtp.git", "0595a24d488d8b0e68811461ceef9d5f27d446c3", []},
   "hackney": {:git, "git://github.com/benoitc/hackney.git", "5b0f7eb949ebebd6fabfbc4e08a7b7231850606a", []},
+  "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "e8ae353c16d4f0897abb9f80025b52925b974dd1", [{:tag, "v4.0.2"}]},
   "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "c9df36f07b2089a73ab6b32074c01728f1e5a2e1", []},
   "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [{:tag, "v1.4.3"}]},
   "meck": {:git, "git://github.com/basho/meck.git", "2b25a30a8688f94106d07f23a9f1fb523ac00f08", [{:tag, "0.8.1"}]},

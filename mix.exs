@@ -13,7 +13,7 @@ defmodule Firebrick.Mixfile do
 
   # Configuration for the OTP application
   def application do
-    [ applications: [:cowboy, :dynamo, :bcrypt, :qdate],
+    [ applications: [:cowboy, :dynamo, :bcrypt, :qdate, :ibrowse],
       mod: { Firebrick, [] } ]
   end
 
@@ -26,7 +26,8 @@ defmodule Firebrick.Mixfile do
      { :gen_smtp, github: "Vagabond/gen_smtp" },
      { :realm, github: "HashNuke/realm" },
      { :riak_pool,  github: "HashNuke/riak_pool" },
-     { :qdate, github: "choptastic/qdate" }
+     { :qdate, github: "choptastic/qdate" },
+     { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.0.2" }
     ]
   end
 end
