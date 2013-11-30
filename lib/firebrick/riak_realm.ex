@@ -115,37 +115,6 @@ defmodule Firebrick.RiakRealm do
       end
 
 
-      # DEPRECATED use query()
-      def search(query, options // []) do
-        RiakPool.run(fn(pid)->
-          {:ok,
-            {:search_results, search_results, _, count}
-          } = :riakc_pb_socket.search(pid, bucket, query, options)
-
-          mapred_input = :lists.map(fn({_, obj})->
-            {bucket, obj["id"]}
-          end, search_results)
-
-          mapreduce_result = :riakc_pb_socket.mapred(pid, mapred_input,
-            [{:map, {:modfun, :firebrick_mapred, :map_result}, :none, false},
-             {:reduce, {:modfun, :firebrick_mapred, :reduce_result}, :none, true}]
-          )
-
-          case mapreduce_result do
-            {:ok, [{1, objs}]} ->
-              models = lc {key, json} inlist objs do
-                {:ok, data} = JSEX.decode(json)
-                assign_attributes(__MODULE__[], data).id(key)
-              end
-              {models, count}
-
-            {:ok, []} -> {[], 0}
-          end
-
-        end)
-      end
-
-
       def destroy(arg1) do
         cond do
           is_binary(arg1) ->
