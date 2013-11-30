@@ -78,6 +78,44 @@ defmodule Firebrick.RiakRealm do
       end
 
 
+      def query(query_string) do
+        encoded_query_string = :ibrowse_lib.url_encode('#{query_string}')
+        url = 'http://localhost:8098/search/#{index_name}?q=#{encoded_query_string}&wt=json'
+        {:ok, _, _, content} = :ibrowse.send_req(url, [], :get)
+        {:ok, data} = JSEX.decode "#{content}"
+        resp = data["response"]
+
+        case resp["docs"] do
+          [] -> {[], resp["numFound"], resp["start"]}
+          _ ->
+            keys = lc doc inlist resp["docs"], do: doc["_yz_id"]
+            models = fetch_models_for_keys(keys)
+            {models, resp["numFound"], resp["start"]}
+        end
+      end
+
+
+      defp fetch_models_for_keys(keys) do
+        mapreduce_result = RiakPool.run(fn(pid)->
+          :riakc_pb_socket.mapred(pid, keys,
+            [{:map, {:modfun, :firebrick_mapred, :map_result}, :none, false},
+             {:reduce, {:modfun, :firebrick_mapred, :reduce_result}, :none, true}]
+          )
+        end)
+
+        case mapreduce_result do
+          {:ok, [{1, objs}]} ->
+            models = lc {key, json} inlist objs do
+              {:ok, data} = JSEX.decode(json)
+              assign_attributes(__MODULE__[], data).id(key)
+            end
+            models
+          {:ok, []} -> []
+        end
+      end
+
+
+      # DEPRECATED use query()
       def search(query, options // []) do
         RiakPool.run(fn(pid)->
           {:ok,
