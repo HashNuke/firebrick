@@ -41,7 +41,7 @@ defrecord User,
 
     uniqueness_validation = fn(record)->
       {results, count, _} = User.query("config_type:user AND username:#{record.username}")
-      case length(results) do
+      case count do
         0 ->
           true
         1 ->
