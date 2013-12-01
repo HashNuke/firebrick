@@ -17,9 +17,9 @@ defmodule SessionsApiRouter do
     {:ok, params} = conn.req_body
     |> JSEX.decode
 
-    {results, count} = User.search("config_type:user AND username:#{params["username"]}")
+    {results, count, _} = User.query("config_type:user AND username:#{params["username"]}")
 
-    if length(results) > 0 do
+    if count > 0 do
       result = results |> hd
       if User.valid_password?(result, params["password"]) do
         conn = put_session(conn, :user_id, result.id)
