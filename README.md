@@ -6,23 +6,28 @@
 
 Firebrick requires Riak 2.0 and Elixir v0.11.2. At the time of writing, the latest version of is Riak 2.0pre5.
 
-* Run the following command to redirect port 25 traffic to port 2525.
+### Configure incoming mail port
 
-        sudo iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25 -j REDIRECT --to-ports 2525
+Run the following command to redirect port 25 traffic to port 2525.
 
-  The above command is for Ubuntu, figure out something else for your operating system.
+    sudo iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25 -j REDIRECT --to-ports 2525
 
-* Turn on Yokozuna in Riak's `riak.conf`
+The above command is for Ubuntu, figure out something else for your operating system.
 
-* Create an index on Solr
+### Configure Riak
+
+* Turn on Riak Search 2.0 in Riak's `riak.conf`
+
+* Start Riak with `riak start`
+
+* Create an index
 
         curl -XPUT -i 'http://localhost:8098/search/index/firebrick_index'
 
-* Create a bucket type which uses the index
+* Create a bucket type which uses the index and also activate it.
 
         riak-admin bucket-type create firebrick_type '{"props":{"search_index":"firebrick_index"}}'
-
-* Start Riak with `riak start`
+        riak-admin bucket-type activate firebrick_type
 
 
 ## Setup
