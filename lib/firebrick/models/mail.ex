@@ -121,7 +121,7 @@ defrecord Mail,
     end
 
     user_query = "config_type:user AND (#{Enum.join(receiver_strings, " OR ")})"
-    {users, count} = User.search(user_query)
+    {users, count, _} = User.query(user_query)
 
 
     if length(users) > 0 do
@@ -134,7 +134,7 @@ defrecord Mail,
       end
 
       thread_query = Enum.join(references_strings, " OR ")
-      {threads, count} = Thread.search(thread_query)
+      {threads, count, _} = Thread.query(thread_query)
 
       if length(users) > 0 do
         mail = mail.thread_id hd(threads).id
