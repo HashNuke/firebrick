@@ -88,24 +88,30 @@ defmodule Firebrick.RiakRealm do
         case resp["docs"] do
           [] -> {[], resp["numFound"], resp["start"]}
           _ ->
-            keys = lc doc inlist resp["docs"], do: doc["_yz_id"]
-            models = fetch_models_for_keys(keys)
+            mapred_input = lc doc inlist resp["docs"], do: {{bucket, doc["_yz_rk"]}, []}
+            models = fetch_models_for_keys(mapred_input)
             {models, resp["numFound"], resp["start"]}
         end
       end
 
 
-      defp fetch_models_for_keys(keys) do
+      defp fetch_models_for_keys(mapred_input) do
+        jsmap = "function(riakObject) { return [[riakObject.key, riakObject.values[0].data]] }"
+        jsreduce = "function(objs) { return objs; }"
+
         mapreduce_result = RiakPool.run(fn(pid)->
-          :riakc_pb_socket.mapred(pid, keys,
-            [{:map, {:modfun, :firebrick_mapred, :map_result}, :none, false},
-             {:reduce, {:modfun, :firebrick_mapred, :reduce_result}, :none, true}]
+          :riakc_pb_socket.mapred(pid, mapred_input,
+            #TODO switch to erlang, when the add_paths option in riak.conf is available
+            # [{:map, {:modfun, :firebrick_mapred, :map_result}, :none, false},
+            #  {:reduce, {:modfun, :firebrick_mapred, :reduce_result}, :none, true}]
+            [{:map, {:jsanon, jsmap}, :none, false},
+             {:reduce, {:jsanon, jsreduce}, :none, true}]
           )
         end)
 
         case mapreduce_result do
           {:ok, [{1, objs}]} ->
-            models = lc {key, json} inlist objs do
+            models = lc [key, json] inlist objs do
               {:ok, data} = JSEX.decode(json)
               assign_attributes(__MODULE__[], data).id(key)
             end
