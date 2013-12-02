@@ -4,7 +4,7 @@
 
 ## Install and configuring dependencies (temporary, expect changes in the future)
 
-Firebrick requires Riak 2.0 and Elixir v0.11.2. At the time of writing, the latest version of is Riak 2.0pre5.
+Firebrick requires Riak 2.0 and Elixir v0.11.2. At the time of writing, the latest version of is Riak 2.0pre7 (from the tag in the Riak git repo).
 
 ### Configure incoming mail port
 
@@ -36,7 +36,15 @@ The above command is for Ubuntu, figure out something else for your operating sy
 * Run `mix deps.get` to install dependencies
 * Start the app with `iex -S mix server`. You will also get a console.
 
-To send a test mail, run `Firebrick.Smtp.send_test_mail`
+* Run the following in the console.
+
+  Firebrick.Installer.install()
+
+  It will create add a domain to receive mail at and also an admin user (username: admin, password: password)
+
+* To send a test mail, run `Firebrick.Smtp.send_test_mail`
+
+* You can login at http://localhost:4000 and view it
 
 
 ## Development
@@ -62,7 +70,8 @@ After installing the Ruby dependencies, you can compile assets using any of the 
 
 Check `docs/asset-compilation-using-watchman.md` for notes on auto-compilation on asset changes.
 
-## Notes for development
+
+## Development/personal notes
 
 * Do not handle db connection errors.
 * Reference for email threading - http://www.jwz.org/doc/threading.html
