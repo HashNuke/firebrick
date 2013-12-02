@@ -21,4 +21,4 @@
   "rebar_vsn_plugin": {:git, "https://github.com/erlware/rebar_vsn_plugin.git", "0d954d923275305c62a81e9c2bf60a60977a9d29", [{:branch, "master"}]},
   "riak_pb": {:git, "git://github.com/basho/riak_pb", "318f043c98657c951661de751bfc0bdf7e53524d", [{:tag, "2.0.0.10"}]},
   "riak_pool": {:git, "git://github.com/HashNuke/riak_pool.git", "51c4b82021b4bc03dc76995969fec5df048d2002", []},
-  "riakc": {:git, "git://github.com/basho/riak-erlang-client.git", "d1447920d0ec43367cf76f436aadd826fb0960fa", []} ]
+  "riakc": {:git, "git://github.com/basho/riak-erlang-client.git", "635799aca29392cfd049c04566b68276d5ef1b99", []} ]
