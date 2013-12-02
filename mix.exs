@@ -6,7 +6,10 @@ defmodule Firebrick.Mixfile do
       version: "0.0.1",
       dynamos: [Firebrick.Dynamo],
       compilers: [:elixir, :dynamo, :app, :erlang],
-      env: [prod: [compile_path: "ebin"]],
+      env: [
+        prod: [compile_path: "ebin"],
+        bcrypt: [mechanism: :port, pool_size: 6]
+      ],
       compile_path: "tmp/#{Mix.env}/firebrick/ebin",
       deps: deps ]
   end
@@ -22,7 +25,7 @@ defmodule Firebrick.Mixfile do
      { :cowboy, github: "extend/cowboy" },
      { :dynamo, "0.1.0-dev", github: "elixir-lang/dynamo" },
      { :jsex,    github: "talentdeficit/jsex" },
-     { :bcrypt, github: "Feuerlabs/erlang-bcrypt" },
+     { :bcrypt, github: "irccloud/erlang-bcrypt" },
      { :gen_smtp, github: "Vagabond/gen_smtp" },
      { :realm, github: "HashNuke/realm" },
      { :riak_pool,  github: "HashNuke/riak_pool" },
