@@ -34,7 +34,7 @@ The above command is for Ubuntu, figure out something else for your operating sy
 
 * Clone this repository
 * Run `mix deps.get` to install dependencies
-* Start the app with `iex -S mix server`. You will also get a console.
+* Start the app with `iex --erl "-config firebrick.config" -S mix server`. You will also get a console.
 
 * Run the following in the console.
 
