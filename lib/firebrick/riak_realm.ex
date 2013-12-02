@@ -105,8 +105,6 @@ defmodule Firebrick.RiakRealm do
           )
         end)
 
-        IO.inspect mapreduce_result
-
         case mapreduce_result do
           {:ok, [{1, objs}]} ->
             models = lc {key, json} inlist objs do
