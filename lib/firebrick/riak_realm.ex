@@ -96,22 +96,20 @@ defmodule Firebrick.RiakRealm do
 
 
       defp fetch_models_for_keys(mapred_input) do
-        jsmap = "function(riakObject) { return [[riakObject.key, riakObject.values[0].data]] }"
-        jsreduce = "function(objs) { return objs; }"
-
+        #TODO Advice from Riak devs, dont use mapred and instead just fetch the objs for keys
+        # Makes sense, because polling isnt going to see new mail every time it polls
         mapreduce_result = RiakPool.run(fn(pid)->
           :riakc_pb_socket.mapred(pid, mapred_input,
-            #TODO switch to erlang, when the add_paths option in riak.conf is available
-            # [{:map, {:modfun, :firebrick_mapred, :map_result}, :none, false},
-            #  {:reduce, {:modfun, :firebrick_mapred, :reduce_result}, :none, true}]
-            [{:map, {:jsanon, jsmap}, :none, false},
-             {:reduce, {:jsanon, jsreduce}, :none, true}]
+            [{:map, {:modfun, :firebrick_mapred, :map_result}, :none, false},
+             {:reduce, {:modfun, :firebrick_mapred, :reduce_result}, :none, true}]
           )
         end)
 
+        IO.inspect mapreduce_result
+
         case mapreduce_result do
           {:ok, [{1, objs}]} ->
-            models = lc [key, json] inlist objs do
+            models = lc {key, json} inlist objs do
               {:ok, data} = JSEX.decode(json)
               assign_attributes(__MODULE__[], data).id(key)
             end
