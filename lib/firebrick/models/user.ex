@@ -16,7 +16,7 @@ defrecord User,
 
 
   # Tells the world which bucket this is stored in
-  def bucket, do: {"firebrick_type", "firebrick_config"}
+  def bucket, do: {"firebrick_type", "firebrick"}
   def index_name, do: "firebrick_index"
 
   # These will be skipped when saving
