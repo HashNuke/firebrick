@@ -8,7 +8,7 @@ defrecord User,
   last_name: nil,
   role: nil,
   domain_id: nil,
-  config_type: "user",
+  type: "user",
    __errors__: [] do
 
   use Realm
@@ -28,7 +28,7 @@ defrecord User,
 
   def intercept_obj(record, obj) do
     metadata = :riakc_obj.get_update_metadata(obj)
-    |> :riakc_obj.set_secondary_index([ {{:binary_index, "config_type"}, ["user"]} ])
+    |> :riakc_obj.set_secondary_index([ {{:binary_index, "type"}, ["user"]} ])
     :riakc_obj.update_metadata(obj, metadata)
   end
 
@@ -40,7 +40,7 @@ defrecord User,
     end
 
     uniqueness_validation = fn(record)->
-      {results, count, _} = User.query("config_type:user AND username:#{record.username}")
+      {results, count, _} = User.query("type:user AND username:#{record.username}")
       case count do
         0 ->
           true
@@ -90,7 +90,7 @@ defrecord User,
   # Merge mandatory params and encrypt password if necessary
   def assign_attributes(record, params) do
     super(record, params)
-    |> apply(:config_type, ["user"])
+    |> apply(:type, ["user"])
   end
 
 

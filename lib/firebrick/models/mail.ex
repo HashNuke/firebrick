@@ -17,6 +17,7 @@ defrecord Mail,
   read: false,
   read_on: nil,
   category: nil,
+  type: "mail",
   parsed_from: nil,
   parsed_to: nil,
   parsed_cc: nil,
@@ -120,7 +121,7 @@ defrecord Mail,
       "primary_address:#{receiver[:email]}"
     end
 
-    user_query = "config_type:user AND (#{Enum.join(receiver_strings, " OR ")})"
+    user_query = "type:user AND (#{Enum.join(receiver_strings, " OR ")})"
     {users, count, _} = User.query(user_query)
 
 

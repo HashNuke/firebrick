@@ -1,7 +1,7 @@
 defrecord Domain,
   id: nil,
   name: nil,
-  config_type: "domain",
+  type: "domain",
    __errors__: [] do
 
   use Realm
@@ -26,7 +26,7 @@ defrecord Domain,
 
   def intercept_obj(record, obj) do
     metadata = :riakc_obj.get_update_metadata(obj)
-    |> :riakc_obj.set_secondary_index([ {{:binary_index, "config_type"}, ["domain"]} ])
+    |> :riakc_obj.set_secondary_index([ {{:binary_index, "type"}, ["domain"]} ])
     :riakc_obj.update_metadata(obj, metadata)
   end
 
@@ -35,7 +35,7 @@ defrecord Domain,
   # Merge mandatory params and encrypt password if necessary
   def assign_attributes(record, params) do
     super(record, params)
-    |> apply(:config_type, ["domain"])
+    |> apply(:type, ["domain"])
   end
 
 end

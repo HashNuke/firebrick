@@ -8,6 +8,7 @@ defrecord Thread,
   category: nil,
   read: false,
   user_id: nil,
+  type: "thread",
   timezone: "+0000",
    __errors__: [] do
 

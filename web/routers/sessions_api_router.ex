@@ -17,7 +17,7 @@ defmodule SessionsApiRouter do
     {:ok, params} = conn.req_body
     |> JSEX.decode
 
-    {results, count, _} = User.query("config_type:user AND username:#{params["username"]}")
+    {results, count, _} = User.query("type:user AND username:#{params["username"]}")
 
     if count > 0 do
       result = results |> hd
