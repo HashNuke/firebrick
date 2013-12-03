@@ -27,7 +27,8 @@ defmodule Firebrick.Mixfile do
      { :realm, github: "HashNuke/realm" },
      { :riak_pool,  github: "HashNuke/riak_pool" },
      { :qdate, github: "choptastic/qdate" },
-     { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.0.2" }
+     { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.0.2" },
+     { :eiconv, github: "zotonic/eiconv" }
     ]
   end
 end

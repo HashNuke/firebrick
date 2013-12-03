@@ -3,6 +3,7 @@
   "cowboy": {:git, "git://github.com/extend/cowboy.git", "df818625545d565b8b76fbc445063a4822114b93", []},
   "cowlib": {:git, "git://github.com/extend/cowlib.git", "63298e8e160031a70efff86a1acde7e7db1fcda6", [{:ref, "0.4.0"}]},
   "dynamo": {:git, "git://github.com/elixir-lang/dynamo.git", "6e92de08f7e20e23264f8a24a2f1b1aeb04f96a3", []},
+  "eiconv": {:git, "git://github.com/zotonic/eiconv.git", "5d8d8d828e7b36f9eb0e475fe3315f1e3d9b965d", []},
   "erlang_localtime": {:git, "git://github.com/choptastic/erlang_localtime.git", "ebcafb02326e4b2e2ea8fb9a8ba1abacf6426a57", [{:branch, "master"}]},
   "erlware_commons": {:git, "git://github.com/erlware/erlware_commons.git", "96cdc0e6237bfc834d144750e7fbef09016be084", [{:branch, "master"}]},
   "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "a5ff9956feeea113509125e5b29623c1fa7e3be4", []},
