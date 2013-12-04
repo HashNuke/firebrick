@@ -58,7 +58,11 @@ defrecord Thread,
     mail_preview = :lists.last(record.mail_previews)
     # import the function from mail instead of using full reference
     sender = Mail.parse_address_list(mail_preview["sender"]) |> hd
-    ListDict.merge attrs, [ mail_preview: [sender: sender, preview: mail_preview["preview"]] ]
+    new_attrs = [
+      mail_preview: [sender: sender, preview: mail_preview["preview"]],
+      mail_count: length(record.mail_previews)
+    ]
+    ListDict.merge attrs, new_attrs
   end
 
 end

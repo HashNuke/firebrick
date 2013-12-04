@@ -72,7 +72,6 @@ defrecord Mail,
 
   def accept(mail_fields) do
     mail = parse_mail(mail_fields)
-    current_mail_preview = [sender: mail.from, preview: summarize(mail.plain_body)]
 
     #TODO categorize spam
     #TODO check for muted threads
@@ -81,11 +80,10 @@ defrecord Mail,
 
     case mail.save do
       {:ok, key} ->
-
+        current_mail_preview = [id: key, sender: mail.from, preview: summarize(mail.plain_body)]
         case mail.thread_id do
           nil ->
             thread = Thread[subject: mail.subject, message_ids: [mail.message_id], mail_previews: [current_mail_preview]]
-            #TODO append message ids
             thread = thread.assign_timestamps
             thread = thread.user_id(mail.user_id).category(mail.category)
             {:ok, thread_id} = thread.save
