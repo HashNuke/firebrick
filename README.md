@@ -38,7 +38,7 @@ The above command is for Ubuntu, figure out something else for your operating sy
 
 * Run the following in the console.
 
-  Firebrick.Installer.install()
+  Firebrick.Installer.install("yourdomain.com")
 
   It will create add a domain to receive mail at and also an admin user (username: admin, password: password)
 

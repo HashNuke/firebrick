@@ -107,13 +107,6 @@ defmodule Firebrick.RiakRealm do
       end
 
 
-      def list_keys do
-        RiakPool.run fn (pid)->
-          :riakc_pb_socket.list_keys pid, bucket
-        end
-      end
-
-
       defoverridable [
         assign_attributes: 2,
         before_save: 1,
@@ -152,5 +145,12 @@ defmodule Firebrick.RiakRealm do
     :ok = :riakc_obj.new(bucket, key, json, "application/json")
     |> RiakPool.put
     {:ok, key}
+  end
+
+
+  def list_keys(bucket) do
+    RiakPool.run fn (pid)->
+      :riakc_pb_socket.list_keys pid, bucket
+    end
   end
 end
