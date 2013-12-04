@@ -84,15 +84,16 @@ defrecord Mail,
 
         case mail.thread_id do
           nil ->
-            thread = Thread[subject: mail.subject, mail_previews: [current_mail_preview]]
+            thread = Thread[subject: mail.subject, message_ids: [mail.message_id], mail_previews: [current_mail_preview]]
             #TODO append message ids
             thread = thread.assign_timestamps
             thread = thread.user_id(mail.user_id).category(mail.category)
             {:ok, thread_id} = thread.save
             mail.id(key).thread_id(thread_id).save
           _ -> # in this case thread already exists, so only update it
-            thread = Thread.find(mail.thread_id)
+            thread = Thread.query(mail.thread_id)
             thread = thread.mail_previews(thread.mail_previews ++ [current_mail_preview])
+            thread = thread.message_ids ++ [mail.message_id]
             thread = thread.user_id(mail.user_id).category(mail.category)
             thread.assign_timestamps.read(false).save
         end
@@ -204,7 +205,7 @@ defrecord Mail,
   defp parse_message_ids(header_value) do
     {:ok, elements} = :smtp_util.parse_rfc822_addresses(header_value)
     Enum.map(elements, fn({name, message_id})->
-      message_id
+      "#{message_id}"
     end)
   end
 
