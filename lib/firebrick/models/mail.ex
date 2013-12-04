@@ -89,7 +89,7 @@ defrecord Mail,
             {:ok, thread_id} = thread.save
             mail.id(key).thread_id(thread_id).save
           _ -> # in this case thread already exists, so only update it
-            threads = Thread.query("message_ids:#{mail.in_reply_to}")
+            {threads, _count, _start} = Thread.query("message_ids:#{mail.in_reply_to}")
             thread = threads |> hd
             thread = thread.mail_previews(thread.mail_previews ++ [current_mail_preview])
             thread = thread.message_ids ++ [mail.message_id]
