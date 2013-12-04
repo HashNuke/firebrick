@@ -92,7 +92,7 @@ defrecord Mail,
             {threads, _count, _start} = Thread.query("message_ids:#{mail.in_reply_to}")
             thread = threads |> hd
             thread = thread.mail_previews(thread.mail_previews ++ [current_mail_preview])
-            thread = thread.message_ids ++ [mail.message_id]
+            thread = thread.message_ids(thread.message_ids ++ [mail.message_id])
             thread = thread.user_id(mail.user_id).category(mail.category)
             thread.assign_timestamps.read(false).save
         end
