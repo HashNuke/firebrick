@@ -80,4 +80,6 @@ Check `docs/asset-compilation-using-watchman.md` for notes on auto-compilation o
       sudo iptables -t nat -A PREROUTING -p tcp -m tcp --dport 25 -j REDIRECT --to-ports 2525
 
 * Tag all incoming mails with "inbox"
+* To delete the index and start over again:
 
+      curl -XDELETE -i 'http://localhost:8098/search/index/firebrick_index'
