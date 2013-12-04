@@ -81,7 +81,7 @@ defrecord Mail,
     case mail.save do
       {:ok, key} ->
         current_mail_preview = [id: key, sender: mail.from, preview: summarize(mail.plain_body)]
-        case mail.thread_id do
+        case mail.in_reply_to do
           nil ->
             thread = Thread[subject: mail.subject, message_ids: [mail.message_id], mail_previews: [current_mail_preview]]
             thread = thread.assign_timestamps
@@ -89,7 +89,8 @@ defrecord Mail,
             {:ok, thread_id} = thread.save
             mail.id(key).thread_id(thread_id).save
           _ -> # in this case thread already exists, so only update it
-            thread = Thread.query(mail.thread_id)
+            threads = Thread.query("message_ids:#{mail.in_reply_to}")
+            thread = threads |> hd
             thread = thread.mail_previews(thread.mail_previews ++ [current_mail_preview])
             thread = thread.message_ids ++ [mail.message_id]
             thread = thread.user_id(mail.user_id).category(mail.category)
