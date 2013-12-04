@@ -8,7 +8,7 @@ defmodule DomainsApiRouter do
 
 
   get "/" do
-    {domains, count} = Domain.search("type:domain", [rows: 50])
+    {domains, count, _} = Domain.query("type:domain")
     lc domain inlist domains do
       domain.public_attributes
     end

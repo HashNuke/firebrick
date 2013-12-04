@@ -8,7 +8,7 @@ defmodule UsersApiRouter do
 
 
   get "/" do
-    {users, count} = User.search("type:user", [rows: 50])
+    {users, count, _} = User.query("type:user")
     lc user inlist users do
       user.public_attributes
     end
