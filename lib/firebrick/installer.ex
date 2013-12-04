@@ -17,7 +17,8 @@ defmodule Firebrick.Installer do
     ].save
   end
 
-  def install(domain_name // "#{:net_adm.localhost}") do
+  # For localhost pass "#{:net_adm.localhost}"
+  def install(domain_name) do
     set_bucket_properties()
     {:ok, domain_id} = Domain[name: domain_name].save
     create_admin_user(domain_id)
