@@ -78,11 +78,16 @@ defmodule Firebrick.RiakRealm do
       end
 
 
-      def query(query_string) do
-        encoded_query_string = :ibrowse_lib.url_encode('#{query_string}')
-        url = 'http://localhost:8098/search/#{index_name}?q=#{encoded_query_string}&wt=json'
+      def query(solr_query, options // []) do
+        options = ListDict.merge options, [q: solr_query, wt: 'json']
+        encoded_params = lc {option_name, option_value} inlist options do
+          "#{option_name}=#{:ibrowse_lib.url_encode('#{option_value}')}"
+        end
+
+        url = 'http://localhost:8098/search/#{index_name}?#{Enum.join(encoded_params, "&")}'
         {:ok, _, _, content} = :ibrowse.send_req(url, [], :get)
         {:ok, data} = JSEX.decode "#{content}"
+        # TODO check for data["error"] and if it contains a ["msg"] key
         resp = data["response"]
 
         case resp["docs"] do
