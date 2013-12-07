@@ -3,7 +3,7 @@
 
     <div class="thread" ng-repeat="thread in threads">
       <div class="sender">{{thread.mail_preview["sender"]["name"] || thread.mail_preview["sender"]["email"]}} ({{thread.mail_count}})</div>
-      <div class="timestamp">{{thread.updated_at | relativeTime}}</div>
+      <div class="timestamp">{{thread.updated_at_dt | relativeTime}}</div>
 
       <div class="preview">
         <div class="subject">{{thread.subject}}</div>

@@ -1,8 +1,8 @@
 defrecord Thread,
   id: nil,
   subject: nil,
-  created_at: nil,
-  updated_at: nil,
+  created_at_dt: nil,
+  updated_at_dt: nil,
   message_ids: [],
   mail_previews: [],
   category: nil,
@@ -20,15 +20,15 @@ defrecord Thread,
   def index_name, do: "firebrick_index"
 
   def skip_attributes, do: ["id"]
-  def safe_attributes, do: ["id", "subject", "created_at", "updated_at", "read", "mail_previews", "user_id"]
+  def safe_attributes, do: ["id", "subject", "created_at_dt", "updated_at_dt", "read", "mail_previews", "user_id"]
 
 
   def assign_timestamps(record) do
-    timestamp = :qdate.to_string("Ymdhms", {:erlang.date(), :erlang.time()})
-    if !record.created_at do
-      record = record.created_at(timestamp)
+    now = timestamp()
+    if !record.created_at_dt do
+      record = record.created_at_dt(now)
     end
-    record.updated_at(timestamp)
+    record.updated_at_dt(now)
   end
 
 
@@ -42,7 +42,7 @@ defrecord Thread,
 
 
   def public_attributes(record) do
-    fields = ["id", "subject", "created_at", "updated_at", "read", "user_id", "timezone"]
+    fields = ["id", "subject", "created_at_dt", "updated_at_dt", "read", "user_id", "timezone"]
     attrs = lc attr inlist fields do
       { "#{attr}", apply(record, :"#{attr}", []) }
     end

@@ -24332,7 +24332,7 @@ angular.module('ngSanitize').filter('linky', function() {
 (function() {
   app.filter("relativeTime", function() {
     return function(text) {
-      return moment.unix(text).fromNow(true);
+      return moment(text).fromNow(true);
     };
   });
 

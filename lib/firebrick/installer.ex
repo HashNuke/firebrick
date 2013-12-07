@@ -1,7 +1,7 @@
 defmodule Firebrick.Installer do
   def config do
     # set_bucket_properties
-    RiakPool.run(fn(pid)->
+    :ok = RiakPool.run(fn(pid)->
       {:ok, bucket_properties} = :riakc_pb_socket.get_bucket(pid, {"firebrick_type", "firebrick"})
       new_bucket_props = ListDict.merge(bucket_properties, [allow_mult: false])
       :riakc_pb_socket.set_bucket(pid, {"firebrick_type", "firebrick"}, new_bucket_props)

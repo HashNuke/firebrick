@@ -61,11 +61,11 @@ defrecord Mail,
 
 
   def mark_as_read!(arg1) do
-    timestamp = :qdate.to_string("Ymdhms", {:erlang.date(), :erlang.time()})
+    now = timestamp()
     if is_record(arg1) do
-      arg1.read(true).read_on(timestamp).save
+      arg1.read(true).read_on(timestamp()).save
     else
-      Mail.find(arg1).read(true).read_on(timestamp).save
+      Mail.find(arg1).read(true).read_on(timestamp()).save
     end
   end
 

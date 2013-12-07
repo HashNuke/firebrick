@@ -1,2 +1,2 @@
 app.filter "relativeTime", ->
-  (text)-> moment.unix(text).fromNow(true)
+  (text)-> moment(text).fromNow(true)

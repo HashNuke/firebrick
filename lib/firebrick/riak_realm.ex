@@ -87,15 +87,18 @@ defmodule Firebrick.RiakRealm do
         url = 'http://localhost:8098/search/#{index_name}?#{Enum.join(encoded_params, "&")}'
         {:ok, _, _, content} = :ibrowse.send_req(url, [], :get)
         {:ok, data} = JSEX.decode "#{content}"
-        # TODO check for data["error"] and if it contains a ["msg"] key
-        resp = data["response"]
-
-        case resp["docs"] do
-          [] -> {[], resp["numFound"], resp["start"]}
+        case data["error"] do
+          nil ->
+            resp = data["response"]
+            case resp["docs"] do
+              [] -> {[], resp["numFound"], resp["start"]}
+              _ ->
+                keys = lc doc inlist resp["docs"], do: doc["_yz_rk"]
+                models = lc key inlist keys, do: __MODULE__.find(key)
+                {models, resp["numFound"], resp["start"]}
+            end
           _ ->
-            keys = lc doc inlist resp["docs"], do: doc["_yz_rk"]
-            models = lc key inlist keys, do: __MODULE__.find(key)
-            {models, resp["numFound"], resp["start"]}
+            {:error, data["error"]}
         end
       end
 
@@ -128,6 +131,11 @@ defmodule Firebrick.RiakRealm do
     |> hd
     |> JSEX.decode
     {:ok, data}
+  end
+
+
+  def timestamp(now // {:erlang.date(), :erlang.time()}) do
+    "#{:qdate.to_string("Y-m-d", now)}T#{:qdate.to_string("H:i:s", now)}Z"
   end
 
 
