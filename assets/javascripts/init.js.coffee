@@ -2,9 +2,9 @@ moment.lang('en', {
   relativeTime :
       future: "in %s",
       past:   "%s ago",
-      s:  "seconds",
+      s:  "just now",
       m:  "a min ago",
-      mm: "%d minutes",
+      mm: "%d minutes ago",
       h:  "an hr ago",
       hh: "%d hrs ago",
       d:  "a day ago",
@@ -32,19 +32,20 @@ config = ($routeProvider, $locationProvider, $httpProvider)->
 
 
   $routeProvider.when('/',
-      templateUrl: '/static/partials/threads.html',
-      controller: 'ThreadsCtrl'
+      templateUrl: '/static/partials/thread_list.html'
+      controller: 'ThreadListCtrl'
       resolve:
         threads: AppResolvers.threads
         auth: AppResolvers.auth
-    ).when('/login',
-      templateUrl: '/static/partials/login.html'
-      controller: 'SessionCtrl'
+    ).when('/threads/in/:category',
+      templateUrl: '/static/partials/thread_list.html'
+      controller: 'ThreadListCtrl'
+    ).when('/threads/:thread_id',
+      templateUrl: '/static/partials/thread.html'
+      controller: 'ThreadCtrl'
       resolve:
+        thread: AppResolvers.thread
         auth: AppResolvers.auth
-    ).when('/threads/:category',
-      templateUrl: '/static/partials/threads.html',
-      controller: 'ThreadsCtrl'
     ).when('/domains',
       templateUrl: '/static/partials/domains.html'
       controller: 'DomainsCtrl'
@@ -68,6 +69,11 @@ config = ($routeProvider, $locationProvider, $httpProvider)->
       controller: 'UserCtrl'
       resolve:
         user: AppResolvers.user
+        auth: AppResolvers.auth
+    ).when('/login',
+      templateUrl: '/static/partials/login.html'
+      controller: 'SessionCtrl'
+      resolve:
         auth: AppResolvers.auth
     ).otherwise(redirectTo: '/not_found')
 

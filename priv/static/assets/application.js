@@ -24139,6 +24139,22 @@ angular.module('ngSanitize').filter('linky', function() {
     return deferred.promise;
   };
 
+  AppResolvers.thread = function(Thread, $q, $route) {
+    var deferred, errorCallback, requestParams, successCallback;
+    requestParams = {
+      id: $route.current.params.thread_id
+    };
+    deferred = $q.defer();
+    successCallback = function(thread) {
+      return deferred.resolve(thread);
+    };
+    errorCallback = function(errorData) {
+      return deferred.reject();
+    };
+    Thread.get(requestParams, successCallback, errorCallback);
+    return deferred.promise;
+  };
+
   AppResolvers.users = function(User, $q) {
     var deferred, errorCallback, successCallback;
     deferred = $q.defer();
@@ -24181,9 +24197,9 @@ angular.module('ngSanitize').filter('linky', function() {
     relativeTime: {
       future: "in %s",
       past: "%s ago",
-      s: "seconds",
+      s: "just now",
       m: "a min ago",
-      mm: "%d minutes",
+      mm: "%d minutes ago",
       h: "an hr ago",
       hh: "%d hrs ago",
       d: "a day ago",
@@ -24221,21 +24237,22 @@ angular.module('ngSanitize').filter('linky', function() {
     $httpProvider.responseInterceptors.push(unauthorizedInterceptor);
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     return $routeProvider.when('/', {
-      templateUrl: '/static/partials/threads.html',
-      controller: 'ThreadsCtrl',
+      templateUrl: '/static/partials/thread_list.html',
+      controller: 'ThreadListCtrl',
       resolve: {
         threads: AppResolvers.threads,
         auth: AppResolvers.auth
       }
-    }).when('/login', {
-      templateUrl: '/static/partials/login.html',
-      controller: 'SessionCtrl',
+    }).when('/threads/in/:category', {
+      templateUrl: '/static/partials/thread_list.html',
+      controller: 'ThreadListCtrl'
+    }).when('/threads/:thread_id', {
+      templateUrl: '/static/partials/thread.html',
+      controller: 'ThreadCtrl',
       resolve: {
+        thread: AppResolvers.thread,
         auth: AppResolvers.auth
       }
-    }).when('/threads/:category', {
-      templateUrl: '/static/partials/threads.html',
-      controller: 'ThreadsCtrl'
     }).when('/domains', {
       templateUrl: '/static/partials/domains.html',
       controller: 'DomainsCtrl',
@@ -24262,6 +24279,12 @@ angular.module('ngSanitize').filter('linky', function() {
       controller: 'UserCtrl',
       resolve: {
         user: AppResolvers.user,
+        auth: AppResolvers.auth
+      }
+    }).when('/login', {
+      templateUrl: '/static/partials/login.html',
+      controller: 'SessionCtrl',
+      resolve: {
         auth: AppResolvers.auth
       }
     }).otherwise({
@@ -24427,11 +24450,23 @@ angular.module('ngSanitize').filter('linky', function() {
 
 }).call(this);
 (function() {
-  app.controller('ThreadsCtrl', function($scope, $route, SharedData, Thread, threads) {
+  app.controller('ThreadCtrl', function($scope, $route, $location, SharedData, Thread, thread) {
+    $scope.thread = thread;
+    $scope.sharedData = SharedData;
+    return $scope.sharedData.title = "inbox";
+  });
+
+}).call(this);
+(function() {
+  app.controller('ThreadListCtrl', function($scope, $location, $route, SharedData, Thread, threads) {
     $scope.sharedData = SharedData;
     $scope.sharedData.title = $route.current.params.category || "inbox";
     $scope.threads = threads;
-    return console.log(threads);
+    console.log(threads);
+    return $scope.openThread = function(threadId) {
+      console.log(threadId);
+      return $location.path("/threads/" + threadId);
+    };
   });
 
 }).call(this);

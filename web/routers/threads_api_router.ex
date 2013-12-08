@@ -18,9 +18,11 @@ defmodule ThreadsApiRouter do
   end
 
 
-  # get "/:thread_id" do
-  #   #TODO
-  # end
+  get "/:thread_id" do
+    user = conn.assigns[:current_user]
+    thread = Thread.find conn.params[:thread_id]
+    json_response thread.public_attributes, conn
+  end
 
 
   delete "/:thread_id" do

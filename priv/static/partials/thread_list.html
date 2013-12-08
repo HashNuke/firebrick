@@ -1,7 +1,7 @@
 <div class="threads-wrapper">
   <div class="threads">
 
-    <div class="thread" ng-repeat="thread in threads">
+    <div class="thread" ng-repeat="thread in threads" ng-click="openThread(thread.id)">
       <div class="sender">
         {{thread.mail_preview["sender"]["name"] || thread.mail_preview["sender"]["email"]}}
         <span ng-hide="thread.mail_count == 1">({{thread.mail_count}})</span>
