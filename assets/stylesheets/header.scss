@@ -1,9 +1,11 @@
 .detail {
   .header {
     width: 100%;
-    float: left;
+    position: fixed;
+    top: 0em;
     padding: 0.25em;
     background: #F6F6F6;
+    margin-left: 0.25em;
 
     .title {
       float: left;

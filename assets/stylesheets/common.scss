@@ -36,9 +36,11 @@ a {
 
 
 .detail {
-  float: right;
   width: 80%;
   overflow-y: scroll;
+  position: absolute;
+  top: 0em;
+  right: 0em;
 }
 
 .login {
