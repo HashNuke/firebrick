@@ -73,7 +73,6 @@ Check `docs/asset-compilation-using-watchman.md` for notes on auto-compilation o
 
 ## Development/personal notes
 
-* Do not handle db connection errors.
 * Reference for email threading - http://www.jwz.org/doc/threading.html
 * Forward port-25 to 2525
 
@@ -82,4 +81,6 @@ Check `docs/asset-compilation-using-watchman.md` for notes on auto-compilation o
 * Tag all incoming mails with "inbox"
 * To delete the index and start over again:
 
+      # clear the directory for the solr index
       curl -XDELETE -i 'http://localhost:8098/search/index/firebrick_index'
+      curl -XPUT -i 'http://localhost:8098/search/index/firebrick_index'
