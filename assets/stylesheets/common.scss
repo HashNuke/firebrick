@@ -30,18 +30,16 @@ a {
     width: 100%;
     height: 100%;
     float: left;
-    padding-top: 2.6em;
+    padding-left: 0.25em;
   }
 }
 
 
 .detail {
-  float: left;
-  width: 70%;
-  padding: 0.5em 0em 0em 0.2em;
+  float: right;
+  width: 80%;
   overflow-y: scroll;
 }
-
 
 .login {
   width: 20em; //TODO change for mobile

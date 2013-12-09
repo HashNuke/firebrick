@@ -1,33 +1,31 @@
 <div class="container" ng-controller="RootCtrl">
 
-  <div class="sidepane-wrapper">
-    <div class="sidepane">
-      <div class="header">
-        <!-- <div class="menu-control">
-          <img src="/static/assets/navicon.png"/>
-        </div> -->
+  <div class="sidebar">
+    <div class="header">
+      <!-- <div class="menu-control">
+        <img src="/static/assets/navicon.png"/>
+      </div> -->
 
-        <div class="list-label">adfasfsf</div>
+      <div class="title">adfasfsf</div>
 
-        <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
-        <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->
-      </div>
+      <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
+      <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->
+    </div>
 
-      <div class="menu-wrapper">
-        <div class="menu">
-          <ul>
-            <li><a href="/labels/inbox">Inbox</a></li>
-            <li><a href="/labels/sent">Sent</a></li>
-            <li><a href="/labels/trash">Trash</a></li>
-          </ul>
-        </div>
+    <div class="menu-wrapper">
+      <div class="menu">
+        <ul>
+          <li><a href="/labels/inbox">Inbox</a></li>
+          <li><a href="/labels/sent">Sent</a></li>
+          <li><a href="/labels/trash">Trash</a></li>
+        </ul>
       </div>
     </div>
   </div>
 
   <div class="detail">
     <div class="header">
-      <div class="list-label">{{sharedData.title}}</div>
+      <div class="title">{{sharedData.title}}</div>
     </div>
     <div class="content" ng-view></div>
   </div>
