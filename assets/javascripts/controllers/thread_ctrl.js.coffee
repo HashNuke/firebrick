@@ -2,3 +2,4 @@ app.controller 'ThreadCtrl', ($scope, $route, $location, SharedData, Thread, thr
   $scope.thread = thread
   $scope.sharedData = SharedData
   $scope.sharedData.title = "inbox"
+  console.log $scope.sharedData

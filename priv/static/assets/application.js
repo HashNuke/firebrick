@@ -24094,13 +24094,13 @@ angular.module('ngSanitize').filter('linky', function() {
       return true;
     }
     deferred = $q.defer();
-    successCallback = function(user) {
-      if (user.error != null) {
+    successCallback = function(data) {
+      if (data.error != null) {
         SharedData.user = null;
-        return deferred.resolve(user);
+        return deferred.resolve(data);
       } else {
-        SharedData.user = user;
-        return deferred.resolve(user);
+        SharedData.user = data.user;
+        return deferred.resolve(data);
       }
     };
     errorCallback = function(response) {
@@ -24457,7 +24457,8 @@ angular.module('ngSanitize').filter('linky', function() {
   app.controller('ThreadCtrl', function($scope, $route, $location, SharedData, Thread, thread) {
     $scope.thread = thread;
     $scope.sharedData = SharedData;
-    return $scope.sharedData.title = "inbox";
+    $scope.sharedData.title = "inbox";
+    return console.log($scope.sharedData);
   });
 
 }).call(this);
