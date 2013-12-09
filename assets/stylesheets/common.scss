@@ -31,16 +31,18 @@ a {
     height: 100%;
     float: left;
     padding-left: 0.25em;
+    overflow-y: scroll;
   }
 }
 
 
 .detail {
   width: 80%;
-  overflow-y: scroll;
   position: absolute;
   top: 0em;
   right: 0em;
+  bottom: 0em;
+  padding-top: 2.6em;
 }
 
 .login {
