@@ -15,9 +15,9 @@
     <div class="menu-wrapper">
       <div class="menu">
         <ul>
-          <li><a href="/labels/inbox">Inbox</a></li>
-          <li><a href="/labels/sent">Sent</a></li>
-          <li><a href="/labels/trash">Trash</a></li>
+          <li><a href="/threads/in/inbox">Inbox</a></li>
+          <li><a href="/threads/in/sent">Sent</a></li>
+          <li><a href="/threads/in/trash">Trash</a></li>
         </ul>
       </div>
     </div>

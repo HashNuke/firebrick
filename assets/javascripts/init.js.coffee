@@ -40,6 +40,9 @@ config = ($routeProvider, $locationProvider, $httpProvider)->
     ).when('/threads/in/:category',
       templateUrl: '/static/partials/thread_list.html'
       controller: 'ThreadListCtrl'
+      resolve:
+        threads: AppResolvers.threads
+        auth: AppResolvers.auth
     ).when('/threads/:thread_id',
       templateUrl: '/static/partials/thread.html'
       controller: 'ThreadCtrl'
