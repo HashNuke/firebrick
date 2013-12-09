@@ -1,12 +1,9 @@
 .thread-info {
   float: left;
-//  background: #FFF;
   width: 100%;
-//  background: #8B8BB1;
-//  border: 1px solid #8B8BB1;
-//  color: #fff;
   padding: 1em;
   color: #666;
+  background: #f9f9f9;
 
   .subject {
     font-size: 1.3em;
@@ -24,8 +21,8 @@
 .mails {
   width: 100%;
   float: left;
-  padding: 0em 1em 0.5em 1em;
-  padding-top: 1em;
+  padding: 0.5em;
+  background: #f9f9f9;
 }
 
 .mail {
@@ -33,20 +30,49 @@
   background: #FFF;
   width: 100%;
   margin-bottom: 1.5em;
-  box-shadow: 0em 0em 0.2em 0.1em #F1F1F1;
-  border: 1px solid #ddd;
-//  border-radius: 0.2em;
+  border: 0.1em solid #DDD;
+  box-shadow: 0em 0em 0.1em 0.1em #EEE;
+  border-radius: 0.25em;
 
-  .meta, .controls {
+  .meta {
     width: 100%;
     float: left;
-    background: #f5f5f5;
+//    background: #f5f5f5;
     padding: 0.5em;
+    border-bottom: 0.1em solid #DDD;
+
+    .sender {
+      float: left;
+      font-weight: bold;
+      font-size: 1.05em;
+    }
+
+    .timestamp {
+      float: right;
+      color: #06C;
+    }
+
+    .recipients {
+      width: 100%;
+      float: left;
+      color: #999;
+    }
+  }
+
+  .controls {
+    width: 100%;
+    float: left;
+    background: #FAFAFA;
+    padding: 0.5em;
+ //   border-bottom: 1px solid #CCC;
+    border-bottom-left-radius: 0.25em;
+    border-bottom-right-radius: 0.25em;
   }
 
   .controls {
     a {
       margin-right: 1em;
+      color: #999;
     }
   }
 
@@ -54,15 +80,6 @@
     width: 100%;
     float: left;
     padding: 0.5em 1em 0.5em 1em;
-  }
-
-  .sender {
-    float: left;
-    font-weight: bold;
-  }
-
-  .timestamp {
-    float: right;
   }
   
   .body {

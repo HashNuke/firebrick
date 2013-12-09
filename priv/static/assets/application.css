@@ -441,7 +441,7 @@ a {
   top: 0em;
   right: 0em;
   bottom: 0em;
-  padding-top: 2.6em; }
+  padding-top: 2.3em; }
 
 .login {
   width: 20em;
@@ -525,7 +525,9 @@ a {
   top: 0em;
   padding: 0.25em;
   background: #F6F6F6;
-  margin-left: 0.25em; }
+  margin-left: 0.25em;
+  box-shadow: 0em 0.2em 0em 0.1em #F1F1F1;
+  border-bottom: 1px solid #DDD; }
   .detail .header .title {
     float: left;
     font-size: 140%;
@@ -634,7 +636,8 @@ a {
   float: left;
   width: 100%;
   padding: 1em;
-  color: #666; }
+  color: #666;
+  background: #f9f9f9; }
   .thread-info .subject {
     font-size: 1.3em;
     font-family: serif;
@@ -647,32 +650,47 @@ a {
 .mails {
   width: 100%;
   float: left;
-  padding: 0em 1em 0.5em 1em;
-  padding-top: 1em; }
+  padding: 0.5em;
+  background: #f9f9f9; }
 
 .mail {
   float: left;
   background: #FFF;
   width: 100%;
   margin-bottom: 1.5em;
-  box-shadow: 0em 0em 0.2em 0.1em #F1F1F1;
-  border: 1px solid #ddd; }
-  .mail .meta, .mail .controls {
+  border: 0.1em solid #DDD;
+  box-shadow: 0em 0em 0.1em 0.1em #EEE;
+  border-radius: 0.25em; }
+  .mail .meta {
     width: 100%;
     float: left;
-    background: #f5f5f5;
-    padding: 0.5em; }
+    padding: 0.5em;
+    border-bottom: 0.1em solid #DDD; }
+    .mail .meta .sender {
+      float: left;
+      font-weight: bold;
+      font-size: 1.05em; }
+    .mail .meta .timestamp {
+      float: right;
+      color: #06C; }
+    .mail .meta .recipients {
+      width: 100%;
+      float: left;
+      color: #999; }
+  .mail .controls {
+    width: 100%;
+    float: left;
+    background: #FAFAFA;
+    padding: 0.5em;
+    border-bottom-left-radius: 0.25em;
+    border-bottom-right-radius: 0.25em; }
   .mail .controls a {
-    margin-right: 1em; }
+    margin-right: 1em;
+    color: #999; }
   .mail .body {
     width: 100%;
     float: left;
     padding: 0.5em 1em 0.5em 1em; }
-  .mail .sender {
-    float: left;
-    font-weight: bold; }
-  .mail .timestamp {
-    float: right; }
   .mail .body {
     width: 100%; }
 
