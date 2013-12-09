@@ -1,27 +1,34 @@
-<div class="container" ng-app="Firebrick">
-  <div class="header" ng-controller="RootCtrl">
-    <div class="menu-control">
-      <img src="/static/assets/navicon.png"/>
-    </div>
+<div class="container" ng-controller="RootCtrl">
 
-    <div class="list-label">
-      {{sharedData.title}}
-      <span class="red-notification" ng-show="sharedData.notification">{{sharedData.notification}}</span>
-    </div>
+  <div class="sidepane-wrapper">
+    <div class="sidepane">
+      <div class="header">
+        <!-- <div class="menu-control">
+          <img src="/static/assets/navicon.png"/>
+        </div> -->
 
-    <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
-    <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div>
+        <div class="list-label">adfasfsf</div>
+
+        <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
+        <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->
+      </div>
+
+      <div class="menu-wrapper">
+        <div class="menu">
+          <ul>
+            <li><a href="/labels/inbox">Inbox</a></li>
+            <li><a href="/labels/sent">Sent</a></li>
+            <li><a href="/labels/trash">Trash</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="menu-wrapper">
-    <div class="menu">
-      <ul>
-        <li><a href="/labels/inbox">Inbox</a></li>
-        <li><a href="/labels/sent">Sent</a></li>
-        <li><a href="/labels/trash">Trash</a></li>
-      </ul>
+  <div class="detail">
+    <div class="header">
+      <div class="list-label">{{sharedData.title}}</div>
     </div>
+    <div class="content" ng-view></div>
   </div>
-
-  <div class="content" ng-view></div>
 </div>

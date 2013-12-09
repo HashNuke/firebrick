@@ -5,7 +5,7 @@
   <script type="text/javascript" src="/static/assets/application.js"></script>
   <link rel="stylesheet" href="/static/assets/application.css"/>
 </head>
-<body>
+<body ng-app="Firebrick">
   <%= content_for(:template) %>
 </body>
 </html>
