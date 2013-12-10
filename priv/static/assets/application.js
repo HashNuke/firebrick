@@ -24315,6 +24315,34 @@ angular.module('ngSanitize').filter('linky', function() {
     };
   });
 
+  app.directive("taggedInput", function() {
+    return {
+      restrict: "E",
+      template: "<div class=\"tagged-input-wrapper\">\n  <input class=\"tagged-input-value\"></input>\n  <div class=\"tagget-input-value-list\"></div>\n  <textarea class=\"tagged-input\"></textarea>\n</div>",
+      controller: function($scope) {
+        angular.element(".tagged-input-wrapper").on("click", function(event) {
+          return $(".tagged-input").focus();
+        });
+        return angular.element(".tagged-input").on("keyup", function(event) {
+          var newValue;
+          if (event.which === 13) {
+            if ($(this).val().trim().length === 0) {
+              $(this).val("");
+              return;
+            }
+            newValue = "<div class='tag'>" + ($(this).val()) + "</div>";
+            $(".values").html($(".values").html() + newValue);
+            return $(this).val("");
+          } else if (event.which === 8 && $(this).val().length === 0) {
+            if ($(".values").children().length > 0) {
+              return $(".values").children().eq($(".values").children().length - 1).remove();
+            }
+          }
+        });
+      }
+    };
+  });
+
 }).call(this);
 (function() {
   app.factory('SharedData', function() {
@@ -24378,12 +24406,6 @@ angular.module('ngSanitize').filter('linky', function() {
     return function(text) {
       return moment(text).fromNow(true);
     };
-  });
-
-}).call(this);
-(function() {
-  app.controller('ComposeCtrl', function($scope, $location, SharedData) {
-    return $scope.sharedData = SharedData;
   });
 
 }).call(this);

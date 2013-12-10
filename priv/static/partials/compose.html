@@ -1,6 +1,10 @@
 <div class="compose-button" ng-click="openComposer()">Compose</div>
-<div class="compose" ng-show="showComposer == true">
-  New mail
-  <textarea class="mail-body"></textarea>
+<div class="compose" ng-show="showComposer == false">
+  <div class="mail-meta">
+    To, CC, BCC
+  </div>
+  <div class="editor-wrapper">
+    <textarea class="editor"></textarea>
+  </div>
 </div>
 

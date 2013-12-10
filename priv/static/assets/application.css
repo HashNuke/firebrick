@@ -715,6 +715,44 @@ a {
         margin-right: 1em;
         cursor: pointer;
         text-decoration: underline; }
+
+.compose {
+  position: fixed;
+  background: #FEFEFE;
+  top: 0em;
+  bottom: 0em;
+  left: 0em;
+  right: 0em;
+  z-index: 1000; }
+
+.mail-meta {
+  width: 25%;
+  float: left;
+  top: 0em;
+  bottom: 0em;
+  left: 0em;
+  padding: 0.5em;
+  position: absolute;
+  background: #F5F5F5; }
+  .mail-meta .fields {
+    overflow-y: scroll; }
+
+.editor-wrapper {
+  width: 75%;
+  float: left;
+  position: absolute;
+  top: 0em;
+  bottom: 0em;
+  right: 0em;
+  padding: 1.5em;
+  background: #FFF; }
+  .editor-wrapper .editor {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    border: none; }
+    .editor-wrapper .editor:focus {
+      outline: 0px solid transparent; }
 /*
 
 

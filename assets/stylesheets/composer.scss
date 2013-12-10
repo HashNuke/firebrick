@@ -1,0 +1,46 @@
+.compose {
+  position: fixed;
+  background: #FEFEFE;
+  top: 0em;
+  bottom: 0em;
+  left: 0em;
+  right: 0em;
+  z-index: 1000;
+}
+
+.mail-meta {
+  width: 25%;
+  float: left;
+  top: 0em;
+  bottom: 0em;
+  left: 0em;
+  padding: 0.5em;
+  position: absolute;
+  background: #F5F5F5;
+
+  .fields {
+    overflow-y: scroll;
+  }
+}
+
+.editor-wrapper {
+  width: 75%;
+  float: left;
+  position: absolute;
+  top: 0em;
+  bottom: 0em;
+  right: 0em;
+  padding: 1.5em;
+  background: #FFF;
+
+  .editor {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    border: none;
+
+    &:focus {
+      outline: 0px solid transparent;
+    }
+  }
+}
