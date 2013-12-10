@@ -24300,6 +24300,23 @@ angular.module('ngSanitize').filter('linky', function() {
 
 }).call(this);
 (function() {
+  app.directive("composeButton", function() {
+    var controller;
+    controller = function($scope) {
+      $scope.showComposer = false;
+      return $scope.openComposer = function() {
+        return $scope.showComposer = true;
+      };
+    };
+    return {
+      templateUrl: "/static/partials/compose.html",
+      restrict: "E",
+      controller: controller
+    };
+  });
+
+}).call(this);
+(function() {
   app.factory('SharedData', function() {
     return {
       notification: 0,
@@ -24361,6 +24378,12 @@ angular.module('ngSanitize').filter('linky', function() {
     return function(text) {
       return moment(text).fromNow(true);
     };
+  });
+
+}).call(this);
+(function() {
+  app.controller('ComposeCtrl', function($scope, $location, SharedData) {
+    return $scope.sharedData = SharedData;
   });
 
 }).call(this);
@@ -24457,8 +24480,7 @@ angular.module('ngSanitize').filter('linky', function() {
   app.controller('ThreadCtrl', function($scope, $route, $location, SharedData, Thread, thread) {
     $scope.thread = thread;
     $scope.sharedData = SharedData;
-    $scope.sharedData.title = "inbox";
-    return console.log($scope.sharedData);
+    return $scope.sharedData.title = "inbox";
   });
 
 }).call(this);
@@ -24538,6 +24560,7 @@ angular.module('ngSanitize').filter('linky', function() {
   });
 
 }).call(this);
+
 
 
 
