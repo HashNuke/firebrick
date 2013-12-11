@@ -730,7 +730,8 @@ a {
   color: #666;
   float: left;
   clear: right;
-  margin-top: 1em; }
+  margin-top: 1em;
+  font-size: 0.9em; }
 
 .compose {
   position: fixed;
