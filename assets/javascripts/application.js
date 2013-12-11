@@ -7,7 +7,7 @@
 //= require "libs/angular-sanitize"
 //= require "resolvers"
 //= require "init"
-//= require "directives"
+//= require_tree "./directives"
 //= require "factories"
 //= require "filters"
 //= require_tree "./controllers"

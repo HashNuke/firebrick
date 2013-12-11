@@ -1,9 +1,28 @@
 <div class="compose-button" ng-click="openComposer()">Compose</div>
-<div class="compose" ng-show="showComposer == false">
+<div class="compose" ng-show="showComposer == true">
   <div class="mail-meta">
-    To, CC, BCC
+    <div class="controls">
+      <a ng-click="closeComposer">close</a>
+    </div>
+    <div class="field">
+      <label>To:</label>
+      <taginput on-set="setMailTo"></tag-input>
+    </div>
+
+    <div class="field">
+      <label>CC:</label>
+      <taginput on-set="setMailTo"></tag-input>
+    </div>
+
+    <div class="field">
+      <label>BCC:</label>
+      <taginput on-set="setMailTo"></tag-input>
+    </div>
   </div>
-  <div class="editor-wrapper">
+  <div class="editor-wrapper" focus-on-click>
+    <div class="field">
+      <label>Message:</label>
+    </div>
     <textarea class="editor"></textarea>
   </div>
 </div>

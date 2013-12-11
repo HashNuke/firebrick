@@ -6,7 +6,13 @@
   left: 0em;
   right: 0em;
   z-index: 1000;
+
+  .field {
+    label { color: #06c; }
+    border-bottom: 0.1em solid #CCC;
+  }
 }
+
 
 .mail-meta {
   width: 25%;
@@ -16,10 +22,16 @@
   left: 0em;
   padding: 0.5em;
   position: absolute;
-  background: #F5F5F5;
+  background: #f9f9f9;
 
-  .fields {
-    overflow-y: scroll;
+  .controls {
+    margin-bottom: 1.2em;
+    a {
+      color: #666;
+      padding: 0.1em 0.25em 0.1em 0.25em;
+      border: 0.1em solid #666;
+      border-radius: 0.2em;
+    }
   }
 }
 
@@ -30,8 +42,13 @@
   top: 0em;
   bottom: 0em;
   right: 0em;
-  padding: 1.5em;
+  padding: 1em 1.5em 1.5em 1.5em;
   background: #FFF;
+
+  .field {
+    height: 1.6em;
+    margin-bottom: 1em;
+  }
 
   .editor {
     height: 100%;
@@ -39,8 +56,6 @@
     overflow-y: scroll;
     border: none;
 
-    &:focus {
-      outline: 0px solid transparent;
-    }
+    &:focus { outline: 0px solid transparent; }
   }
 }

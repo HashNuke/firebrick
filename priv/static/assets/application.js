@@ -24315,27 +24315,50 @@ angular.module('ngSanitize').filter('linky', function() {
     };
   });
 
-  app.directive("taggedInput", function() {
+}).call(this);
+(function() {
+  app.directive("focusOnClick", function() {
+    return {
+      restrict: "A",
+      link: function(scope, element, attrs) {
+        return element.on("click", function(event) {
+          return element.find("textarea")[0].focus();
+        });
+      }
+    };
+  });
+
+}).call(this);
+(function() {
+  app.directive("taginput", function() {
     return {
       restrict: "E",
-      template: "<div class=\"tagged-input-wrapper\">\n  <input class=\"tagged-input-value\"></input>\n  <div class=\"tagget-input-value-list\"></div>\n  <textarea class=\"tagged-input\"></textarea>\n</div>",
-      controller: function($scope) {
-        angular.element(".tagged-input-wrapper").on("click", function(event) {
-          return $(".tagged-input").focus();
+      template: "<input></input>",
+      controller: function($scope, $element, $attrs) {
+        $scope.values = [];
+        $element.parent().on("click", function(event) {
+          return $element.find("input")[0].focus();
         });
-        return angular.element(".tagged-input").on("keyup", function(event) {
-          var newValue;
-          if (event.which === 13) {
-            if ($(this).val().trim().length === 0) {
-              $(this).val("");
+        return $element.find("input").on("keyup", function(event) {
+          var input, list, newValue, tag;
+          if (event.keyCode === 13) {
+            input = $element.find("input");
+            list = $element.find("span");
+            if (input.val().trim().length === 0) {
+              input.val("");
               return;
             }
-            newValue = "<div class='tag'>" + ($(this).val()) + "</div>";
-            $(".values").html($(".values").html() + newValue);
-            return $(this).val("");
-          } else if (event.which === 8 && $(this).val().length === 0) {
-            if ($(".values").children().length > 0) {
-              return $(".values").children().eq($(".values").children().length - 1).remove();
+            newValue = input.val().trim();
+            tag = angular.element("<span>").addClass("tag").html(newValue);
+            $element[0].insertBefore(tag[0], $element.find("input")[0]);
+            $scope.values.push(newValue);
+            return input.val("");
+          } else if (event.keyCode === 8) {
+            list = $element.find("span");
+            input = $element.find("input");
+            if (list.length > 0 && input.val().length === 0) {
+              list.eq(list.length - 1).remove();
+              return $scope.values.pop();
             }
           }
         });

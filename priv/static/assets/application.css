@@ -724,6 +724,10 @@ a {
   left: 0em;
   right: 0em;
   z-index: 1000; }
+  .compose .field {
+    border-bottom: 0.1em solid #CCC; }
+    .compose .field label {
+      color: #06c; }
 
 .mail-meta {
   width: 25%;
@@ -733,9 +737,14 @@ a {
   left: 0em;
   padding: 0.5em;
   position: absolute;
-  background: #F5F5F5; }
-  .mail-meta .fields {
-    overflow-y: scroll; }
+  background: #f9f9f9; }
+  .mail-meta .controls {
+    margin-bottom: 1.2em; }
+    .mail-meta .controls a {
+      color: #666;
+      padding: 0.1em 0.25em 0.1em 0.25em;
+      border: 0.1em solid #666;
+      border-radius: 0.2em; }
 
 .editor-wrapper {
   width: 75%;
@@ -744,8 +753,11 @@ a {
   top: 0em;
   bottom: 0em;
   right: 0em;
-  padding: 1.5em;
+  padding: 1em 1.5em 1.5em 1.5em;
   background: #FFF; }
+  .editor-wrapper .field {
+    height: 1.6em;
+    margin-bottom: 1em; }
   .editor-wrapper .editor {
     height: 100%;
     width: 100%;
@@ -753,6 +765,24 @@ a {
     border: none; }
     .editor-wrapper .editor:focus {
       outline: 0px solid transparent; }
+
+taginput input {
+  margin-top: 0.25em;
+  margin-left: 0.25em;
+  outline: 0em solid transparent;
+  resize: none;
+  background: #f9f9f9;
+  border: none;
+  padding: 0.25em; }
+taginput .tag {
+  display: inline-block;
+  color: #777;
+  border-radius: 0.2em;
+  border: 0.1em solid #CCC;
+  margin-top: 0.25em;
+  margin-right: 0.25em;
+  padding: 0.3em;
+  background-image: -webkit-linear-gradient(top, whitesmoke, #f1f1f1); }
 /*
 
 
