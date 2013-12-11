@@ -24440,8 +24440,7 @@ angular.module('ngSanitize').filter('linky', function() {
 
 }).call(this);
 (function() {
-  app.controller('ComposeCtrl', function($scope, $location, SharedData) {
-    console.log("init", window.history);
+  app.controller('ComposeCtrl', function($scope, $location, SharedData, $rootScope) {
     $scope.sharedData = SharedData;
     $scope.showComposer = false;
     $scope.showOtherRecipients = false;
@@ -24449,9 +24448,7 @@ angular.module('ngSanitize').filter('linky', function() {
       return $scope.showComposer = true;
     };
     return $scope.closeComposer = function() {
-      console.log("when close", window.history);
-      if (window.history.length === 1) {
-        console.log("go to index");
+      if ($rootScope.landedOnCompose) {
         $location.path("/");
       } else {
         window.history.back();
@@ -24495,8 +24492,15 @@ angular.module('ngSanitize').filter('linky', function() {
 
 }).call(this);
 (function() {
-  app.controller('RootCtrl', function($scope, $location, SharedData, Session) {
+  app.controller('RootCtrl', function($scope, $location, SharedData, Session, $rootScope) {
     $scope.sharedData = SharedData;
+    $scope.$on('$routeChangeSuccess', function(scope, next, current) {
+      if (current == null) {
+        return $rootScope.landedOnCompose = true;
+      } else {
+        return $rootScope.landedOnCompose = false;
+      }
+    });
     $scope.is_auth = function() {
       return SharedData.user != null;
     };
@@ -24563,7 +24567,6 @@ angular.module('ngSanitize').filter('linky', function() {
     $scope.sharedData = SharedData;
     $scope.sharedData.title = $route.current.params.category || "inbox";
     $scope.threads = threads;
-    console.log(threads);
     return $scope.openThread = function(threadId) {
       console.log(threadId);
       return $location.path("/threads/" + threadId);

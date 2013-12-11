@@ -2,7 +2,6 @@ app.controller 'ThreadListCtrl', ($scope, $location, $route, SharedData, Thread,
   $scope.sharedData = SharedData
   $scope.sharedData.title = ($route.current.params.category || "inbox")
   $scope.threads = threads
-  console.log threads
 
   $scope.openThread = (threadId)->
     console.log threadId
