@@ -82,5 +82,5 @@ config = ($routeProvider, $locationProvider, $httpProvider)->
 
 
 window.app = angular
-  .module('Firebrick', ['ngRoute', 'ngResource', 'ngSanitize'])
+  .module('Firebrick', ['ngSanitize', 'ngRoute', 'ngResource', 'ngSanitize'])
   .config ['$routeProvider', '$locationProvider', '$httpProvider', config]

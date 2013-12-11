@@ -3,7 +3,7 @@ app.directive "taginput", ->
     restrict: "E"
     template: """<input></input>"""
 
-    controller: ($scope, $element, $attrs)->
+    controller: ($scope, $element, $attrs, $sanitize)->
       $scope.values = []
       $element.parent().on("click", (event)-> $element.find("input")[0].focus())
 
@@ -16,7 +16,7 @@ app.directive "taginput", ->
             input.val("")
             return
           newValue = input.val().trim()
-          tag = angular.element("<span>").addClass("tag").html(newValue)
+          tag = angular.element("<span>").addClass("tag").text(newValue)
           $element[0].insertBefore(tag[0], $element.find("input")[0])
           $scope.values.push(newValue)
           input.val("")

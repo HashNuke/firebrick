@@ -24296,7 +24296,7 @@ angular.module('ngSanitize').filter('linky', function() {
     });
   };
 
-  window.app = angular.module('Firebrick', ['ngRoute', 'ngResource', 'ngSanitize']).config(['$routeProvider', '$locationProvider', '$httpProvider', config]);
+  window.app = angular.module('Firebrick', ['ngSanitize', 'ngRoute', 'ngResource', 'ngSanitize']).config(['$routeProvider', '$locationProvider', '$httpProvider', config]);
 
 }).call(this);
 (function() {
@@ -24334,7 +24334,7 @@ angular.module('ngSanitize').filter('linky', function() {
     return {
       restrict: "E",
       template: "<input></input>",
-      controller: function($scope, $element, $attrs) {
+      controller: function($scope, $element, $attrs, $sanitize) {
         $scope.values = [];
         $element.parent().on("click", function(event) {
           return $element.find("input")[0].focus();
@@ -24349,7 +24349,7 @@ angular.module('ngSanitize').filter('linky', function() {
               return;
             }
             newValue = input.val().trim();
-            tag = angular.element("<span>").addClass("tag").html(newValue);
+            tag = angular.element("<span>").addClass("tag").text(newValue);
             $element[0].insertBefore(tag[0], $element.find("input")[0]);
             $scope.values.push(newValue);
             return input.val("");
