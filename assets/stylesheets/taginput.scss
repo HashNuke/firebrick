@@ -11,6 +11,7 @@ taginput {
 
   .tag {
     display: inline-block;
+    white-space:nowrap;
     color: #777;
     border-radius: 0.2em;
     border: 0.1em solid #CCC;
