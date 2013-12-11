@@ -14,7 +14,7 @@
 
     <div class="menu-wrapper">
       <div class="menu">
-        <compose-button></compose-button>
+        <div compose-button></div>
         <ul>
           <li><a href="/threads/in/inbox">Inbox</a></li>
           <li><a href="/threads/in/sent">Sent</a></li>

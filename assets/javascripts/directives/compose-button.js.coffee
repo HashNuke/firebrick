@@ -1,11 +1,14 @@
 app.directive "composeButton", ->
   controller = ($scope)->
     $scope.showComposer = false
-    $scope.openComposer = ->
-      $scope.showComposer = true
+    $scope.showOtherRecipients = false
+
+    $scope.openComposer  = -> $scope.showComposer = true
+    $scope.closeComposer = -> $scope.showComposer = false
+
 
   return {
     templateUrl: "/static/partials/compose.html"
-    restrict: "E"
+    restrict: "A"
     controller: controller
   }

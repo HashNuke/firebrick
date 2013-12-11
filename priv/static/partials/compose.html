@@ -1,24 +1,34 @@
-<div class="compose-button" ng-click="openComposer()">Compose</div>
+<a class="compose-button" ng-click="openComposer()">Compose</a>
 <div class="compose" ng-show="showComposer == true">
   <div class="mail-meta">
     <div class="controls">
-      <a ng-click="closeComposer">close</a>
+      <a ng-click="closeComposer()">close</a>
     </div>
+
     <div class="field">
       <label>To:</label>
       <taginput on-set="setMailTo"></tag-input>
     </div>
 
-    <div class="field">
-      <label>CC:</label>
-      <taginput on-set="setMailTo"></tag-input>
-    </div>
+    <a class="extra-recipients-button"
+      ng-click="showOtherRecipients = true"
+      ng-hide="showOtherRecipients">
+      Add CC, BCC
+    </a>
 
-    <div class="field">
-      <label>BCC:</label>
-      <taginput on-set="setMailTo"></tag-input>
+    <div class="field-group" ng-show="showOtherRecipients == true">
+      <div class="field">
+        <label>CC:</label>
+        <taginput on-set="setMailTo"></tag-input>
+      </div>
+
+      <div class="field">
+        <label>BCC:</label>
+        <taginput on-set="setMailTo"></tag-input>
+      </div>
     </div>
   </div>
+
   <div class="editor-wrapper" focus-on-click>
     <div class="field">
       <label>Message:</label>

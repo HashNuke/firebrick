@@ -24304,13 +24304,17 @@ angular.module('ngSanitize').filter('linky', function() {
     var controller;
     controller = function($scope) {
       $scope.showComposer = false;
-      return $scope.openComposer = function() {
+      $scope.showOtherRecipients = false;
+      $scope.openComposer = function() {
         return $scope.showComposer = true;
+      };
+      return $scope.closeComposer = function() {
+        return $scope.showComposer = false;
       };
     };
     return {
       templateUrl: "/static/partials/compose.html",
-      restrict: "E",
+      restrict: "A",
       controller: controller
     };
   });

@@ -37,9 +37,11 @@
     height: 100%;
     background: #FFF;
     overflow-y: scroll;
+    padding: 1em;
 
     ul {
       list-style-type: none;
+      padding-left: 0em;
     }
 
     li {

@@ -1,3 +1,18 @@
+.compose-button {
+  background: #6692D4;
+  padding: 0.25em 0.5em 0.25em 0.5em;
+  color: #FFF;
+  cursor: pointer;
+}
+
+.extra-recipients-button {
+  cursor: pointer;
+  color: #666;
+  float: left;
+  clear: right;
+  margin-top: 1em;
+}
+
 .compose {
   position: fixed;
   background: #FEFEFE;
@@ -8,6 +23,8 @@
   z-index: 1000;
 
   .field {
+    float: left;
+    width: 100%;
     label { color: #06c; }
     border-bottom: 0.1em solid #CCC;
   }
@@ -31,6 +48,7 @@
       padding: 0.1em 0.25em 0.1em 0.25em;
       border: 0.1em solid #666;
       border-radius: 0.2em;
+      cursor: pointer;
     }
   }
 }
