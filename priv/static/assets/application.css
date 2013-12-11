@@ -723,7 +723,7 @@ a {
   background: #6692D4;
   padding: 0.25em 0.5em 0.25em 0.5em;
   color: #FFF;
-  cursor: pointer; }
+  text-decoration: none; }
 
 .extra-recipients-button {
   cursor: pointer;
@@ -796,6 +796,7 @@ taginput input {
   padding: 0.25em; }
 taginput .tag {
   display: inline-block;
+  white-space: nowrap;
   color: #777;
   border-radius: 0.2em;
   border: 0.1em solid #CCC;

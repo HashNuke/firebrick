@@ -24243,6 +24243,9 @@ angular.module('ngSanitize').filter('linky', function() {
         threads: AppResolvers.threads,
         auth: AppResolvers.auth
       }
+    }).when('/compose/new', {
+      templateUrl: '/static/partials/compose.html',
+      controller: 'ComposeCtrl'
     }).when('/threads/in/:category', {
       templateUrl: '/static/partials/thread_list.html',
       controller: 'ThreadListCtrl',
@@ -24432,6 +24435,28 @@ angular.module('ngSanitize').filter('linky', function() {
   app.filter("relativeTime", function() {
     return function(text) {
       return moment(text).fromNow(true);
+    };
+  });
+
+}).call(this);
+(function() {
+  app.controller('ComposeCtrl', function($scope, $location, SharedData) {
+    console.log("init", window.history);
+    $scope.sharedData = SharedData;
+    $scope.showComposer = false;
+    $scope.showOtherRecipients = false;
+    $scope.openComposer = function() {
+      return $scope.showComposer = true;
+    };
+    return $scope.closeComposer = function() {
+      console.log("when close", window.history);
+      if (window.history.length === 1) {
+        console.log("go to index");
+        $location.path("/");
+      } else {
+        window.history.back();
+      }
+      return $scope.showComposer = false;
     };
   });
 

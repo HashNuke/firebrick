@@ -1,7 +1,5 @@
 <div class="container" ng-controller="RootCtrl">
 
-  <div composer></div>
-
   <div class="sidebar" ng-hide="showComposer">
     <div class="header">
       <!-- <div class="menu-control">
@@ -16,7 +14,7 @@
 
     <div class="menu-wrapper">
       <div class="menu">
-        <a class="compose-button" ng-click="openComposer()">Compose</a>
+        <a class="compose-button" href="/compose/new">Compose</a>
         <ul>
           <li><a href="/threads/in/inbox">Inbox</a></li>
           <li><a href="/threads/in/sent">Sent</a></li>

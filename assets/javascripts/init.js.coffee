@@ -37,6 +37,9 @@ config = ($routeProvider, $locationProvider, $httpProvider)->
       resolve:
         threads: AppResolvers.threads
         auth: AppResolvers.auth
+    ).when('/compose/new',
+      templateUrl: '/static/partials/compose.html'
+      controller: 'ComposeCtrl'
     ).when('/threads/in/:category',
       templateUrl: '/static/partials/thread_list.html'
       controller: 'ThreadListCtrl'
