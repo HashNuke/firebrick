@@ -1,6 +1,8 @@
 <div class="container" ng-controller="RootCtrl">
 
-  <div class="sidebar">
+  <div composer></div>
+
+  <div class="sidebar" ng-hide="showComposer">
     <div class="header">
       <!-- <div class="menu-control">
         <img src="/static/assets/navicon.png"/>
@@ -14,7 +16,7 @@
 
     <div class="menu-wrapper">
       <div class="menu">
-        <div compose-button></div>
+        <a class="compose-button" ng-click="openComposer()">Compose</a>
         <ul>
           <li><a href="/threads/in/inbox">Inbox</a></li>
           <li><a href="/threads/in/sent">Sent</a></li>
@@ -24,7 +26,7 @@
     </div>
   </div>
 
-  <div class="detail">
+  <div class="detail" ng-hide="showComposer">
     <div class="header">
       <div class="title">{{sharedData.title}}</div>
     </div>

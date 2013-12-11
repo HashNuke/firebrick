@@ -1,4 +1,4 @@
-app.directive "composeButton", ->
+app.directive "composer", ->
   controller = ($scope)->
     $scope.showComposer = false
     $scope.showOtherRecipients = false

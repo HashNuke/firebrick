@@ -24300,7 +24300,7 @@ angular.module('ngSanitize').filter('linky', function() {
 
 }).call(this);
 (function() {
-  app.directive("composeButton", function() {
+  app.directive("composer", function() {
     var controller;
     controller = function($scope) {
       $scope.showComposer = false;
