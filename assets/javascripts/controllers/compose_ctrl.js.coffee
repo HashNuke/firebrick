@@ -1,6 +1,5 @@
 app.controller 'ComposeCtrl', ($scope, $location, SharedData, $rootScope)->
   $scope.sharedData = SharedData
-  $scope.showComposer = false
   $scope.showOtherRecipients = false
 
   $scope.openComposer  = -> $scope.showComposer = true
@@ -9,5 +8,3 @@ app.controller 'ComposeCtrl', ($scope, $location, SharedData, $rootScope)->
       $location.path("/")
     else
       window.history.back()
-
-    $scope.showComposer = false

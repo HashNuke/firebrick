@@ -1,6 +1,6 @@
 <div class="container" ng-controller="RootCtrl">
 
-  <div class="sidebar" ng-hide="showComposer">
+  <div class="sidebar">
     <div class="header">
       <!-- <div class="menu-control">
         <img src="/static/assets/navicon.png"/>
@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <div class="detail" ng-hide="showComposer">
+  <div class="detail">
     <div class="header">
       <div class="title">{{sharedData.title}}</div>
     </div>
