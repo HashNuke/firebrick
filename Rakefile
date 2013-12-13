@@ -39,7 +39,7 @@ namespace :assets do
 
   desc "Watch assets for changes and compile"
   task :watch do
-    watch_list = ["assets/javascripts/", "assets/stylesheets/"]
+    watch_list = ["assets/javascripts/", "assets/stylesheets/", "assets/images/"]
 
     FileWatcher.new(watch_list, "Watching assets for compliation...").watch do |filename|
 

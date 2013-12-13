@@ -14,7 +14,10 @@
 
     <div class="menu-wrapper">
       <div class="menu">
-        <a class="compose-button" href="/compose/new">Compose</a>
+        <a class="compose-button" href="/compose/new">
+          <img src="/static/assets/compose.png"/>
+          Compose
+        </a>
         <ul>
           <li><a href="/threads/in/inbox">Inbox</a></li>
           <li><a href="/threads/in/sent">Sent</a></li>
