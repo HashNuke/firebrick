@@ -7,4 +7,4 @@ app.filter "relativeTime", ->
     else if difference > 86400
       time.format("MMM D")
     else
-      time.fromNow()
+      time.fromNow(true)

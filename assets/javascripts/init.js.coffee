@@ -3,18 +3,18 @@ window.AppResolvers = {}
 moment.lang('en', {
   relativeTime :
       future: "in %s",
-      past:   "%s ago",
+      past:   "%s",
       s:  "just now",
-      m:  "a min",
-      mm: "%d minutes",
-      h:  "an hr",
-      hh: "%d hrs",
-      d:  "a day",
-      dd: "%d days",
-      M:  "a month",
-      MM: "%d months",
-      y:  "a year",
-      yy: "%d years"
+      m:  "a min ago",
+      mm: "%d minutes ago",
+      h:  "an hr ago",
+      hh: "%d hrs ago",
+      d:  "a day ago",
+      dd: "%d days ago",
+      M:  "a month ago",
+      MM: "%d months ago",
+      y:  "a year ago",
+      yy: "%d years ago"
 })
 
 config = ($routeProvider, $locationProvider, $httpProvider)->
