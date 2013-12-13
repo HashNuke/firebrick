@@ -21,7 +21,9 @@ defmodule ThreadsApiRouter do
   get "/:thread_id" do
     user = conn.assigns[:current_user]
     thread = Thread.find conn.params[:thread_id]
-    json_response thread.public_attributes, conn
+    {mails, count, start} = Mail.query("type:mail AND thread_id:#{conn.params[:thread_id]}", [sort: "created_at_dt desc"])
+    mail_attributes = lc mail inlist mails, do: mail.public_attributes
+    json_response ListDict.merge(thread.public_attributes, [mails: mail_attributes]), conn
   end
 
 

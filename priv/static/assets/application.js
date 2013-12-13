@@ -24086,128 +24086,25 @@ angular.module('ngSanitize').filter('linky', function() {
 
 })(window, window.angular);
 (function() {
-  window.AppResolvers = {};
-
-  AppResolvers.auth = function(Session, SharedData, $q, $route) {
-    var deferred, errorCallback, successCallback;
-    if (SharedData.user != null) {
-      return true;
-    }
-    deferred = $q.defer();
-    successCallback = function(data) {
-      if (data.error != null) {
-        SharedData.user = null;
-        return deferred.resolve(data);
-      } else {
-        SharedData.user = data.user;
-        return deferred.resolve(data);
-      }
-    };
-    errorCallback = function(response) {
-      return deferred.reject();
-    };
-    Session.get({}, successCallback, errorCallback);
-    return deferred.promise;
-  };
-
-  AppResolvers.domains = function(Domain, $q) {
-    var deferred, errorCallback, successCallback;
-    deferred = $q.defer();
-    successCallback = function(domains) {
-      return deferred.resolve(domains);
-    };
-    errorCallback = function(response) {
-      return deferred.reject();
-    };
-    Domain.query(successCallback, errorCallback);
-    return deferred.promise;
-  };
-
-  AppResolvers.threads = function(Thread, $q, $route) {
-    var deferred, errorCallback, requestParams, successCallback;
-    requestParams = {
-      category: $route.current.params.category || "inbox"
-    };
-    deferred = $q.defer();
-    successCallback = function(threads) {
-      return deferred.resolve(threads);
-    };
-    errorCallback = function(errorData) {
-      return deferred.reject();
-    };
-    Thread.inCategory(requestParams, successCallback, errorCallback);
-    return deferred.promise;
-  };
-
-  AppResolvers.thread = function(Thread, $q, $route) {
-    var deferred, errorCallback, requestParams, successCallback;
-    requestParams = {
-      id: $route.current.params.thread_id
-    };
-    deferred = $q.defer();
-    successCallback = function(thread) {
-      return deferred.resolve(thread);
-    };
-    errorCallback = function(errorData) {
-      return deferred.reject();
-    };
-    Thread.get(requestParams, successCallback, errorCallback);
-    return deferred.promise;
-  };
-
-  AppResolvers.users = function(User, $q) {
-    var deferred, errorCallback, successCallback;
-    deferred = $q.defer();
-    successCallback = function(users) {
-      return deferred.resolve(users);
-    };
-    errorCallback = function(response) {
-      return deferred.reject();
-    };
-    User.query(successCallback, errorCallback);
-    return deferred.promise;
-  };
-
-  AppResolvers.user = function(User, $q, $route) {
-    var deferred, errorCallback, requestParams, successCallback;
-    if (!$route.current.params.user_id) {
-      return {
-        role: "member"
-      };
-    }
-    requestParams = {
-      id: $route.current.params.user_id
-    };
-    deferred = $q.defer();
-    successCallback = function(user) {
-      return deferred.resolve(user);
-    };
-    errorCallback = function(errorData) {
-      return deferred.reject();
-    };
-    User.get(requestParams, successCallback, errorCallback);
-    return deferred.promise;
-  };
-
-}).call(this);
-(function() {
   var config;
+
+  window.AppResolvers = {};
 
   moment.lang('en', {
     relativeTime: {
       future: "in %s",
       past: "%s ago",
       s: "just now",
-      m: "a min ago",
-      mm: "%d minutes ago",
-      h: "an hr ago",
-      hh: "%d hrs ago",
-      d: "a day ago",
-      dd: "%d days ago",
-      M: "a month ago",
-      MM: "%d months ago",
-      y: "a year ago",
-      yy: "%d years ago"
+      m: "a min",
+      mm: "%d minutes",
+      h: "an hr",
+      hh: "%d hrs",
+      d: "a day",
+      dd: "%d days",
+      M: "a month",
+      MM: "%d months",
+      y: "a year",
+      yy: "%d years"
     }
   });
 
@@ -24300,6 +24197,119 @@ angular.module('ngSanitize').filter('linky', function() {
   };
 
   window.app = angular.module('Firebrick', ['ngSanitize', 'ngRoute', 'ngResource', 'ngSanitize']).config(['$routeProvider', '$locationProvider', '$httpProvider', config]);
+
+}).call(this);
+(function() {
+  AppResolvers.auth = function(Session, SharedData, $q, $route) {
+    var deferred, errorCallback, successCallback;
+    if (SharedData.user != null) {
+      return true;
+    }
+    deferred = $q.defer();
+    successCallback = function(data) {
+      if (data.error != null) {
+        SharedData.user = null;
+        return deferred.resolve(data);
+      } else {
+        SharedData.user = data.user;
+        return deferred.resolve(data);
+      }
+    };
+    errorCallback = function(response) {
+      return deferred.reject();
+    };
+    Session.get({}, successCallback, errorCallback);
+    return deferred.promise;
+  };
+
+}).call(this);
+(function() {
+  AppResolvers.domains = function(Domain, $q) {
+    var deferred, errorCallback, successCallback;
+    deferred = $q.defer();
+    successCallback = function(domains) {
+      return deferred.resolve(domains);
+    };
+    errorCallback = function(response) {
+      return deferred.reject();
+    };
+    Domain.query(successCallback, errorCallback);
+    return deferred.promise;
+  };
+
+}).call(this);
+(function() {
+  AppResolvers.thread = function(Thread, $q, $route) {
+    var deferred, errorCallback, requestParams, successCallback;
+    requestParams = {
+      id: $route.current.params.thread_id
+    };
+    deferred = $q.defer();
+    successCallback = function(thread) {
+      return deferred.resolve(thread);
+    };
+    errorCallback = function(errorData) {
+      return deferred.reject();
+    };
+    Thread.get(requestParams, successCallback, errorCallback);
+    return deferred.promise;
+  };
+
+}).call(this);
+(function() {
+  AppResolvers.threads = function(Thread, $q, $route) {
+    var deferred, errorCallback, requestParams, successCallback;
+    requestParams = {
+      category: $route.current.params.category || "inbox"
+    };
+    deferred = $q.defer();
+    successCallback = function(threads) {
+      return deferred.resolve(threads);
+    };
+    errorCallback = function(errorData) {
+      return deferred.reject();
+    };
+    Thread.inCategory(requestParams, successCallback, errorCallback);
+    return deferred.promise;
+  };
+
+}).call(this);
+(function() {
+  AppResolvers.user = function(User, $q, $route) {
+    var deferred, errorCallback, requestParams, successCallback;
+    if (!$route.current.params.user_id) {
+      return {
+        role: "member"
+      };
+    }
+    requestParams = {
+      id: $route.current.params.user_id
+    };
+    deferred = $q.defer();
+    successCallback = function(user) {
+      return deferred.resolve(user);
+    };
+    errorCallback = function(errorData) {
+      return deferred.reject();
+    };
+    User.get(requestParams, successCallback, errorCallback);
+    return deferred.promise;
+  };
+
+}).call(this);
+(function() {
+  AppResolvers.users = function(User, $q) {
+    var deferred, errorCallback, successCallback;
+    deferred = $q.defer();
+    successCallback = function(users) {
+      return deferred.resolve(users);
+    };
+    errorCallback = function(response) {
+      return deferred.reject();
+    };
+    User.query(successCallback, errorCallback);
+    return deferred.promise;
+  };
 
 }).call(this);
 (function() {
@@ -24434,7 +24444,13 @@ angular.module('ngSanitize').filter('linky', function() {
 (function() {
   app.filter("relativeTime", function() {
     return function(text) {
-      return moment(text).fromNow(true);
+      var time;
+      time = moment(text);
+      if ((moment().unix() - time.unix()) > 86400) {
+        return time.format("MMM D, YYYY");
+      } else {
+        return time.fromNow();
+      }
     };
   });
 
@@ -24442,18 +24458,16 @@ angular.module('ngSanitize').filter('linky', function() {
 (function() {
   app.controller('ComposeCtrl', function($scope, $location, SharedData, $rootScope) {
     $scope.sharedData = SharedData;
-    $scope.showComposer = false;
     $scope.showOtherRecipients = false;
     $scope.openComposer = function() {
       return $scope.showComposer = true;
     };
     return $scope.closeComposer = function() {
       if ($rootScope.landedOnCompose) {
-        $location.path("/");
+        return $location.path("/");
       } else {
-        window.history.back();
+        return window.history.back();
       }
-      return $scope.showComposer = false;
     };
   });
 

@@ -1,2 +1,7 @@
 app.filter "relativeTime", ->
-  (text)-> moment(text).fromNow(true)
+  (text)->
+    time = moment(text)
+    if (moment().unix() - time.unix()) > 86400
+      time.format("MMM D, YYYY")
+    else
+      time.fromNow()

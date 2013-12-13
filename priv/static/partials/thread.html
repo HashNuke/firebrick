@@ -1,65 +1,18 @@
 <div class="thread-info">
-  <div class="subject">Lorem Ipsum is not nice to read</div>
-  <div class="people-info">John, Jane and 6 people in conversation. 3 others are watching</div>
+  <div class="subject">{{thread.subject}}</div>
+<!--   <div class="people-info">John, Jane and 6 people in conversation. 3 others are watching</div> -->
 </div>
 
 <div class="mails">
-  <div class="mail">
+
+  <div class="mail" ng-repeat="mail in thread.mails">
     <div class="meta">
-      <div class="sender">John Appleseed</div>
-      <div class="timestamp">1:46am</div>
-      <div class="recipients">to me and 6 others</div>
-    </div>
-    <div class="body">
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      </p>
-    </div>
-    <div class="controls">
-      <a href="#">Reply</a>
-      <a href="#">Reply to all</a>
-    </div>
-  </div>
-
-
-  <div class="mail">
-    <div class="meta">
-      <div class="sender">John Appleseed</div>
-      <div class="timestamp">1:46am</div>
-    </div>
-    <div class="body">
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      </p>
-    </div>
-    <div class="controls">
-      <a href="#">Reply</a>
-      <a href="#">Reply to all</a>
-    </div>
-  </div>
-
-
-  <div class="mail">
-    <div class="meta">
-      <div class="sender">John Appleseed</div>
-      <div class="timestamp">1:46am</div>
-    </div>
-    <div class="body">
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      </p>
-    </div>
-    <div class="controls">
-      <a href="#">Reply</a>
-      <a href="#">Reply to all</a>
-    </div>
-  </div>
-
-
-  <div class="mail">
-    <div class="meta">
-      <div class="sender">John Appleseed</div>
-      <div class="timestamp">1:46am</div>
+      <div class="sender">{{mail.parsed_from.name}}</div>
+      <!-- TODO add mouseover to show full date time -->
+      <div class="timestamp">{{ mail.created_at_dt | relativeTime }}</div>
+      <div class="recipients">to
+        <span class="recipient" ng-repeat="recipient in mail.parsed_to">{{recipient.name}}</span>
+      </div>
     </div>
     <div class="body">
       <p>

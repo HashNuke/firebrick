@@ -38,6 +38,8 @@ defrecord Mail,
   def safe_attributes do
     [
       "id",
+      "created_at_dt",
+      "updated_at_dt",
       "from",
       "to",
       "cc",
@@ -52,6 +54,13 @@ defrecord Mail,
       "raw_data",
       "category"
     ]
+  end
+
+
+  def public_attributes(record) do
+    assign_parsed_to_field(record)
+    |> assign_parsed_from_field
+    |> assign_parsed_cc_field
   end
 
 
@@ -76,7 +85,7 @@ defrecord Mail,
     #TODO categorize spam
     #TODO check for muted threads
     #TODO check if thread is marked as spam
-    mail = mail.category("inbox")
+    mail = mail.category("inbox").assign_timestamps
 
     case mail.save do
       {:ok, key} ->
@@ -277,4 +286,15 @@ defrecord Mail,
       mail
     end
   end
+
+
+  def assign_timestamps(record) do
+    now = timestamp()
+    if !record.created_at_dt do
+      record = record.created_at_dt(now)
+    end
+    record.updated_at_dt(now)
+  end
+
+
 end
