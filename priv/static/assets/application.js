@@ -24444,10 +24444,13 @@ angular.module('ngSanitize').filter('linky', function() {
 (function() {
   app.filter("relativeTime", function() {
     return function(text) {
-      var time;
+      var difference, time;
       time = moment(text);
-      if ((moment().unix() - time.unix()) > 86400) {
+      difference = moment().unix() - time.unix();
+      if (difference > 31536000) {
         return time.format("MMM D, YYYY");
+      } else if (difference > 86400) {
+        return time.format("MMM D");
       } else {
         return time.fromNow();
       }

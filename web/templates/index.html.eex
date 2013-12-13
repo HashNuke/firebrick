@@ -6,7 +6,7 @@
         <img src="/static/assets/navicon.png"/>
       </div> -->
 
-      <div class="title">{{sharedData.user.first_name}}</div>
+      <div class="title">{{sharedData.user.primary_address}}</div>
 
       <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
       <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->

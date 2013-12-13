@@ -523,14 +523,12 @@ a {
     position: fixed;
     top: 0em;
     padding: 0.25em;
-    background: #F6F6F6;
     margin-left: 0.25em;
-    box-shadow: 0em 0.2em 0em 0.1em #F1F1F1;
-    border-bottom: 1px solid #DDD; }
+    color: #06c; }
     .detail .header .title {
       float: left;
-      font-size: 140%;
-      margin-left: 0.5em;
+      font-size: 1.5em;
+      margin-left: 0.25em;
       text-transform: capitalize; }
 
 .threads-wrapper {
@@ -591,24 +589,22 @@ a {
       color: #06c; }
 
 .sidebar {
-  width: 20%;
   float: left;
   position: absolute;
   top: 0em;
   bottom: 0em;
+  width: 20%;
+  background: #F5F5F5;
   box-shadow: 0.2em 0em 0em 0.1em #F1F1F1;
   border-right: 1px solid #ddd; }
   .sidebar .header {
     width: 100%;
     float: left;
-    padding: 0.25em;
-    background: #F6F6F6;
-    height: 2.8em; }
+    padding: 0.25em; }
     .sidebar .header .title {
       float: left;
-      margin-left: 0.75em;
-      margin-top: 0.5em;
-      text-transform: capitalize; }
+      margin-top: 0.75em;
+      margin-left: 0.75em; }
   .sidebar .menu-wrapper {
     position: absolute;
     left: 0;
@@ -619,7 +615,7 @@ a {
     z-index: 2;
     width: 100%;
     height: 100%;
-    background: #FFF;
+    background: #F5F5F5;
     overflow-y: scroll;
     padding: 1em; }
     .sidebar .menu ul {
@@ -636,9 +632,8 @@ a {
 .thread-info {
   float: left;
   width: 100%;
-  padding: 1em;
-  color: #666;
-  background: #F6F8F8; }
+  padding: 0.6em;
+  color: #666; }
   .thread-info .subject {
     font-size: 1.3em;
     font-family: serif;
@@ -651,22 +646,33 @@ a {
 .mails {
   width: 100%;
   float: left;
-  padding: 0.5em;
-  background: #F6F8F8; }
+  padding: 0.5em; }
+  .mails .controls {
+    width: 100%;
+    float: left;
+    padding: 1em 0.5em 0.5em 0.5em;
+    border-top: 0.1em solid #999; }
+    .mails .controls .wrapper {
+      float: left;
+      width: 100%;
+      border: 0.1em solid #CCC;
+      padding: 0.5em; }
+    .mails .controls a {
+      margin-right: 1em;
+      color: #999; }
 
 .mail {
   float: left;
   background: #FFF;
   width: 100%;
   margin-bottom: 1.5em;
-  border: 0.1em solid #DDD;
-  box-shadow: 0em 0em 0.1em 0.1em #EEE;
   border-radius: 0.25em; }
   .mail .meta {
     width: 100%;
     float: left;
+    background: #f9f9f9;
     padding: 0.5em;
-    border-bottom: 0.1em solid #DDD; }
+    border-top: 0.1em solid #DDD; }
     .mail .meta .sender {
       float: left;
       font-weight: bold;
@@ -678,16 +684,6 @@ a {
       width: 100%;
       float: left;
       color: #999; }
-  .mail .controls {
-    width: 100%;
-    float: left;
-    background: #FAFAFA;
-    padding: 0.5em;
-    border-bottom-left-radius: 0.25em;
-    border-bottom-right-radius: 0.25em; }
-  .mail .controls a {
-    margin-right: 1em;
-    color: #999; }
   .mail .body {
     width: 100%;
     float: left;
@@ -723,7 +719,9 @@ a {
   background: #6692D4;
   padding: 0.25em 0.5em 0.25em 0.5em;
   color: #FFF;
-  text-decoration: none; }
+  text-decoration: none;
+  border-radius: 0.2em;
+  font-size: 1.2em; }
 
 .extra-recipients-button {
   cursor: pointer;

@@ -1,9 +1,8 @@
 .thread-info {
   float: left;
   width: 100%;
-  padding: 1em;
+  padding: 0.6em;
   color: #666;
-  background: #F6F8F8;
 
   .subject {
     font-size: 1.3em;
@@ -22,24 +21,42 @@
   width: 100%;
   float: left;
   padding: 0.5em;
-  background: #F6F8F8;
+
+
+  .controls {
+    width: 100%;
+    float: left;
+    padding: 1em 0.5em 0.5em 0.5em;
+    border-top: 0.1em solid #999;
+
+    .wrapper {
+      float: left;
+      width: 100%;
+      border: 0.1em solid #CCC;
+      padding: 0.5em;
+    }
+
+    a {
+      margin-right: 1em;
+      color: #999;
+    }
+  }
 }
+
 
 .mail {
   float: left;
   background: #FFF;
   width: 100%;
   margin-bottom: 1.5em;
-  border: 0.1em solid #DDD;
-  box-shadow: 0em 0em 0.1em 0.1em #EEE;
   border-radius: 0.25em;
 
   .meta {
     width: 100%;
     float: left;
-//    background: #f5f5f5;
+    background: #f9f9f9;
     padding: 0.5em;
-    border-bottom: 0.1em solid #DDD;
+    border-top: 0.1em solid #DDD;
 
     .sender {
       float: left;
@@ -59,30 +76,15 @@
     }
   }
 
-  .controls {
-    width: 100%;
-    float: left;
-    background: #FAFAFA;
-    padding: 0.5em;
- //   border-bottom: 1px solid #CCC;
-    border-bottom-left-radius: 0.25em;
-    border-bottom-right-radius: 0.25em;
-  }
-
-  .controls {
-    a {
-      margin-right: 1em;
-      color: #999;
-    }
-  }
-
   .body {
     width: 100%;
     float: left;
     padding: 0.5em 1em 0.5em 1em;
   }
-  
+
   .body {
     width: 100%;
   }
+
 }
+

@@ -1,9 +1,10 @@
 .sidebar {
-  width: 20%;
   float: left;
   position: absolute;
   top: 0em;
   bottom: 0em;
+  width: 20%;
+  background: #F5F5F5;
   box-shadow: 0.2em 0em 0em 0.1em #F1F1F1;
   border-right: 1px solid #ddd;
 
@@ -11,14 +12,11 @@
     width: 100%;
     float: left;
     padding: 0.25em;
-    background: #F6F6F6;
-    height: 2.8em;
 
     .title {
       float: left;
+      margin-top: 0.75em;
       margin-left: 0.75em;
-      margin-top: 0.5em;
-      text-transform: capitalize;
     }
   }
 
