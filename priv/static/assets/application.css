@@ -648,6 +648,9 @@ a {
     font-size: 1.1em;
     width: 100%;
     clear: both; }
+    .thread-info .subject span {
+      background: #FFFFE5;
+      padding: 0.2em; }
   .thread-info .people-info {
     margin-top: 0.5em;
     color: #999; }
