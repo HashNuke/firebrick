@@ -19,9 +19,24 @@
           Compose
         </a>
         <ul>
-          <li><a href="/threads/in/inbox">Inbox</a></li>
-          <li><a href="/threads/in/sent">Sent</a></li>
-          <li><a href="/threads/in/trash">Trash</a></li>
+          <li>
+            <a class="inbox" href="/threads/in/inbox">
+              <img src="/static/assets/inbox.png"/>
+              Inbox
+            </a>
+          </li>
+          <li>
+            <a class="sent" href="/threads/in/sent">
+              <img src="/static/assets/sent.png"/>
+              Sent
+            </a>
+          </li>
+          <li>
+            <a class="trash" href="/threads/in/trash">
+              <img src="/static/assets/trash.png"/>
+              Trash
+            </a>
+          </li>
         </ul>
       </div>
     </div>
