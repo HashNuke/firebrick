@@ -620,14 +620,24 @@ a {
     padding: 1em; }
     .sidebar .menu ul {
       list-style-type: none;
-      padding-left: 0em; }
+      padding-left: 0.75em; }
     .sidebar .menu li {
       margin-top: 1em;
       margin-bottom: 1em; }
       .sidebar .menu li a {
         color: #444;
         font-size: 1.2em;
-        text-decoration: none; }
+        text-decoration: none;
+        vertical-align: bottom; }
+      .sidebar .menu li .inbox img {
+        height: 1em;
+        margin-right: 0.25em; }
+      .sidebar .menu li .sent img {
+        height: 1em;
+        margin-right: 0.25em; }
+      .sidebar .menu li .trash img {
+        height: 1.2em;
+        margin-bottom: -0.15em; }
 
 .thread-info {
   float: left;
@@ -721,6 +731,10 @@ a {
   text-decoration: none;
   border-radius: 0.2em;
   font-size: 1.2em; }
+  .compose-button img {
+    height: 1.2em;
+    vertical-align: middle;
+    margin-bottom: 0.25em; }
 
 .extra-recipients-button {
   cursor: pointer;
