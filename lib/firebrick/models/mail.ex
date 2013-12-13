@@ -22,6 +22,8 @@ defrecord Mail,
   parsed_to: nil,
   parsed_cc: nil,
   parsed_references: nil,
+  created_at_dt: nil,
+  updated_at_dt: nil,
   raw_data: nil,
   timezone: "+0000",
    __errors__: [] do
