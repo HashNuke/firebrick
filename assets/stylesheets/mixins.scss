@@ -27,7 +27,7 @@
 
     ul {
       list-style-type: none;
-      padding-left: 0em;
+      padding-left: 0.75em;
     }
 
     li {
@@ -37,6 +37,22 @@
         color: #444;
         font-size: 1.2em;
         text-decoration: none;
+        vertical-align: bottom;
+      }
+
+      .inbox img {
+        height: 1em;
+        margin-right: 0.25em;
+      }
+
+      .sent img {
+        height: 1em;
+        margin-right: 0.25em;
+      }
+
+      .trash img {
+        height: 1.2em;
+        margin-bottom: -0.15em;
       }
     }
   }
