@@ -42,6 +42,9 @@ config = ($routeProvider, $locationProvider, $httpProvider)->
     ).when('/compose/new',
       templateUrl: '/static/partials/compose.html'
       controller: 'ComposeCtrl'
+    ).when('/reply_to/:mail_id',
+      templateUrl: '/static/partials/compose.html'
+      controller: 'ComposeCtrl'
     ).when('/threads/in/:category',
       templateUrl: '/static/partials/thread_list.html'
       controller: 'ThreadListCtrl'
