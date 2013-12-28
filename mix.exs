@@ -8,7 +8,7 @@ defmodule Firebrick.Mixfile do
       compilers: [:elixir, :dynamo, :app, :erlang],
       env: [ prod: [compile_path: "ebin"]],
       compile_path: "tmp/#{Mix.env}/firebrick/ebin",
-      deps: deps ]
+      deps: deps(Mix.env) ]
   end
 
   # Configuration for the OTP application
@@ -17,7 +17,7 @@ defmodule Firebrick.Mixfile do
       mod: { Firebrick, [] } ]
   end
 
-  defp deps do
+  def deps(:prod) do
     [
      { :cowboy, github: "extend/cowboy" },
      { :dynamo, "0.1.0-dev", github: "elixir-lang/dynamo" },
@@ -30,5 +30,13 @@ defmodule Firebrick.Mixfile do
      { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.0.2" },
      { :eiconv, github: "zotonic/eiconv" }
     ]
+  end
+
+  def deps(:test) do
+    deps(:prod) ++ [{:hound, github: "HashNuke/hound"}]
+  end
+
+  def deps(_) do
+    deps(:prod)
   end
 end
