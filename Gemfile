@@ -7,4 +7,3 @@ gem 'sass'
 gem 'bourbon'
 
 gem 'filewatcher'
-gem 'debugger'

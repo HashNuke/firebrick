@@ -2,7 +2,6 @@ require 'sprockets'
 require 'rake/sprocketstask'
 require 'bourbon'
 require 'filewatcher'
-require 'debugger'
 
 sprockets = Sprockets::Environment.new("./") do |env|
   env.logger = Logger.new(STDOUT)
