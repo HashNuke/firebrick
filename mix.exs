@@ -28,12 +28,13 @@ defmodule Firebrick.Mixfile do
      { :riak_pool,  github: "HashNuke/riak_pool" },
      { :qdate, github: "choptastic/qdate" },
      { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.0.2" },
-     { :eiconv, github: "zotonic/eiconv" }
+     { :eiconv, github: "zotonic/eiconv" },
+     { :hound, github: "HashNuke/hound", tag: "v0.5.0" }
     ]
   end
 
   def deps(:test) do
-    deps(:prod) ++ [{:hound, github: "HashNuke/hound"}]
+    deps(:prod)
   end
 
   def deps(_) do
