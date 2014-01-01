@@ -29,7 +29,7 @@ defmodule Firebrick.Mixfile do
      { :qdate, github: "choptastic/qdate" },
      { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.0.2" },
      { :eiconv, github: "zotonic/eiconv" },
-     { :hound, github: "HashNuke/hound", tag: "v0.5.0" }
+     { :hound, github: "HashNuke/hound" }
     ]
   end
 

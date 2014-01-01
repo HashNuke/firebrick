@@ -9,7 +9,7 @@
   "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "637b3f09030aeef24961290b0d33fd2d40bd3b0c", []},
   "gen_smtp": {:git, "git://github.com/Vagabond/gen_smtp.git", "fd0426c46468c33c21332335c267ae6e13e01afb", []},
   "hackney": {:git, "git://github.com/benoitc/hackney.git", "5b0f7eb949ebebd6fabfbc4e08a7b7231850606a", []},
-  "hound": {:git, "git://github.com/HashNuke/hound.git", "9ff55a55005562499aa7db23124359af3e9e092c", [{:tag, "v0.5.0"}]},
+  "hound": {:git, "git://github.com/HashNuke/hound.git", "1eec7c31567816ece40eaacb247ed5edf36241c5", []},
   "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "e8ae353c16d4f0897abb9f80025b52925b974dd1", [{:tag, "v4.0.2"}]},
   "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "1e89a76f770e14bbbd1b5bebfc05312a984f21a4", []},
   "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [{:tag, "v1.4.3"}]},
