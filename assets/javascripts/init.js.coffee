@@ -17,6 +17,8 @@ moment.lang('en', {
 
 
 App.Router.map ()->
+  # /login
+  @route("login", {path: "/login"})
 
   # /threads/in/:category
   # /threads/:thread_id
@@ -25,9 +27,8 @@ App.Router.map ()->
     @route("thread", {path: "/:thread_id"})
   )
 
-  @route("login", {path: "/login"})
+  # /compose
   @route("compose", {path: "/compose"})
-
 
   # /users
   # /users/new
