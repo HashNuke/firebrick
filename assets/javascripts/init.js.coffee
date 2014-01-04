@@ -33,6 +33,36 @@ config = ($routeProvider, $locationProvider, $httpProvider)->
   $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest'
 
 
+App.Router.map(function(){
+
+  # /threads/in/:category
+  # /threads/:thread_id
+  this.resource("threads", function() {
+    this.route("in", {path: "/in/:category"});
+    this.route("thread", {path: "/:thread_id"});
+  });
+
+  this.route("login", {path: "/login"});
+  this.route("compose", {path: "/compose"});
+
+
+  # /users
+  # /users/new
+  # /users/:user_id
+  this.resource("users", function() {
+    this.route("new");
+
+    this.resource("user", {path: "/:user_id"}, function(){
+      this.route("edit");
+    });
+  });
+
+  # /domains
+  this.route("domains");
+
+});
+
+
   $routeProvider.when('/',
       templateUrl: '/static/partials/thread_list.html'
       controller: 'ThreadListCtrl'
