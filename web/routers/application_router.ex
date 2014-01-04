@@ -14,25 +14,17 @@ defmodule ApplicationRouter do
   # routers, forwarding the requests between them:
   # forward "/posts", to: PostsRouter
 
-  forward "/api/sessions", to: SessionsApiRouter
-  forward "/api/domains",  to: DomainsApiRouter
-  forward "/api/users",    to: UsersApiRouter
-  forward "/api/threads",  to: ThreadsApiRouter
-  forward "/api/mails",    to: MailsApiRouter
+  forward "/sessions", to: SessionsApiRouter
+  forward "/domains",  to: DomainsApiRouter
+  forward "/users",    to: UsersApiRouter
+  forward "/threads",  to: ThreadsApiRouter
+  forward "/mails",    to: MailsApiRouter
 
 
   @prepare :authenticate_user!
   get "/" do
     conn = conn.assign(:title, "Firebrick Mail")
     render conn, "index.html"
-  end
-
-
-  Enum.map ["/users/*", "/mails/*"], fn(route)->
-    get route do
-      conn = conn.assign(:title, "Firebrick Mail")
-      render conn, "index.html"
-    end
   end
 
 end
