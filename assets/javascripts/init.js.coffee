@@ -1,5 +1,3 @@
-window.AppResolvers = {}
-
 moment.lang('en', {
   relativeTime :
       future: "in %s",
@@ -17,108 +15,27 @@ moment.lang('en', {
       yy: "%d years ago"
 })
 
-config = ($routeProvider, $locationProvider, $httpProvider)->
-  $locationProvider.html5Mode(true)
 
-  unauthorizedInterceptor = ['$rootScope', '$q', '$location', (scope, $q, $location)->
-      success = (response)-> response
-      error   = (response)->
-        console.log "INTERCEPTER", response
-        return $q.reject(response) if response.status != 401
-        $location.path("/login") if $location.path != "/login"
-
-      return ((promise)-> promise.then(success, error))
-    ]
-  $httpProvider.responseInterceptors.push(unauthorizedInterceptor)
-  $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest'
-
-
-App.Router.map(function(){
+App.Router.map ()->
 
   # /threads/in/:category
   # /threads/:thread_id
-  this.resource("threads", function() {
-    this.route("in", {path: "/in/:category"});
-    this.route("thread", {path: "/:thread_id"});
-  });
+  @resource("threads", ()->
+    @route("in", {path: "/in/:category"})
+    @route("thread", {path: "/:thread_id"})
+  )
 
-  this.route("login", {path: "/login"});
-  this.route("compose", {path: "/compose"});
+  @route("login", {path: "/login"})
+  @route("compose", {path: "/compose"})
 
 
   # /users
   # /users/new
   # /users/:user_id
-  this.resource("users", function() {
-    this.route("new");
-
-    this.resource("user", {path: "/:user_id"}, function(){
-      this.route("edit");
-    });
-  });
+  @resource("users", ()->
+    @route("new");
+    @resource("user", {path: "/:user_id"}, ()-> @route("edit"))
+  )
 
   # /domains
-  this.route("domains");
-
-});
-
-
-  $routeProvider.when('/',
-      templateUrl: '/static/partials/thread_list.html'
-      controller: 'ThreadListCtrl'
-      resolve:
-        threads: AppResolvers.threads
-        auth: AppResolvers.auth
-    ).when('/compose/new',
-      templateUrl: '/static/partials/compose.html'
-      controller: 'ComposeCtrl'
-    ).when('/reply_to/:mail_id',
-      templateUrl: '/static/partials/compose.html'
-      controller: 'ComposeCtrl'
-    ).when('/threads/in/:category',
-      templateUrl: '/static/partials/thread_list.html'
-      controller: 'ThreadListCtrl'
-      resolve:
-        threads: AppResolvers.threads
-        auth: AppResolvers.auth
-    ).when('/threads/:thread_id',
-      templateUrl: '/static/partials/thread.html'
-      controller: 'ThreadCtrl'
-      resolve:
-        thread: AppResolvers.thread
-        auth: AppResolvers.auth
-    ).when('/domains',
-      templateUrl: '/static/partials/domains.html'
-      controller: 'DomainsCtrl'
-      resolve:
-        domains: AppResolvers.domains
-        auth: AppResolvers.auth
-    ).when('/users',
-      templateUrl: '/static/partials/users/list.html'
-      controller: 'UsersListCtrl'
-      resolve:
-        users: AppResolvers.users
-        auth: AppResolvers.auth
-    ).when('/users/new',
-      templateUrl: '/static/partials/users/user.html'
-      controller: 'UserCtrl'
-      resolve:
-        auth: AppResolvers.auth
-        user: AppResolvers.user
-    ).when('/users/:user_id/:edit',
-      templateUrl: '/static/partials/users/user.html'
-      controller: 'UserCtrl'
-      resolve:
-        user: AppResolvers.user
-        auth: AppResolvers.auth
-    ).when('/login',
-      templateUrl: '/static/partials/login.html'
-      controller: 'SessionCtrl'
-      resolve:
-        auth: AppResolvers.auth
-    ).otherwise(redirectTo: '/not_found')
-
-
-window.app = angular
-  .module('Firebrick', ['ngSanitize', 'ngRoute', 'ngResource', 'ngSanitize'])
-  .config ['$routeProvider', '$locationProvider', '$httpProvider', config]
+  @route("domains")
