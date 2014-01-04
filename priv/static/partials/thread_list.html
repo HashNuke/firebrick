@@ -1,18 +1,25 @@
 <div class="threads-wrapper">
   <div class="threads">
 
-    <div class="thread" ng-repeat="thread in threads" ng-click="openThread(thread.id)">
-      <div class="sender">
-        {{thread.mail_preview["sender"]["name"] || thread.mail_preview["sender"]["email"]}}
-        <span ng-hide="thread.mail_count == 1">({{thread.mail_count}})</span>
-      </div>
-      <div class="timestamp">{{thread.updated_at_dt | relativeTime}}</div>
+    {{#each thread in controller}}
 
-      <div class="preview">
-        <div class="subject">{{thread.subject}}</div>
-        <div class="summary">{{thread.mail_preview.preview}}</div>
+      <div class="thread">
+        <div class="sender">
+          {{thread.currentSenderName || thread.currentSenderEmail}}
+          <span>({{thread.mailCount}})</span>
+        </div>
+        <div class="timestamp">{{relativeTime thread.updatedAt}}</div>
+
+        <div class="preview">
+          <div class="subject">{{thread.subject}}</div>
+          <div class="summary">{{thread.preview}}</div>
+        </div>
       </div>
-    </div>
+
+    {{else}}
+      <h2>No mails. You feel lucky?</h2>
+    {{/each}}
+
 
   </div>
 </div>
