@@ -7,5 +7,4 @@
 //= require_tree "./resolvers"
 //= require_tree "./directives"
 //= require "factories"
-//= require "filters"
 //= require_tree "./controllers"
