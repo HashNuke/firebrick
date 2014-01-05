@@ -14,10 +14,7 @@ defrecord User,
   use Realm
   use Firebrick.RiakRealm
 
-
-  # Tells the world which bucket this is stored in
-  def bucket, do: {"firebrick_type", "firebrick"}
-  def index_name, do: "firebrick_index"
+  bucket_info
 
   # These will be skipped when saving
   def skip_attributes, do: ["id", "password"]

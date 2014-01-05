@@ -125,6 +125,16 @@ defmodule Firebrick.RiakRealm do
   end
 
 
+  defmacro bucket_info({bucket_type, bucket_name, index_name} // {"firebrick_type", "firebrick", "firebrick_index"}) do
+    full_bucket_name = "#{bucket_name}_#{Mix.env}"
+    full_index_name  = "#{index_name}_#{Mix.env}"
+    quote do
+      def bucket, do: { unquote(bucket_type), unquote(full_bucket_name) }
+      def index_name, do: unquote(full_index_name)
+    end
+  end
+
+
   def get(bucket, key) do
     {:ok, obj} = RiakPool.get(bucket, key)
     {:ok, data} = :riakc_obj.get_values(obj)
@@ -166,4 +176,5 @@ defmodule Firebrick.RiakRealm do
       :riakc_pb_socket.list_keys pid, bucket
     end
   end
+
 end

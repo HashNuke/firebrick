@@ -15,9 +15,7 @@ defrecord Thread,
   use Realm
   use Firebrick.RiakRealm
 
-
-  def bucket, do: {"firebrick_type", "firebrick"}
-  def index_name, do: "firebrick_index"
+  bucket_info
 
   def skip_attributes, do: ["id"]
   def safe_attributes, do: ["id", "subject", "created_at_dt", "updated_at_dt", "read", "mail_previews", "user_id"]
