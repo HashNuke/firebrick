@@ -22,12 +22,20 @@ The above command is for Ubuntu, figure out something else for your operating sy
 
 * Create an index
 
-        curl -XPUT -i 'http://localhost:8098/search/index/firebrick_index'
+        curl -XPUT -i 'http://localhost:8098/search/index/firebrick_dev_index'
+        curl -XPUT -i 'http://localhost:8098/search/index/firebrick_prod_index'
+        curl -XPUT -i 'http://localhost:8098/search/index/firebrick_test_index'
 
 * Create a bucket type which uses the index and also activate it.
 
-        riak-admin bucket-type create firebrick_type '{"props":{"search_index":"firebrick_index"}}'
-        riak-admin bucket-type activate firebrick_type
+        riak-admin bucket-type create firebrick_dev_type '{"props":{"search_index":"firebrick_dev_index"}}'
+        riak-admin bucket-type activate firebrick_dev_type
+
+        riak-admin bucket-type create firebrick_prod_type '{"props":{"search_index":"firebrick_prod_index"}}'
+        riak-admin bucket-type activate firebrick_prod_type
+
+        riak-admin bucket-type create firebrick_test_type '{"props":{"search_index":"firebrick_test_index"}}'
+        riak-admin bucket-type activate firebrick_test_type
 
 
 ## Setup
@@ -82,5 +90,6 @@ Check `docs/asset-compilation-using-watchman.md` for notes on auto-compilation o
 * To delete the index and start over again:
 
       # clear the directory for the solr index
-      curl -XDELETE -i 'http://localhost:8098/search/index/firebrick_index'
-      curl -XPUT -i 'http://localhost:8098/search/index/firebrick_index'
+      curl -XDELETE -i 'http://localhost:8098/search/index/firebrick_prod_index'
+      curl -XDELETE -i 'http://localhost:8098/search/index/firebrick_dev_index'
+      curl -XDELETE -i 'http://localhost:8098/search/index/firebrick_test_index'
