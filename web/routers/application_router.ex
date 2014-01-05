@@ -14,11 +14,11 @@ defmodule ApplicationRouter do
   # routers, forwarding the requests between them:
   # forward "/posts", to: PostsRouter
 
-  forward "/sessions", to: SessionsApiRouter
-  forward "/domains",  to: DomainsApiRouter
-  forward "/users",    to: UsersApiRouter
-  forward "/threads",  to: ThreadsApiRouter
-  forward "/mails",    to: MailsApiRouter
+  forward "/api/sessions", to: SessionsApiRouter
+  forward "/api/domains",  to: DomainsApiRouter
+  forward "/api/users",    to: UsersApiRouter
+  forward "/api/threads",  to: ThreadsApiRouter
+  forward "/api/mails",    to: MailsApiRouter
 
 
   @prepare :authenticate_user!
