@@ -27,6 +27,25 @@ Ember.Handlebars.helper 'relativeTime', (value, options)->
     time.fromNow(true)
 
 
+App.ApplicationAdapter = DS.RESTAdapter.reopen({namespace: "api"})
+
+
+App.User = DS.Model.extend({
+  username: DS.attr('string'),
+  primaryAddress: DS.attr('string'),
+  firstName: DS.attr('string'),
+  lastName: DS.attr('string'),
+  role: DS.attr('string'),
+  domainId: DS.attr('string')
+});
+
+DS.RESTAdapter.map('App.User', {
+  firstName: { key: 'first_name' },
+  lastName: { key: 'last_name' },
+  domainId: { key: 'domain_id' },
+  primaryAddress: { key: 'primary_address' }
+});
+
 
 App.Router.map ()->
   # /login
