@@ -1,5 +1,8 @@
 <script type="text/x-handlebars" id="login">
   <div class="login">
+
+    <div class="title">Firebrick Login</div>
+
     <form {{action login on="submit"}}>
 
       <div class="field">
@@ -45,9 +48,6 @@
         </div>
       </div>
     {{else}}
-      <div class="header">
-        <div class="title">Login</div>
-      </div>
       <div class="content">{{outlet}}</div>
     {{/if}}
 

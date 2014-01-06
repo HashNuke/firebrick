@@ -43,10 +43,18 @@ a {
   margin-top: 4em;
   background: #FFF;
   display: inline-block;
-  padding: 2em;
+  padding: 1em 2em 2em 2em;
   border: 0.1em solid #DFDFDF;
   border-radius: 0.3em;
   margin-bottom: 0.1em;
+
+  .title {
+    color: #06c;
+    font-size: 1.5em;
+    text-transform: capitalize;
+    border-bottom: 0.1em solid #06C;
+    margin-bottom: 1em;
+  }
 
   .field {
     margin-bottom: 1em;
