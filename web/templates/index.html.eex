@@ -21,56 +21,82 @@
   </div>
 </script>
 
+
+<script type="text/x-handlebars" id="plain">
+  <div class="container">
+    <div class="detail">
+      <div class="header">
+        <div class="title">Login</div>
+      </div>
+      <div class="content">{{yield}}</div>
+    </div>
+  </div>
+</script>
+
+
 <script type="text/x-handlebars" id="application">
   <div class="container">
 
-    <div class="sidebar">
-      <div class="header">
-        <!-- <div class="menu-control">
-          <img src="/static/assets/navicon.png"/>
-        </div> -->
-
-        <div class="title">{{sharedData.user.primary_address}}</div>
-
-        <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
-        <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->
-      </div>
-
-      <div class="menu-wrapper">
-        <div class="menu">
-          <a class="compose-button" href="/compose/new">
-            <img src="/static/assets/compose.png"/>
-            Compose
-          </a>
-          <ul>
-            <li>
-              <a class="inbox" href="/threads/in/inbox">
-                <img src="/static/assets/inbox.png"/>
-                Inbox
-              </a>
-            </li>
-            <li>
-              <a class="sent" href="/threads/in/sent">
-                <img src="/static/assets/sent.png"/>
-                Sent
-              </a>
-            </li>
-            <li>
-              <a class="trash" href="/threads/in/trash">
-                <img src="/static/assets/trash.png"/>
-                Trash
-              </a>
-            </li>
-          </ul>
+    {{#if loggedIn}}
+      {{render 'sidebar'}}
+      <div class="detail">
+        <div class="header">
+          <div class="title">{{sharedData.title}}</div>
         </div>
       </div>
-    </div>
-
-    <div class="detail">
+    {{else}}
       <div class="header">
-        <div class="title">{{sharedData.title}}</div>
+        <div class="title">Login</div>
       </div>
       <div class="content">{{outlet}}</div>
+    {{/if}}
+
+  </div>
+</script>
+
+
+<script type="text/x-handlebars" id="sidebar">
+
+  <div class="sidebar">
+    <div class="header">
+      <!-- <div class="menu-control">
+        <img src="/static/assets/navicon.png"/>
+      </div> -->
+
+      <div class="title">{{sharedData.user.primary_address}}</div>
+
+      <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
+      <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->
+    </div>
+
+    <div class="menu-wrapper">
+      <div class="menu">
+        <a class="compose-button" href="/compose/new">
+          <img src="/static/assets/compose.png"/>
+          Compose
+        </a>
+        <ul>
+          <li>
+            <a class="inbox" href="/threads/in/inbox">
+              <img src="/static/assets/inbox.png"/>
+              Inbox
+            </a>
+          </li>
+          <li>
+            <a class="sent" href="/threads/in/sent">
+              <img src="/static/assets/sent.png"/>
+              Sent
+            </a>
+          </li>
+          <li>
+            <a class="trash" href="/threads/in/trash">
+              <img src="/static/assets/trash.png"/>
+              Trash
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
+
 </script>

@@ -74,6 +74,16 @@ App.Router.map ()->
   @route("domains")
 
 
+App.ApplicationController = Ember.Controller.extend
+  loggedIn: false
+
+  login: ->
+    this.set('loggedIn', true);
+
+  logout: ()->
+    this.set('loggedIn', false);
+
+
 App.LoginController = Ember.Controller.extend
   actions:
     login: ->
