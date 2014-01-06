@@ -4,7 +4,4 @@
 //= require "libs/ember"
 //= require "libs/ember-data"
 //= require "init"
-//= require_tree "./resolvers"
-//= require_tree "./directives"
-//= require "factories"
-//= require_tree "./controllers"
+
