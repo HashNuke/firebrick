@@ -32,7 +32,7 @@ defmodule Firebrick.RouterUtils do
     if xhr?(conn) do
       halt! conn.status(401)
     else
-      redirect! conn, to: "/login", format: :html
+      redirect! conn, to: "/#login", format: :html
     end
   end
 
