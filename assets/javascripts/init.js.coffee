@@ -1,4 +1,6 @@
 window.App = Ember.Application.create()
+App.ApplicationSerializer = DS.ActiveModelSerializer.extend({});
+App.ApplicationAdapter = DS.RESTAdapter.reopen({namespace: "api"})
 
 moment.lang('en', {
   relativeTime :
@@ -27,9 +29,6 @@ Ember.Handlebars.helper 'relativeTime', (value, options)->
     time.format("MMM D")
   else
     time.fromNow(true)
-
-
-App.ApplicationAdapter = DS.RESTAdapter.reopen({namespace: "api"})
 
 
 App.User = DS.Model.extend({
