@@ -518,18 +518,19 @@ a {
   right: 0em;
   bottom: 0em;
   padding-top: 2.3em; }
-  .detail .header {
-    width: 100%;
-    position: fixed;
-    top: 0em;
-    padding: 0.25em;
+
+.header {
+  width: 100%;
+  position: fixed;
+  top: 0em;
+  padding: 0.25em;
+  margin-left: 0.25em;
+  color: #06c; }
+  .header .title {
+    float: left;
+    font-size: 1.5em;
     margin-left: 0.25em;
-    color: #06c; }
-    .detail .header .title {
-      float: left;
-      font-size: 1.5em;
-      margin-left: 0.25em;
-      text-transform: capitalize; }
+    text-transform: capitalize; }
 
 .threads-wrapper {
   float: left;

@@ -60615,6 +60615,12 @@ Ember.onLoad('Ember.Application', function(Application) {
 (function() {
   window.App = Ember.Application.create();
 
+  App.ApplicationSerializer = DS.ActiveModelSerializer.extend({});
+
+  App.ApplicationAdapter = DS.RESTAdapter.reopen({
+    namespace: "api"
+  });
+
   moment.lang('en', {
     relativeTime: {
       future: "in %s",
@@ -60644,10 +60650,6 @@ Ember.onLoad('Ember.Application', function(Application) {
     } else {
       return time.fromNow(true);
     }
-  });
-
-  App.ApplicationAdapter = DS.RESTAdapter.reopen({
-    namespace: "api"
   });
 
   App.User = DS.Model.extend({
@@ -60681,6 +60683,16 @@ Ember.onLoad('Ember.Application', function(Application) {
       });
     });
     return this.route("domains");
+  });
+
+  App.ApplicationController = Ember.Controller.extend({
+    loggedIn: false,
+    login: function() {
+      return this.set('loggedIn', true);
+    },
+    logout: function() {
+      return this.set('loggedIn', false);
+    }
   });
 
   App.LoginController = Ember.Controller.extend({
