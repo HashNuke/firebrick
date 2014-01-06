@@ -21,7 +21,6 @@ defmodule ApplicationRouter do
   forward "/api/mails",    to: MailsApiRouter
 
 
-  @prepare :authenticate_user!
   get "/" do
     conn = conn.assign(:title, "Firebrick Mail")
     render conn, "index.html"
