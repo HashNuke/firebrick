@@ -1,3 +1,5 @@
+window.App = Ember.Application.create()
+
 moment.lang('en', {
   relativeTime :
       future: "in %s",
@@ -39,17 +41,17 @@ App.User = DS.Model.extend({
   domainId: DS.attr('string')
 });
 
-DS.RESTAdapter.map('App.User', {
-  firstName: { key: 'first_name' },
-  lastName: { key: 'last_name' },
-  domainId: { key: 'domain_id' },
-  primaryAddress: { key: 'primary_address' }
-});
+# DS.RESTAdapter.map('App.User', {
+#   firstName: { key: 'first_name' },
+#   lastName: { key: 'last_name' },
+#   domainId: { key: 'domain_id' },
+#   primaryAddress: { key: 'primary_address' }
+# });
 
 
 App.Router.map ()->
   # /login
-  @route("login", {path: "/login"})
+  @route("login")
 
   # /threads/in/:category
   # /threads/:thread_id
@@ -72,3 +74,14 @@ App.Router.map ()->
   # /domains
   @route("domains")
 
+
+App.LoginController = Ember.Controller.extend
+  actions:
+    login: ->
+      data = @getProperties('username', 'password')
+      Ember.$.post("/api/sessions", data).then (response)->
+        if response.error
+          console.log "error"
+          console.log "response"
+        else
+          console.log response
