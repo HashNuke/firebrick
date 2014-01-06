@@ -1,51 +1,76 @@
-<div class="container" ng-controller="RootCtrl">
+<script type="text/x-handlebars" id="login">
+  <div class="login">
+    <form {{action login on="submit"}}>
 
-  <div class="sidebar">
-    <div class="header">
-      <!-- <div class="menu-control">
-        <img src="/static/assets/navicon.png"/>
-      </div> -->
+      <div class="field">
+        <label>Username</label><br/>
+        {{input type="text" value=username}}
+      </div>
 
-      <div class="title">{{sharedData.user.primary_address}}</div>
+      <div class="field">
+        <label>Password</label><br/>
+        {{input type="password" value=password}}
+      </div>
 
-      <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
-      <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->
-    </div>
+      <div class="actions">
+        <span class="auth-error">{{errorNotification}}</span>
+        {{input type="submit" value="Log In"}}
+      </div>
 
-    <div class="menu-wrapper">
-      <div class="menu">
-        <a class="compose-button" href="/compose/new">
-          <img src="/static/assets/compose.png"/>
-          Compose
-        </a>
-        <ul>
-          <li>
-            <a class="inbox" href="/threads/in/inbox">
-              <img src="/static/assets/inbox.png"/>
-              Inbox
-            </a>
-          </li>
-          <li>
-            <a class="sent" href="/threads/in/sent">
-              <img src="/static/assets/sent.png"/>
-              Sent
-            </a>
-          </li>
-          <li>
-            <a class="trash" href="/threads/in/trash">
-              <img src="/static/assets/trash.png"/>
-              Trash
-            </a>
-          </li>
-        </ul>
+    </form>
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="application">
+  <div class="container">
+
+    <div class="sidebar">
+      <div class="header">
+        <!-- <div class="menu-control">
+          <img src="/static/assets/navicon.png"/>
+        </div> -->
+
+        <div class="title">{{sharedData.user.primary_address}}</div>
+
+        <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
+        <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->
+      </div>
+
+      <div class="menu-wrapper">
+        <div class="menu">
+          <a class="compose-button" href="/compose/new">
+            <img src="/static/assets/compose.png"/>
+            Compose
+          </a>
+          <ul>
+            <li>
+              <a class="inbox" href="/threads/in/inbox">
+                <img src="/static/assets/inbox.png"/>
+                Inbox
+              </a>
+            </li>
+            <li>
+              <a class="sent" href="/threads/in/sent">
+                <img src="/static/assets/sent.png"/>
+                Sent
+              </a>
+            </li>
+            <li>
+              <a class="trash" href="/threads/in/trash">
+                <img src="/static/assets/trash.png"/>
+                Trash
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="detail">
-    <div class="header">
-      <div class="title">{{sharedData.title}}</div>
+    <div class="detail">
+      <div class="header">
+        <div class="title">{{sharedData.title}}</div>
+      </div>
+      <div class="content">{{outlet}}</div>
     </div>
-    <div class="content" ng-view></div>
   </div>
-</div>
+</script>
