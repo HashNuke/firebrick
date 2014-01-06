@@ -78,19 +78,21 @@ App.ApplicationController = Ember.Controller.extend
   loggedIn: false
 
   login: ->
-    this.set('loggedIn', true);
+    @set('loggedIn', true);
 
   logout: ()->
-    this.set('loggedIn', false);
+    @set('loggedIn', false);
 
 
 App.LoginController = Ember.Controller.extend
+  needs: ["application"]
   actions:
     login: ->
       data = @getProperties('username', 'password')
-      Ember.$.post("/api/sessions", data).then (response)->
+      console.log @get("controllers.application.loggedIn")
+      Ember.$.post("/api/sessions", data).then (response)=>
         if response.error
-          console.log "error"
-          console.log "response"
+          console.log "error", response
         else
           console.log response
+          @set("controllers.application.loggedIn", response)
