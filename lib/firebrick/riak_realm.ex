@@ -125,11 +125,12 @@ defmodule Firebrick.RiakRealm do
   end
 
 
-  defmacro bucket_info({bucket_type, bucket_name, index_name} // {"firebrick_type", "firebrick", "firebrick_index"}) do
+  defmacro bucket_info(bucket_name // "firebrick") do
+    full_bucket_type = "#{bucket_name}_#{Mix.env}_type"
+    full_index_name  = "#{bucket_name}_#{Mix.env}_index"
     full_bucket_name = "#{bucket_name}_#{Mix.env}"
-    full_index_name  = "#{index_name}_#{Mix.env}"
     quote do
-      def bucket, do: { unquote(bucket_type), unquote(full_bucket_name) }
+      def bucket, do: { unquote(full_bucket_type), unquote(full_bucket_name) }
       def index_name, do: unquote(full_index_name)
     end
   end
