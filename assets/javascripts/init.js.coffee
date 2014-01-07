@@ -75,13 +75,7 @@ App.Router.map ()->
 
 
 App.ApplicationController = Ember.Controller.extend
-  loggedIn: false
-
-  login: ->
-    @set('loggedIn', true);
-
-  logout: ()->
-    @set('loggedIn', false);
+  currentUser: false
 
 
 App.LoginController = Ember.Controller.extend
@@ -89,10 +83,12 @@ App.LoginController = Ember.Controller.extend
   actions:
     login: ->
       data = @getProperties('username', 'password')
-      console.log @get("controllers.application.loggedIn")
+      console.log @get("controllers.application.currentUser")
       Ember.$.post("/api/sessions", data).then (response)=>
         if response.error
           console.log "error", response
         else
-          console.log response
-          @set("controllers.application.loggedIn", response)
+          user = JSON.parse(response).user
+          @set("controllers.application.currentUser", @store.createRecord('user', user))
+          console.log @get("controllers.application.currentUser")
+          @transitionToRoute('threads.in', 'inbox')
