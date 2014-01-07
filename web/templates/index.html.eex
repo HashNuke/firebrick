@@ -25,6 +25,11 @@
 </script>
 
 
+<script type="text/x-handlebars" id="threads/in">
+  <h1>Hey all. This is all about routes.</h1>
+</script>
+
+
 <script type="text/x-handlebars" id="plain">
   <div class="container">
     <div class="detail">
@@ -57,6 +62,7 @@
         <div class="header">
           <div class="title">{{pageTitle}}</div>
         </div>
+        {{outlet}}
       </div>
     {{else}}
       {{outlet}}

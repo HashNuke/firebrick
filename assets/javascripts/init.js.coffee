@@ -2,6 +2,48 @@ window.App = Ember.Application.create()
 App.ApplicationSerializer = DS.ActiveModelSerializer.extend({});
 App.ApplicationAdapter = DS.RESTAdapter.reopen({namespace: "api"})
 
+
+App.AuthenticatedRoute = Ember.Route.extend
+  beforeModel: (transition)->
+    applicationController = @controllerFor("application")
+    if applicationController.get("currentUser")
+      return true
+
+    Ember.$.getJSON("/api/sessions").then (response)=>
+      if response.user
+        user = @store.createRecord('user', response.user)
+        @controllerFor('application').set('currentUser', user)
+      else
+        @redirectToLogin(transition)
+
+  # Redirect to the login page and store the current transition so we can
+  # run it again after login
+  redirectToLogin: (transition)->
+    loginController = @controllerFor("login")
+    # loginController.set("attemptedTransition", transition)
+    @transitionTo("login")
+
+  #TODO not sure why this is here
+  actions:
+    error: (reason, transition)->
+      this.redirectToLogin(transition)
+
+
+# App.initializer(
+#   name: 'currentUser'
+#   after: 'store'
+
+#   initialize: (container) ->
+#     store = container.lookup('store:main')
+#     Ember.$.getJSON("/api/sessions").then (response)=>
+#       if response.user
+#         console.log "responded..."
+#         user = store.createRecord('user', response.user)
+#         container.lookup('controller:application').set('currentUser', user)
+#         # container.typeInjection('controller', 'currentUser', 'controller:application')
+# )
+
+
 moment.lang('en', {
   relativeTime :
       future: "in %s",
@@ -74,11 +116,12 @@ App.Router.map ()->
   @route("domains")
 
 
+App.ThreadsRoute = App.AuthenticatedRoute.extend({})
+
+
 App.ApplicationController = Ember.Controller.extend
   currentUser: false
   pageTitle: null
-  currentPrimaryAddress: ()->
-    currentUser.get('id')
 
 
 App.LoginController = Ember.Controller.extend
@@ -90,10 +133,11 @@ App.LoginController = Ember.Controller.extend
       data = @getProperties('username', 'password')
       console.log @get("controllers.application.currentUser")
       Ember.$.post("/api/sessions", data).then (response)=>
+        response = JSON.parse(response)
         if response.error
           console.log "error", response
         else
-          user = JSON.parse(response).user
-          @set("controllers.application.currentUser", @store.createRecord('user', user))
+          user = @store.createRecord('user', response.user)
+          @set("controllers.application.currentUser", user)
           console.log @get("controllers.application.currentUser")
           @transitionToRoute('threads.in', 'inbox')
