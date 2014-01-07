@@ -29,21 +29,6 @@ App.AuthenticatedRoute = Ember.Route.extend
       this.redirectToLogin(transition)
 
 
-# App.initializer(
-#   name: 'currentUser'
-#   after: 'store'
-
-#   initialize: (container) ->
-#     store = container.lookup('store:main')
-#     Ember.$.getJSON("/api/sessions").then (response)=>
-#       if response.user
-#         console.log "responded..."
-#         user = store.createRecord('user', response.user)
-#         container.lookup('controller:application').set('currentUser', user)
-#         # container.typeInjection('controller', 'currentUser', 'controller:application')
-# )
-
-
 moment.lang('en', {
   relativeTime :
       future: "in %s",
