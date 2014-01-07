@@ -76,10 +76,15 @@ App.Router.map ()->
 
 App.ApplicationController = Ember.Controller.extend
   currentUser: false
+  pageTitle: null
+  currentPrimaryAddress: ()->
+    currentUser.get('id')
 
 
 App.LoginController = Ember.Controller.extend
   needs: ["application"]
+  username: "admin"
+  password: "password"
   actions:
     login: ->
       data = @getProperties('username', 'password')

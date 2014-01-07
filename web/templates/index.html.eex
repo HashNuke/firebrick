@@ -41,10 +41,21 @@
   <div class="container">
 
     {{#if currentUser}}
-      {{render "sidebar"}}
+      <div class="sidebar">
+        <div class="header">
+          <div class="title">{{currentUser.primary_address}}</div>
+          <!-- <div class="menu-control"><img src="/static/assets/navicon.png"/></div> -->
+
+          <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
+          <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->
+        </div>
+
+        <div class="menu-wrapper">{{render "menu"}}</div>
+      </div>
+
       <div class="detail">
         <div class="header">
-          <div class="title">{{sharedData.title}}</div>
+          <div class="title">{{pageTitle}}</div>
         </div>
       </div>
     {{else}}
@@ -62,42 +73,24 @@
       Compose
     </a>
     <ul>
-      <li>
-        <a class="inbox" href="/threads/in/inbox">
+      <li class="inbox">
+        {{#link-to "threads.in" "inbox"}}
           <img src="/static/assets/inbox.png"/>
           Inbox
-        </a>
+        {{/link-to}}
       </li>
-      <li>
-        <a class="sent" href="/threads/in/sent">
+      <li class="sent">
+        {{#link-to "threads.in" "sent"}}
           <img src="/static/assets/sent.png"/>
           Sent
-        </a>
+        {{/link-to}}
       </li>
-      <li>
-        <a class="trash" href="/threads/in/trash">
+      <li class="trash">
+        {{#link-to "threads.in" "trash"}}
           <img src="/static/assets/trash.png"/>
           Trash
-        </a>
+        {{/link-to}}
       </li>
     </ul>
   </div>
-</script>
-
-
-<script type="text/x-handlebars" id="sidebar">
-  <div class="sidebar">
-    <div class="header">
-      <!-- <div class="menu-control">
-        <img src="/static/assets/navicon.png"/>
-      </div> -->
-
-      <div class="title">{{sharedData.user.primary_address}}</div>
-      <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
-      <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->
-    </div>
-
-    <div class="menu-wrapper">{{render "menu"}}</div>
-  </div>
-
 </script>
