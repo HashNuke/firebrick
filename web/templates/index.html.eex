@@ -25,6 +25,94 @@
 </script>
 
 
+<script type="text/x-handlebars" id="domains">
+  <div class="detail">
+    <div class="header">
+      <div class="title">Domains</div>
+    </div>
+
+    <div class="page">
+      <div class="list">
+
+        {{#each domain in controller}}
+          <div class="item">
+            <span class="name">{{domain.name}}</span>
+            <div class="controls">
+              <span {{action remove this}}>Remove</span>
+            </div>
+          </div>
+        {{/each}}
+
+        <form class="user" {{action add on="submit"}}>
+          <div class="name">
+            New domain:
+            {{input type="text" value=newDomainName}}
+            <button class="save" {{action add}}>Add</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<script type="text/x-handlebars" id="users/new">
+
+  <div class="detail">
+    <div class="header">
+      <div class="title">New User</div>
+    </div>
+
+    <div class="page">
+      <div class="user-form">
+        <form {{action save on="submit"}}>
+
+          <div class="field">
+            <label>First name</label><br/>
+            {{input type="text" value=user.first_name}}
+          </div>
+
+          <div class="field">
+            <label>Last name</label><br/>
+            {{input type="text" value=user.last_name}}
+          </div>
+
+          <div class="field">
+            <label>Username</label><br/>
+            {{input type="text" value=user.username}}
+          </div>
+
+          <div class="field">
+            <label>Password</label><br/>
+            {{input type="password" value=user.password}}
+          </div>
+
+          <div class="field">
+            <label>Domain</label>
+            <select ng-required="true"
+              ng-model="user.domain_id" ng-options="domain.id as domain.name for domain in domains"></select>
+          </div>
+
+          <div class="field">
+            <label>Role</label>
+            <select ng-required="true"
+              ng-model="user.role" ng-options="role for role in validRoles track by role"></select>
+          </div>
+
+          <div class="actions">
+            <button class="save" {{action save}}>Save</button>
+            or
+            {{#link-to "users" }}cancel{{/link-to}}
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</script>
+
+
 <script type="text/x-handlebars" id="users/index">
 
   <div class="detail">
@@ -42,7 +130,7 @@
             (<span class="email">{{user.primaryAddress}}</span>)
             <div class="controls">
               {{#link-to "user.edit" user.id }}Edit{{/link-to}}
-              <span {{action "remove" user.id }}>Remove</span>
+              <span {{action "remove" this }}>Remove</span>
             </div>
           </div>
         {{/each}}
