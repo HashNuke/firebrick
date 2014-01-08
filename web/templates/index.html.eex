@@ -49,6 +49,29 @@
 
 <script type="text/x-handlebars" id="threads/in">
   <h1>Hey all. This is all about routes.</h1>
+  <div class="threads-wrapper">
+    <div class="threads">
+
+      {{#each thread in controller}}
+
+        <div class="thread">
+          <div class="sender">
+
+          </div>
+          <div class="timestamp">{{relativeTime thread.updatedAtDt}}</div>
+
+          <div class="preview">
+            <div class="subject">{{thread.subject}}</div>
+            <div class="summary">{{thread.preview}}</div>
+          </div>
+        </div>
+
+      {{else}}
+        <h2>No mails. You feel lucky?</h2>
+      {{/each}}
+
+    </div>
+  </div>
 </script>
 
 
@@ -97,26 +120,22 @@
 <script type="text/x-handlebars" id="menu">
   <div class="menu">
     <a class="compose-button" href="/compose/new">
-      <img src="/static/assets/compose.png"/>
-      Compose
+      <img src="/static/assets/compose.png"/> Compose
     </a>
     <ul>
       <li class="inbox">
         {{#link-to "threads.in" "inbox"}}
-          <img src="/static/assets/inbox.png"/>
-          Inbox
+          <img src="/static/assets/inbox.png"/> Inbox
         {{/link-to}}
       </li>
       <li class="sent">
         {{#link-to "threads.in" "sent"}}
-          <img src="/static/assets/sent.png"/>
-          Sent
+          <img src="/static/assets/sent.png"/> Sent
         {{/link-to}}
       </li>
       <li class="trash">
         {{#link-to "threads.in" "trash"}}
-          <img src="/static/assets/trash.png"/>
-          Trash
+          <img src="/static/assets/trash.png"/> Trash
         {{/link-to}}
       </li>
     </ul>
