@@ -60,6 +60,22 @@ Ember.Handlebars.helper 'relativeTime', (value, options)->
     time.fromNow(true)
 
 
+App.MailPreviewTransform = DS.Transform.extend
+  deserialize: (serialized)->
+    return serialized
+
+  serialize: (deserialized)->
+    return deserialized
+
+
+App.MailPreviewsTransform = DS.Transform.extend
+  deserialize: (serialized)->
+    return serialized
+
+  serialize: (deserialized)->
+    return deserialized
+
+
 App.ArrayTransform = DS.Transform.extend
   deserialize: (serialized)->
     return serialized if Ember.typeOf(serialized) == "array"

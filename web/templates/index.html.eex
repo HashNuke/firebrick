@@ -49,6 +49,7 @@
 
 <script type="text/x-handlebars" id="threads/in">
   <h1>Hey all. This is all about routes.</h1>
+
   <div class="threads-wrapper">
     <div class="threads">
 
