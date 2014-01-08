@@ -1,5 +1,5 @@
-window.App = Ember.Application.create()
-App.ApplicationSerializer = DS.ActiveModelSerializer.extend({});
+window.App = Ember.Application.create({LOG_TRANSITIONS: true})
+App.ApplicationSerializer = DS.ActiveModelSerializer.extend({})
 App.ApplicationAdapter = DS.RESTAdapter.reopen({namespace: "api"})
 
 
@@ -11,9 +11,10 @@ App.AuthenticatedRoute = Ember.Route.extend
 
     Ember.$.getJSON("/api/sessions").then (response)=>
       if response.user
-        user = @store.createRecord('user', response.user)
+        user = @store.createRecord('current_user', response.user)
         @controllerFor('application').set('currentUser', user)
       else
+        console.log response
         @redirectToLogin(transition)
 
   # Redirect to the login page and store the current transition so we can
@@ -26,6 +27,7 @@ App.AuthenticatedRoute = Ember.Route.extend
   #TODO not sure why this is here
   actions:
     error: (reason, transition)->
+      console.log "ERROR: moving to login", error
       this.redirectToLogin(transition)
 
 
@@ -58,14 +60,40 @@ Ember.Handlebars.helper 'relativeTime', (value, options)->
     time.fromNow(true)
 
 
-App.User = DS.Model.extend({
-  username: DS.attr('string'),
-  primaryAddress: DS.attr('string'),
-  firstName: DS.attr('string'),
-  lastName: DS.attr('string'),
-  role: DS.attr('string'),
-  domainId: DS.attr('string')
-});
+App.ArrayTransform = DS.Transform.extend
+  deserialize: (serialized)->
+    return serialized if Ember.typeOf(serialized) == "array"
+    []
+
+  serialize: (deserialized)->
+    return deserialized if Ember.typeOf(deserialized) == 'array'
+    []
+
+
+App.User = DS.Model.extend
+  username:  DS.attr("string")
+  firstName: DS.attr("string")
+  lastName:  DS.attr("string")
+  role:      DS.attr("string")
+  domainId:  DS.attr("string")
+  primaryAddress: DS.attr("string")
+
+
+App.CurrentUser = App.User.extend({})
+
+
+App.Thread = DS.Model.extend
+  subject: DS.attr("string")
+  createdAtDt: DS.attr("string")
+  updatedAtDt: DS.attr("string")
+  messageIds: DS.attr("array")
+  mailPreviews: DS.attr("mailPreview")
+  mailPreview: DS.attr("mailPreview")
+  category: DS.attr("string")
+  read: DS.attr("boolean")
+  user_id: DS.attr("string")
+  timezone: DS.attr("string")
+
 
 # DS.RESTAdapter.map('App.User', {
 #   firstName: { key: 'first_name' },
@@ -94,7 +122,8 @@ App.Router.map ()->
   # /users/:user_id
   @resource("users", ()->
     @route("new");
-    @resource("user", {path: "/:user_id"}, ()-> @route("edit"))
+    @resource "user", {path: "/:user_id"}, ()->
+      @route("edit")
   )
 
   # /domains
@@ -102,12 +131,18 @@ App.Router.map ()->
 
 
 App.ThreadsRoute = App.AuthenticatedRoute.extend({})
+App.IndexRoute = App.AuthenticatedRoute.extend({})
+
+App.UsersIndexRoute = Ember.Route.extend
+  model: (params)->
+    @store.find("user")
 
 
 App.ApplicationController = Ember.Controller.extend
   currentUser: false
   pageTitle: null
 
+App.UsersIndexController = Ember.ArrayController.extend({})
 
 App.LoginController = Ember.Controller.extend
   needs: ["application"]
@@ -116,13 +151,10 @@ App.LoginController = Ember.Controller.extend
   actions:
     login: ->
       data = @getProperties('username', 'password')
-      console.log @get("controllers.application.currentUser")
       Ember.$.post("/api/sessions", data).then (response)=>
-        response = JSON.parse(response)
         if response.error
           console.log "error", response
         else
           user = @store.createRecord('user', response.user)
           @set("controllers.application.currentUser", user)
-          console.log @get("controllers.application.currentUser")
           @transitionToRoute('threads.in', 'inbox')
