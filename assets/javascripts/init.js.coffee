@@ -38,7 +38,7 @@ moment.lang('en', {
       past:   "%s",
       s:  "just now",
       m:  "a min ago",
-      mm: "%d minutes ago",
+      mm: "%d min ago",
       h:  "an hr ago",
       hh: "%d hrs ago",
       d:  "a day ago",
@@ -148,25 +148,34 @@ App.Router.map ()->
   @route("domains")
 
 
+App.ApplicationController = Em.Controller.extend
+  currentUser: false
+
 App.ThreadsInRoute = App.AuthenticatedRoute.extend
   model: (params)->
-    @store.find("thread", {category: params.category || "inbox"})
+    category = params.category || "inbox"
+    console.log category
+    @controllerFor("threads.in").set("title", category)
+    @store.find("thread", {category: category})
+
 
 App.IndexRoute = App.ThreadsInRoute.extend({})
+
+App.ThreadsInController = Em.ArrayController.extend
+  needs: ["application"]
 
 
 App.UsersIndexRoute = App.AuthenticatedRoute.extend
   model: (params)->
     @store.find("user")
 
-
-App.ApplicationController = Em.Controller.extend
-  currentUser: false
-  pageTitle: null
-
 App.UsersIndexController = Em.ArrayController.extend
   needs: ["application"]
+  title: "Users"
 
+  actions:
+    remove: (userId)->
+      console.log "remove #{userId}"
 
 App.LoginController = Em.Controller.extend
   needs: ["application"]
