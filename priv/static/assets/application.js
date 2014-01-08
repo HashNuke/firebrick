@@ -61626,12 +61626,50 @@ Ember.onLoad('Ember.Application', function(Application) {
 
 })();
 (function() {
-  window.App = Ember.Application.create();
+  window.App = Em.Application.create({
+    LOG_TRANSITIONS: true
+  });
 
   App.ApplicationSerializer = DS.ActiveModelSerializer.extend({});
 
   App.ApplicationAdapter = DS.RESTAdapter.reopen({
     namespace: "api"
+  });
+
+  App.ApplicationView = Em.View.extend({
+    classNames: ["container"]
+  });
+
+  App.AuthenticatedRoute = Em.Route.extend({
+    beforeModel: function(transition) {
+      var applicationController,
+        _this = this;
+      applicationController = this.controllerFor("application");
+      if (applicationController.get("currentUser")) {
+        return true;
+      }
+      return Ember.$.getJSON("/api/sessions").then(function(response) {
+        var user;
+        if (response.user) {
+          user = _this.store.createRecord('current_user', response.user);
+          return _this.controllerFor('application').set('currentUser', user);
+        } else {
+          console.log(response);
+          return _this.redirectToLogin(transition);
+        }
+      });
+    },
+    redirectToLogin: function(transition) {
+      var loginController;
+      loginController = this.controllerFor("login");
+      return this.transitionTo("login");
+    },
+    actions: {
+      error: function(reason, transition) {
+        console.log("ERROR: moving to login", error);
+        return this.redirectToLogin(transition);
+      }
+    }
   });
 
   moment.lang('en', {
@@ -61652,7 +61690,7 @@ Ember.onLoad('Ember.Application', function(Application) {
     }
   });
 
-  Ember.Handlebars.helper('relativeTime', function(value, options) {
+  Em.Handlebars.helper('relativeTime', function(value, options) {
     var difference, time;
     time = moment(value);
     difference = moment().unix() - time.unix();
@@ -61665,13 +61703,61 @@ Ember.onLoad('Ember.Application', function(Application) {
     }
   });
 
+  App.MailPreviewTransform = DS.Transform.extend({
+    deserialize: function(serialized) {
+      return serialized;
+    },
+    serialize: function(deserialized) {
+      return deserialized;
+    }
+  });
+
+  App.MailPreviewsTransform = DS.Transform.extend({
+    deserialize: function(serialized) {
+      return serialized;
+    },
+    serialize: function(deserialized) {
+      return deserialized;
+    }
+  });
+
+  App.ArrayTransform = DS.Transform.extend({
+    deserialize: function(serialized) {
+      if (Em.typeOf(serialized) === "array") {
+        return serialized;
+      }
+      return [];
+    },
+    serialize: function(deserialized) {
+      if (Em.typeOf(deserialized) === 'array') {
+        return deserialized;
+      }
+      return [];
+    }
+  });
+
   App.User = DS.Model.extend({
-    username: DS.attr('string'),
-    primaryAddress: DS.attr('string'),
-    firstName: DS.attr('string'),
-    lastName: DS.attr('string'),
-    role: DS.attr('string'),
-    domainId: DS.attr('string')
+    username: DS.attr("string"),
+    firstName: DS.attr("string"),
+    lastName: DS.attr("string"),
+    role: DS.attr("string"),
+    domainId: DS.attr("string"),
+    primaryAddress: DS.attr("string")
+  });
+
+  App.CurrentUser = App.User.extend({});
+
+  App.Thread = DS.Model.extend({
+    subject: DS.attr("string"),
+    createdAtDt: DS.attr("string"),
+    updatedAtDt: DS.attr("string"),
+    messageIds: DS.attr("array"),
+    mailPreviews: DS.attr("mailPreview"),
+    mailPreview: DS.attr("mailPreview"),
+    category: DS.attr("string"),
+    read: DS.attr("boolean"),
+    user_id: DS.attr("string"),
+    timezone: DS.attr("string")
   });
 
   App.Router.map(function() {
@@ -61698,15 +61784,32 @@ Ember.onLoad('Ember.Application', function(Application) {
     return this.route("domains");
   });
 
-  App.ApplicationController = Ember.Controller.extend({
-    currentUser: false,
-    pageTitle: null,
-    currentPrimaryAddress: function() {
-      return currentUser.get('id');
+  App.ThreadsRoute = App.AuthenticatedRoute.extend({});
+
+  App.IndexRoute = App.AuthenticatedRoute.extend({});
+
+  App.ThreadsInRoute = Em.Route.extend({
+    model: function(params) {
+      return this.store.find("thread", {
+        category: params.category || "inbox"
+      });
     }
   });
 
-  App.LoginController = Ember.Controller.extend({
+  App.UsersIndexRoute = Em.Route.extend({
+    model: function(params) {
+      return this.store.find("user");
+    }
+  });
+
+  App.ApplicationController = Em.Controller.extend({
+    currentUser: false,
+    pageTitle: null
+  });
+
+  App.UsersIndexController = Em.ArrayController.extend({});
+
+  App.LoginController = Em.Controller.extend({
     needs: ["application"],
     username: "admin",
     password: "password",
@@ -61715,15 +61818,13 @@ Ember.onLoad('Ember.Application', function(Application) {
         var data,
           _this = this;
         data = this.getProperties('username', 'password');
-        console.log(this.get("controllers.application.currentUser"));
-        return Ember.$.post("/api/sessions", data).then(function(response) {
+        return Em.$.post("/api/sessions", data).then(function(response) {
           var user;
           if (response.error) {
             return console.log("error", response);
           } else {
-            user = JSON.parse(response).user;
-            _this.set("controllers.application.currentUser", _this.store.createRecord('user', user));
-            console.log(_this.get("controllers.application.currentUser"));
+            user = _this.store.createRecord('user', response.user);
+            _this.set("controllers.application.currentUser", user);
             return _this.transitionToRoute('threads.in', 'inbox');
           }
         });
