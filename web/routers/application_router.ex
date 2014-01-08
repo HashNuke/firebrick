@@ -1,6 +1,5 @@
 defmodule ApplicationRouter do
   use Dynamo.Router
-  import Firebrick.RouterUtils
 
   prepare do
     # Pick which parts of the request you want to fetch

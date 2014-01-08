@@ -10,11 +10,11 @@ defmodule ThreadsApiRouter do
   get "/in/:category" do
     user = conn.assigns[:current_user]
     #TODO invalidate if category is not inbox/sent/trash
-    {threads, count, start} = Thread.query(
+    {thread_objs, count, start} = Thread.query(
       "type:thread AND user_id:#{user.id} AND category:#{conn.params[:category]}",
       [sort: "updated_at_dt desc"])
-    thread_attributes = lc thread inlist threads, do: thread.public_attributes
-    json_response thread_attributes, conn
+    threads = lc thread inlist thread_objs, do: thread.public_attributes
+    json_response [threads: threads], conn
   end
 
 
