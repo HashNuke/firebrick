@@ -48,7 +48,6 @@ defmodule Firebrick.RiakRealm do
               {:ok, json} = JSEX.encode record.saveable_attributes
               obj = :riakc_obj.new(bucket, :undefined, json, "application/json")
               obj = __MODULE__.intercept_obj(record, obj)
-              IO.inspect obj
               {:ok, result} = RiakPool.put(obj)
               {:ok, :riakc_obj.key(result)}
             _ ->
