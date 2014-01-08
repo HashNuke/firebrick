@@ -6,3 +6,4 @@ erl_crash.dump
 _build
 .bundle
 .DS_Store
+priv/static/assets
