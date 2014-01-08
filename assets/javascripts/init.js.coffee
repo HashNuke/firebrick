@@ -148,12 +148,11 @@ App.Router.map ()->
   @route("domains")
 
 
-App.ThreadsRoute = App.AuthenticatedRoute.extend({})
-App.IndexRoute = App.AuthenticatedRoute.extend({})
-
-App.ThreadsInRoute = Em.Route.extend
+App.ThreadsInRoute = App.AuthenticatedRoute.extend
   model: (params)->
     @store.find("thread", {category: params.category || "inbox"})
+
+App.IndexRoute = App.ThreadsInRoute.extend({})
 
 
 App.UsersIndexRoute = App.AuthenticatedRoute.extend
