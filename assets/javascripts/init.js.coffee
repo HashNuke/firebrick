@@ -16,7 +16,6 @@ App.AuthenticatedRoute = Em.Route.extend
         user = @store.createRecord('current_user', response.user)
         @controllerFor('application').set('currentUser', user)
       else
-        console.log response
         @redirectToLogin(transition)
 
   # Redirect to the login page and store the current transition so we can
@@ -156,7 +155,8 @@ App.ThreadsInRoute = Em.Route.extend
   model: (params)->
     @store.find("thread", {category: params.category || "inbox"})
 
-App.UsersIndexRoute = Em.Route.extend
+
+App.UsersIndexRoute = App.AuthenticatedRoute.extend
   model: (params)->
     @store.find("user")
 
@@ -165,7 +165,9 @@ App.ApplicationController = Em.Controller.extend
   currentUser: false
   pageTitle: null
 
-App.UsersIndexController = Em.ArrayController.extend({})
+App.UsersIndexController = Em.ArrayController.extend
+  needs: ["application"]
+
 
 App.LoginController = Em.Controller.extend
   needs: ["application"]
