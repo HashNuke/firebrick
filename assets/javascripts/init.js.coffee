@@ -88,6 +88,10 @@ App.ArrayTransform = DS.Transform.extend
     []
 
 
+App.Domain = DS.Model.extend
+  name: DS.attr("string")
+
+
 App.User = DS.Model.extend
   username:  DS.attr("string")
   firstName: DS.attr("string")
@@ -113,17 +117,12 @@ App.Thread = DS.Model.extend
   timezone: DS.attr("string")
 
 
-# DS.RESTAdapter.map('App.User', {
-#   firstName: { key: 'first_name' },
-#   lastName: { key: 'last_name' },
-#   domainId: { key: 'domain_id' },
-#   primaryAddress: { key: 'primary_address' }
-# });
-
-
 App.Router.map ()->
   # /login
   @route("login")
+
+  # /domains
+  @resource("domains")
 
   # /threads/in/:category
   # /threads/:thread_id
@@ -144,9 +143,6 @@ App.Router.map ()->
       @route("edit")
   )
 
-  # /domains
-  @route("domains")
-
 
 App.ApplicationController = Em.Controller.extend
   currentUser: false
@@ -166,21 +162,58 @@ App.ThreadsInController = Em.ArrayController.extend
   needs: ["application"]
 
 
+App.DomainsRoute = App.AuthenticatedRoute.extend
+
+  model: (params)->
+    @store.find("domain")
+
+
+App.DomainItemController = Em.ObjectController.extend
+  actions:
+    remove: ->
+      domain = @get('model')
+      domain.deleteRecord()
+      successCallback  = =>
+        console.log("deleted")
+      errorCallback = =>
+        console.log("error whatever...")
+      domain.save().then(successCallback, errorCallback)
+
+
+App.DomainsController = Em.ArrayController.extend
+  needs: ["application"]
+  itemController: "DomainItem"
+
+  actions:
+    add: ->
+      newDomain = @store.createRecord("domain", {name: @get("newDomainName")})
+      successCallback  = =>
+        console.log("saved")
+        @set("newDomainName", "")
+      errorCallback = =>
+        console.log("error adding domain")
+      newDomain.save().then(successCallback, errorCallback)
+
+
 App.UsersIndexRoute = App.AuthenticatedRoute.extend
   model: (params)->
     @store.find("user")
 
 App.UserItemController = Em.ObjectController.extend
   actions:
-    remove: ()->
-      @get('model').deleteRecord().save()
+    remove: ->
+      user = @get("model").deleteRecord()
+      successCallback  = =>
+        console.log("deleted")
+      errorCallback = =>
+        console.log("error whatever...")
+      user.save().then(successCallback, errorCallback)
 
 
 App.UsersIndexController = Em.ArrayController.extend
   needs: ["application"]
   itemController: "UserItem"
   title: "Users"
-
 
 App.UsersNewRoute = App.AuthenticatedRoute.extend({})
 
