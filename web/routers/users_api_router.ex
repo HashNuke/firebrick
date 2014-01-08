@@ -9,10 +9,10 @@ defmodule UsersApiRouter do
 
   get "/" do
     {users, count, _} = User.query("type:user")
-    lc user inlist users do
+    users = lc user inlist users do
       user.public_attributes
     end
-    |> json_response(conn)
+    json_response([users: users], conn)
   end
 
 
