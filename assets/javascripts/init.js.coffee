@@ -139,7 +139,7 @@ App.Router.map ()->
   # /users/new
   # /users/:user_id
   @resource("users", ()->
-    @route("new");
+    @route("new")
     @resource "user", {path: "/:user_id"}, ()->
       @route("edit")
   )
@@ -159,7 +159,8 @@ App.ThreadsInRoute = App.AuthenticatedRoute.extend
     @store.find("thread", {category: category})
 
 
-App.IndexRoute = App.ThreadsInRoute.extend({})
+App.IndexRoute = App.ThreadsInRoute.extend
+  needs: ["application"]
 
 App.ThreadsInController = Em.ArrayController.extend
   needs: ["application"]
@@ -169,13 +170,23 @@ App.UsersIndexRoute = App.AuthenticatedRoute.extend
   model: (params)->
     @store.find("user")
 
+App.UserItemController = Em.ObjectController.extend
+  actions:
+    remove: ()->
+      @get('model').deleteRecord().save()
+
+
 App.UsersIndexController = Em.ArrayController.extend
   needs: ["application"]
+  itemController: "UserItem"
   title: "Users"
 
-  actions:
-    remove: (userId)->
-      console.log "remove #{userId}"
+
+App.UsersNewRoute = App.AuthenticatedRoute.extend({})
+
+App.UsersNewController = Em.ObjectController.extend
+  needs: ["application"]
+
 
 App.LoginController = Em.Controller.extend
   needs: ["application"]
