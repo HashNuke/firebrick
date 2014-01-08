@@ -48,8 +48,6 @@
 
 
 <script type="text/x-handlebars" id="threads/in">
-  <h1>Hey all. This is all about routes.</h1>
-
   <div class="threads-wrapper">
     <div class="threads">
 
@@ -77,44 +75,40 @@
 
 
 <script type="text/x-handlebars" id="plain">
-  <div class="container">
-    <div class="detail">
-      <div class="header">
-        <div class="title">Login</div>
-      </div>
-      <div class="content">{{yield}}</div>
+  <div class="detail">
+    <div class="header">
+      <div class="title">Login</div>
     </div>
+    <div class="content">{{yield}}</div>
   </div>
 </script>
 
 
 <script type="text/x-handlebars" id="application">
-  <div class="container">
 
-    {{#if currentUser}}
-      <div class="sidebar">
-        <div class="header">
-          <div class="title">{{currentUser.primary_address}}</div>
-          <!-- <div class="menu-control"><img src="/static/assets/navicon.png"/></div> -->
+  {{#if currentUser}}
+    <div class="sidebar">
+      <div class="header">
+        <div class="title">{{currentUser.primary_address}}</div>
+        <!-- <div class="menu-control"><img src="/static/assets/navicon.png"/></div> -->
 
-          <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
-          <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->
-        </div>
-
-        <div class="menu-wrapper">{{render "menu"}}</div>
+        <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
+        <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->
       </div>
 
-      <div class="detail">
-        <div class="header">
-          <div class="title">{{pageTitle}}</div>
-        </div>
-        {{outlet}}
+      <div class="menu-wrapper">{{render "menu"}}</div>
+    </div>
+
+    <div class="detail">
+      <div class="header">
+        <div class="title">{{pageTitle}}</div>
       </div>
-    {{else}}
       {{outlet}}
-    {{/if}}
+    </div>
+  {{else}}
+    {{outlet}}
+  {{/if}}
 
-  </div>
 </script>
 
 

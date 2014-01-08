@@ -1,9 +1,11 @@
-window.App = Ember.Application.create({LOG_TRANSITIONS: true})
+window.App = Em.Application.create({LOG_TRANSITIONS: true})
 App.ApplicationSerializer = DS.ActiveModelSerializer.extend({})
 App.ApplicationAdapter = DS.RESTAdapter.reopen({namespace: "api"})
 
+App.ApplicationView = Em.View.extend
+  classNames: ["container"]
 
-App.AuthenticatedRoute = Ember.Route.extend
+App.AuthenticatedRoute = Em.Route.extend
   beforeModel: (transition)->
     applicationController = @controllerFor("application")
     if applicationController.get("currentUser")
@@ -49,7 +51,7 @@ moment.lang('en', {
 })
 
 
-Ember.Handlebars.helper 'relativeTime', (value, options)->
+Em.Handlebars.helper 'relativeTime', (value, options)->
   time = moment(value)
   difference = moment().unix() - time.unix()
   if difference > 31536000
@@ -58,6 +60,7 @@ Ember.Handlebars.helper 'relativeTime', (value, options)->
     time.format("MMM D")
   else
     time.fromNow(true)
+
 
 
 App.MailPreviewTransform = DS.Transform.extend
@@ -78,11 +81,11 @@ App.MailPreviewsTransform = DS.Transform.extend
 
 App.ArrayTransform = DS.Transform.extend
   deserialize: (serialized)->
-    return serialized if Ember.typeOf(serialized) == "array"
+    return serialized if Em.typeOf(serialized) == "array"
     []
 
   serialize: (deserialized)->
-    return deserialized if Ember.typeOf(deserialized) == 'array'
+    return deserialized if Em.typeOf(deserialized) == 'array'
     []
 
 
@@ -149,29 +152,29 @@ App.Router.map ()->
 App.ThreadsRoute = App.AuthenticatedRoute.extend({})
 App.IndexRoute = App.AuthenticatedRoute.extend({})
 
-App.ThreadsInRoute = Ember.Route.extend
+App.ThreadsInRoute = Em.Route.extend
   model: (params)->
     @store.find("thread", {category: params.category || "inbox"})
 
-App.UsersIndexRoute = Ember.Route.extend
+App.UsersIndexRoute = Em.Route.extend
   model: (params)->
     @store.find("user")
 
 
-App.ApplicationController = Ember.Controller.extend
+App.ApplicationController = Em.Controller.extend
   currentUser: false
   pageTitle: null
 
-App.UsersIndexController = Ember.ArrayController.extend({})
+App.UsersIndexController = Em.ArrayController.extend({})
 
-App.LoginController = Ember.Controller.extend
+App.LoginController = Em.Controller.extend
   needs: ["application"]
   username: "admin"
   password: "password"
   actions:
     login: ->
       data = @getProperties('username', 'password')
-      Ember.$.post("/api/sessions", data).then (response)=>
+      Em.$.post("/api/sessions", data).then (response)=>
         if response.error
           console.log "error", response
         else
