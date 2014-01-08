@@ -133,6 +133,10 @@ App.Router.map ()->
 App.ThreadsRoute = App.AuthenticatedRoute.extend({})
 App.IndexRoute = App.AuthenticatedRoute.extend({})
 
+App.ThreadsInRoute = Ember.Route.extend
+  model: (params)->
+    @store.find("thread", {category: params.category || "inbox"})
+
 App.UsersIndexRoute = Ember.Route.extend
   model: (params)->
     @store.find("user")
