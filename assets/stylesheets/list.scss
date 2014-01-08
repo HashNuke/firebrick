@@ -21,10 +21,11 @@
     .controls {
       clear: left;
       margin-top: 0.5em;
-      a {
+      a, span {
         margin-right: 1em;
         cursor: pointer;
         text-decoration: underline;
+        color: #06c;
       }
     }
   }
