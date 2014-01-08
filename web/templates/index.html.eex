@@ -25,6 +25,28 @@
 </script>
 
 
+<script type="text/x-handlebars" id="users/index">
+  <div class="page">
+    <div class="list">
+      {{#link-to "users.new" classNames="add"}}+ Add{{/link-to}}
+
+      {{#each user in controller}}
+        <div class="item">
+          <span class="name">{{user.firstName}} {{user.lastName}}</span>
+          (<span class="email">{{user.primaryAddress}}</span>)
+          <div class="controls">
+            {{#link-to "user.edit" user.id }}Edit{{/link-to}}</a>
+            <a ng-click="removeUser($index)">Remove</a>
+          </div>
+        </div>
+      {{/each}}
+
+    </div>
+  </div>
+</script>
+
+
+
 <script type="text/x-handlebars" id="threads/in">
   <h1>Hey all. This is all about routes.</h1>
 </script>
