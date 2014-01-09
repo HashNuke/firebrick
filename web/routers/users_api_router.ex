@@ -34,8 +34,8 @@ defmodule UsersApiRouter do
 
   get "/:user_id" do
     user_id = conn.params["user_id"]
-    User.find(user_id).public_attributes
-    |> json_response conn
+    user = User.find(user_id).public_attributes
+    json_response [user: user], conn
   end
 
 
