@@ -57,7 +57,7 @@
 </script>
 
 
-<script type="text/x-handlebars" id="users/new">
+<script type="text/x-handlebars" id="user/edit">
 
   <div class="detail">
     <div class="header">
@@ -70,12 +70,12 @@
 
           <div class="field">
             <label>First name</label><br/>
-            {{input type="text" value=user.first_name}}
+            {{input type="text" value=user.firstName}}
           </div>
 
           <div class="field">
             <label>Last name</label><br/>
-            {{input type="text" value=user.last_name}}
+            {{input type="text" value=user.lastName}}
           </div>
 
           <div class="field">
@@ -90,14 +90,17 @@
 
           <div class="field">
             <label>Domain</label>
-            <select ng-required="true"
-              ng-model="user.domain_id" ng-options="domain.id as domain.name for domain in domains"></select>
+            {{view Ember.Select content=domains
+                                optionValuePath="content.id"
+                                optionLabelPath="content.name"
+                                value=user.domainId}}
           </div>
 
           <div class="field">
             <label>Role</label>
-            <select ng-required="true"
-              ng-model="user.role" ng-options="role for role in validRoles track by role"></select>
+            {{view Ember.Select
+                   content=validRoles
+                   value=user.role}}
           </div>
 
           <div class="actions">
