@@ -4,4 +4,9 @@
 //= require "libs/ember"
 //= require "libs/ember-data"
 //= require "init"
-
+//= require "transforms"
+//= require "models"
+//= require "helpers"
+//= require "./routes/authenticated_route"
+//= require_tree "./controllers"
+//= require_tree "./routes"
