@@ -96,7 +96,7 @@ App.User = DS.Model.extend
   username:  DS.attr("string")
   firstName: DS.attr("string")
   lastName:  DS.attr("string")
-  role:      DS.attr("string")
+  role:      DS.attr("string", defaultValue: "member")
   domainId:  DS.attr("string")
   primaryAddress: DS.attr("string")
 
@@ -113,35 +113,33 @@ App.Thread = DS.Model.extend
   mailPreview: DS.attr("mailPreview")
   category: DS.attr("string")
   read: DS.attr("boolean")
-  user_id: DS.attr("string")
+  userId: DS.attr("string")
   timezone: DS.attr("string")
 
 
 App.Router.map ()->
   # /login
-  @route("login")
+  @route "login"
 
   # /domains
-  @resource("domains")
+  @resource "domains"
+
+  # /compose
+  @route "compose", {path: "/compose"}
 
   # /threads/in/:category
   # /threads/:thread_id
-  @resource("threads", ()->
-    @route("in", {path: "/in/:category"})
-    @route("thread", {path: "/:thread_id"})
-  )
-
-  # /compose
-  @route("compose", {path: "/compose"})
+  @resource "threads", ()->
+    @route "in", {path: "/in/:category"}
+    @route "thread", {path: "/:thread_id"}
 
   # /users
   # /users/new
   # /users/:user_id
-  @resource("users", ()->
-    @route("new")
-    @resource "user", {path: "/:user_id"}, ()->
-      @route("edit")
-  )
+  @resource "users", ()->
+    @route "new"
+    @resource "user", {path: "/:user_id"}, ->
+      @route "edit"
 
 
 App.ApplicationController = Em.Controller.extend
@@ -163,7 +161,6 @@ App.ThreadsInController = Em.ArrayController.extend
 
 
 App.DomainsRoute = App.AuthenticatedRoute.extend
-
   model: (params)->
     @store.find("domain")
 
@@ -187,7 +184,7 @@ App.DomainsController = Em.ArrayController.extend
   actions:
     add: ->
       newDomain = @store.createRecord("domain", {name: @get("newDomainName")})
-      successCallback  = =>
+      successCallback = =>
         console.log("saved")
         @set("newDomainName", "")
       errorCallback = =>
@@ -215,11 +212,44 @@ App.UsersIndexController = Em.ArrayController.extend
   itemController: "UserItem"
   title: "Users"
 
-App.UsersNewRoute = App.AuthenticatedRoute.extend({})
+App.UserRoute = App.AuthenticatedRoute.extend
+  model: (params)->
+    if params.user_id
+      @store.find("user", params.user_id)
+    else
+      @store.createRecord("user")
 
-App.UsersNewController = Em.ObjectController.extend
+
+App.UserEditRoute = App.AuthenticatedRoute.extend
+  setupController: (controller, model)->
+    controller.set "title", "Edit User"
+    controller.set "user", model
+    controller.set "domains", @store.find("domain")
+
+  model: ->
+    @modelFor("user")
+
+
+App.UserEditController = Em.Controller.extend
   needs: ["application"]
+  validRoles: ["admin", "member"]
 
+
+App.UsersNewRoute = App.AuthenticatedRoute.extend
+  setupController: (controller, model)->
+    controller.set "title", "New User"
+    controller.set "domains", @store.find("domain")
+    controller.set "user", model
+
+  model: ->
+    @store.createRecord("user")
+
+  renderTemplate: (controller, model)->
+    @render "user/edit"
+
+
+App.UsersNewController = App.UserEditController.extend
+  needs: ["application"]
 
 App.LoginController = Em.Controller.extend
   needs: ["application"]
