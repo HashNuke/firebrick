@@ -3,4 +3,4 @@ App.UserRoute = App.AuthenticatedRoute.extend
     if params.user_id
       @store.find("user", params.user_id)
     else
-      @store.createRecord("user")
+      {}
