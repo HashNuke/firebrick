@@ -3,6 +3,7 @@
 //= require "libs/handlebars-v1.1.2"
 //= require "libs/ember"
 //= require "libs/ember-data"
+//= require "config"
 //= require "init"
 //= require "transforms"
 //= require "models"
