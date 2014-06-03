@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Firebrick</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link type="text/css" rel="stylesheet" href="libs/bootstrap.css"/>
+  <link type="text/css" rel="stylesheet" href="app.css"/>
+  <script src="libs/jquery-2.1.1.js"></script>
+  <script src="libs/bootstrap.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $.fn.menuify = function(toggleClassName) {
+        $(this).on("click", function(event) {
+          $(this).toggleClass(toggleClassName);
+        });
+      };
+      $(".mail-sections-menu").menuify("menu-active");
+    });
+  </script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapsable-navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" data-toggle="dropdown" href="#">
+          Firebrick <span class="badge unread-badge">123</span>
+        </a>
+
+
+        <ul class="mail-sections-menu">
+          <li>
+            <a href="#">
+              <span class="glyphicon glyphicon-inbox"></span>
+              Inbox <b class="caret"></b>
+            </a>
+            <ul class="menu">
+              <li>
+                <a href="#"><span class="glyphicon glyphicon-edit"></span> Compose</a>
+              </li>
+
+              <li>
+                <a href="#"><span class="glyphicon glyphicon-inbox"></span> Inbox</a>
+              </li>
+
+              <li>
+                <a href="#"><span class="glyphicon glyphicon-send"></span> Sent mail</a>
+              </li>
+
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="collapsable-navbar">
+        <form class="navbar-form navbar-left" role="search">
+
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+        </form>
+
+
+        <div class="nav navbar-form navbar-right">
+          <div class="form-group">
+            <a href="#" class="logout-btn btn">
+              <span class="glyphicon glyphicon-off"></span> Logout
+            </a>
+          </div>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Users</a></li>
+              <li><a href="#">Domains</a></li>
+            </ul>
+          </li>
+        </ul>
+
+
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mails">
+
+        <div class="row mail unread">
+          <div class="col-md-2 conversation-info">
+            <span class="person">John</span>,
+            <span class="person">Alice</span>,
+            <span class="person sender">Bob</span>
+            <span class="count">(12)</span>
+          </div>
+          <div class="col-md-9 overview">
+            <span class="subject">Lunch this weekend?</span>
+            <span class="snip">I suggest we go to the place near John's office</span>
+          </div>
+
+          <div class="col-md-1 time">
+            2hrs ago
+          </div>
+        </div>
+
+        <div class="row mail">
+          <div class="col-md-2 conversation-info">
+            <span class="person">John</span>,
+            <span class="person">Alice</span>,
+            <span class="person sender">Bob</span>
+            <span class="count">(12)</span>
+          </div>
+          <div class="col-md-9 overview">
+            <span class="subject">Lunch this weekend?</span>
+            <span class="snip">I suggest we go to the place near John's office</span>
+          </div>
+
+          <div class="col-md-1 time">
+            May 14
+          </div>
+        </div>
+
+        <div class="row mail">
+          <div class="col-md-2 conversation-info">
+            <span class="person">John</span>,
+            <span class="person">Alice</span>,
+            <span class="person sender">Bob</span>
+            <span class="count">(12)</span>
+          </div>
+          <div class="col-md-9 overview">
+            <span class="subject">Lunch this weekend?</span>
+            <span class="snip">I suggest we go to the place near John's office</span>
+          </div>
+
+          <div class="col-md-1 time">
+            May 14
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

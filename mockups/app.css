@@ -1,0 +1,161 @@
+body {
+  background: #D2D7DD;
+}
+
+.navbar-custom {
+  background: #FFF;
+}
+
+.mails {
+  background: #f2f2f2;
+  border-radius: 0.3em;
+  border: 0.1em solid #AAA;
+}
+
+.mails .mail:last-child {
+
+}
+
+.mails .mail {
+  padding: 0.75em 0.1em;
+  border-bottom: 0.1em solid #DDD;
+}
+
+.mails .mail:first-child {
+  border-top-left-radius: 0.3em;
+  border-top-right-radius: 0.3em;
+}
+
+.mails .mail:last-child {
+  border-bottom: none !important;
+  border-bottom-left-radius: 0.3em
+  border-bottom-right-radius: 0.3em
+}
+
+.mails .mail .conversation-info {
+
+}
+
+.mails .mail .conversation-info .count {
+
+}
+
+.mails .unread .conversation-info .sender {
+  font-weight: bold;
+}
+
+.mails .mail .conversation-info {
+
+}
+
+.mails .mail .conversation-info .people .person {
+
+}
+
+
+.mails .unread .conversation-info .count {
+  font-weight: bold;
+}
+
+.conversation-info .people .sender {
+  font-weight: bold;
+}
+
+.mails .unread .overview .subject {
+  font-weight: bold;
+}
+
+.mails .mail .overview .snip {
+  color: #AAA;
+}
+
+.mails .unread {
+  background: #FFF;
+}
+
+.mails .mail .time {
+  font-size: 0.9em;
+  text-align: right;
+}
+
+.mails .unread .time {
+  font-weight: bold;
+}
+
+.navbar-brand {
+  color: #DA1F2A !important;
+}
+
+
+.mail-sections-menu {
+  float: left;
+  margin-left: 2em;
+  margin-top: 10px;
+  padding-top: 0.3em;
+  padding-bottom: 0em;
+  padding-left: 0.75em;
+  padding-right: 0.5em;
+  margin-right: 1em;
+}
+
+
+.mail-sections-menu.menu-active {
+  background: #fff;
+  box-shadow: 0.1em 0em 0.1em 0.1em #888;
+  border-bottom-top-radius: 0.2em;
+  border-bottom-top-radius: 0.2em;
+}
+
+.mail-sections-menu.menu-active .menu{
+  display: block;
+}
+
+.mail-sections-menu li{
+  list-style-type: none;
+}
+
+.mail-sections-menu > li a {
+  color: #666;
+  text-decoration: none;
+}
+
+.mail-sections-menu .menu {
+  position: absolute;
+  z-index: 12;
+  display: none;
+
+  margin-left: -0.75em;
+  margin-top: -0.1em;
+  padding-left: 0em;
+  padding-top: 0.5em;
+
+  background: #fff;
+  box-shadow: 0.1em 0.2em 0.1em 0.1em #888;
+  border-bottom-left-radius: 0.2em;
+  border-bottom-right-radius: 0.2em;
+}
+
+.mail-sections-menu .menu li {
+}
+
+.mail-sections-menu .menu li a {
+  padding: 1em 0.8em;
+  display: block;
+  /*background: #f1f1f1;*/
+}
+
+.mail-sections-menu .menu li:last-child {
+  margin-bottom: 0em;
+}
+
+.unread-badge {
+  background: #EC5C5C;
+  color: #FFF;
+  vertical-align: middle;
+}
+
+.logout-btn {
+  color: #DA1F2A !important;
+}
+
+
