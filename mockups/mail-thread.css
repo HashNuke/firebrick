@@ -38,22 +38,31 @@
 }
 
 .thread-mails .mail .sender-info .time {
-  color: #999;
+  color: #444;
   font-style: italic;
   font-size: 0.85em;
-  text-transform: uppercase;
 }
 
 .thread-mails .mail .dot-divider {
   margin: 0em 0.25em;
 }
 
-.thread-mails .receivers {
+.thread-mails .mail .receivers {
   padding: 0em 0em 0.5em 1em;
   color: #AAA;
   font-size: 1em;
 }
 
-.thread-mails .body {
-  padding: 1em 0em 1em 0em
+.thread-mails .mail .body {
+  padding: 1em 0em 1em 0em;
+}
+
+.thread-mails .mail .controls {
+  padding: 0.5em 1em;
+  margin: 0em;
+  background: #fcfcfc;
+}
+
+.thread-mails .mail .controls a {
+  margin-right: 1em;
 }
