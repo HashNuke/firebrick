@@ -7,17 +7,6 @@
   <link type="text/css" rel="stylesheet" href="app.css"/>
   <script src="libs/jquery-2.1.1.js"></script>
   <script src="libs/bootstrap.js"></script>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $.fn.menuify = function(toggleClassName) {
-        $(this).on("click", function(event) {
-          $(this).toggleClass(toggleClassName);
-        });
-      };
-      $(".mail-sections-menu").menuify("menu-active");
-    });
-  </script>
 </head>
 
 <body>
@@ -33,32 +22,26 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" data-toggle="dropdown" href="#">
-          Firebrick <span class="badge unread-badge">123</span>
+          Firebrick
         </a>
 
+        <div class="mail-sections">
+          <a href="#" class="btn">
+            <span class="glyphicon glyphicon-inbox"></span>
+            <span class="hidden-xs">Inbox</span>
+            <span class="badge unread-badge">123</span>
+          </a>
 
-        <ul class="mail-sections-menu">
-          <li>
-            <a href="#">
-              <span class="glyphicon glyphicon-inbox"></span>
-              Inbox <b class="caret"></b>
-            </a>
-            <ul class="menu">
-              <li>
-                <a href="#"><span class="glyphicon glyphicon-edit"></span> Compose</a>
-              </li>
+          <a href="#" class="btn">
+            <span class="glyphicon glyphicon-edit"></span>
+            <span class="hidden-xs">Compose</span>
+          </a>
 
-              <li>
-                <a href="#"><span class="glyphicon glyphicon-inbox"></span> Inbox</a>
-              </li>
-
-              <li>
-                <a href="#"><span class="glyphicon glyphicon-send"></span> Sent mail</a>
-              </li>
-
-            </ul>
-          </li>
-        </ul>
+          <a href="#" class="btn">
+            <span class="glyphicon glyphicon-send"></span>
+            <span class="hidden-xs">Sent mail</span>
+          </a>
+        </div>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
