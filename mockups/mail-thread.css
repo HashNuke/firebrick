@@ -1,0 +1,55 @@
+
+.thread .subject {
+  float: left;
+  clear: both;
+  width: 100%;
+}
+
+.thread .subject span{
+  float: left;
+  background-color: #FFFFE5;
+  color: #444;
+  padding: 0.25em;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.thread-mails {
+  background: #fff;
+  border: 0.1em solid #DDD;
+  margin: 1em 0.05em;
+}
+
+.thread-mails .mail .mail-meta {
+  background: #fafafa;
+}
+
+.thread-mails .mail .sender-info {
+  padding: 0.5em 0em 0em 1em;
+}
+
+.thread-mails .mail .sender-info .sender {
+  font-weight: bold;
+  color: #06c;
+}
+
+.thread-mails .mail .sender-info .time {
+  color: #999;
+  font-style: italic;
+  font-size: 0.85em;
+  text-transform: uppercase;
+}
+
+.thread-mails .mail .dot-divider {
+  margin: 0em 0.25em;
+}
+
+.thread-mails .receivers {
+  padding: 0em 0em 0.5em 1em;
+  color: #AAA;
+  font-size: 1em;
+}
+
+.thread-mails .body {
+  padding: 1em 0em 1em 0em
+}

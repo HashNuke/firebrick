@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <link type="text/css" rel="stylesheet" href="libs/bootstrap.css"/>
   <link type="text/css" rel="stylesheet" href="app.css"/>
+  <link type="text/css" rel="stylesheet" href="mail-thread.css"/>
   <script src="libs/jquery-2.1.1.js"></script>
   <script src="libs/bootstrap.js"></script>
 
@@ -33,7 +34,7 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" data-toggle="dropdown" href="#">
-          Firebrick <span class="badge unread-badge">123</span>
+          Firebrick <span class="badge unread-badge">11</span>
         </a>
 
 
@@ -55,7 +56,6 @@
               <li>
                 <a href="#"><span class="glyphicon glyphicon-send"></span> Sent mail</a>
               </li>
-
             </ul>
           </li>
         </ul>
@@ -96,61 +96,47 @@
 
 
   <div class="container">
-    <div class="row">
-      <div class="col-md-12 mail-list">
 
-        <div class="row mail unread">
-          <div class="col-md-2 conversation-info">
-            <span class="person">John</span>,
-            <span class="person">Alice</span>,
-            <span class="person sender">Bob</span>
-            <span class="count">(12)</span>
-          </div>
-          <div class="col-md-9 overview">
-            <span class="subject">Lunch this weekend?</span>
-            <span class="snip">I suggest we go to the place near John's office</span>
-          </div>
-
-          <div class="col-md-1 time">
-            2hrs ago
-          </div>
-        </div>
-
-        <div class="row mail">
-          <div class="col-md-2 conversation-info">
-            <span class="person">John</span>,
-            <span class="person">Alice</span>,
-            <span class="person sender">Bob</span>
-            <span class="count">(12)</span>
-          </div>
-          <div class="col-md-9 overview">
-            <span class="subject">Lunch this weekend?</span>
-            <span class="snip">I suggest we go to the place near John's office</span>
-          </div>
-
-          <div class="col-md-1 time">
-            May 14
-          </div>
-        </div>
-
-        <div class="row mail">
-          <div class="col-md-2 conversation-info">
-            <span class="person">John</span>,
-            <span class="person">Alice</span>,
-            <span class="person sender">Bob</span>
-            <span class="count">(12)</span>
-          </div>
-          <div class="col-md-9 overview">
-            <span class="subject">Lunch this weekend?</span>
-            <span class="snip">I suggest we go to the place near John's office</span>
-          </div>
-
-          <div class="col-md-1 time">
-            May 14
-          </div>
-        </div>
-
+    <div class="row thread">
+      <div class="col-md-12 subject">
+        <span>Anyone got ideas for Rachet's birthday surprise?</span>
       </div>
+    </div>
+
+    <div class="row thread-mails">
+
+      <div class="col-md-12 mail">
+        <div class="row mail-meta">
+          <div class="col-md-12 sender-info">
+            <span class="sender">Akash Manohar</span>
+            <span class="dot-divider">&middot;</span>
+            <span class="time">12hrs ago</span>
+          </div>
+          <div class="col-md-12 receivers">to Bob, Mudflap, Shiva</div>
+        </div>
+
+        <div class="col-md-12 body">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </div>
+      </div>
+
+
+      <div class="col-md-12 mail">
+        <div class="row mail-meta">
+          <div class="col-md-12 sender-info">
+            <span class="sender">Optimus</span>
+            <span class="dot-divider">&middot;</span>
+            <span class="time">12hrs ago</span>
+          </div>
+          <div class="col-md-12 receivers">to Bob, Alice, Shiva</div>
+        </div>
+
+        <div class="col-md-12 body">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </div>
+      </div>
+
+
     </div>
 
   </div>
