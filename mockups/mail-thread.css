@@ -15,9 +15,13 @@
 }
 
 .thread-mails {
+  margin: 1em 0.05em;
+}
+
+.thread-mails .mail {
   background: #fff;
   border: 0.1em solid #DDD;
-  margin: 1em 0.05em;
+  margin: 1em 0em;
 }
 
 .thread-mails .mail .mail-meta {

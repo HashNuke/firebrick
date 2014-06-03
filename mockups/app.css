@@ -1,16 +1,11 @@
-body {
-  background: #fbfbfb;
-}
-
 .navbar-custom {
   background: #FFF;
 }
 
 .mail-list {
   background: #fff;
-  border-radius: 0.25em;
-  border: 0.1em solid #EEE;
-  box-shadow: 0em 0em 0em 0.1em #DDD;
+  border: 0.1em solid #DDD;
+  margin: 1em 0em;
 }
 
 .mail-list .mail:last-child {
@@ -43,6 +38,27 @@ body {
 
 .mail-list .unread .conversation-info .sender {
   font-weight: bold;
+  color: #06c;
+}
+
+.mail-list .unread .conversation-info .person {
+  color: #06c;
+}
+
+.mail-list .unread .conversation-info .count {
+  font-weight: bold;
+  color: #06c;
+}
+
+.mail-list .unread .time {
+  font-weight: bold;
+  color: #06c;
+}
+
+
+.mail-list .unread .overview .subject {
+  font-weight: bold;
+  color: #06c;
 }
 
 .mail-list .mail .conversation-info {
@@ -54,33 +70,18 @@ body {
 }
 
 
-.mail-list .unread .conversation-info .count {
-  font-weight: bold;
-}
-
-.conversation-info .people .sender {
-  font-weight: bold;
-}
-
-.mail-list .unread .overview .subject {
-  font-weight: bold;
-}
-
 .mail-list .mail .overview .snip {
   color: #AAA;
 }
 
-.mail-list .unread {
+.mail-list .mail:hover {
   background: #FFFEFB;
+  cursor: pointer;
 }
 
 .mail-list .mail .time {
   font-size: 0.9em;
   text-align: right;
-}
-
-.mail-list .unread .time {
-  font-weight: bold;
 }
 
 .navbar-brand {
