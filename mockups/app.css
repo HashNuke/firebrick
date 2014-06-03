@@ -99,8 +99,14 @@
   padding-bottom: 15px;
 }
 
-.unread-badge {
+.red-badge {
   background: #EC5C5C;
+  color: #FFF;
+  vertical-align: middle;
+}
+
+.blue-badge {
+  background: #06C;
   color: #FFF;
   vertical-align: middle;
 }
