@@ -4,6 +4,7 @@ defmodule Firebrick.Mixfile do
   def project do
     [ app: :firebrick,
       version: "0.0.1",
+      elixir: "~> 0.13.3",
       dynamos: [Firebrick.Dynamo],
       compilers: [:elixir, :dynamo, :app, :erlang],
       env: [ prod: [compile_path: "ebin"]],
@@ -28,8 +29,7 @@ defmodule Firebrick.Mixfile do
      { :riak_pool,  github: "HashNuke/riak_pool" },
      { :qdate, github: "choptastic/qdate" },
      { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.0.2" },
-     { :eiconv, github: "zotonic/eiconv" },
-     { :hound, github: "HashNuke/hound", tag: "v0.5.1" }
+     { :eiconv, github: "zotonic/eiconv" }
     ]
   end
 
