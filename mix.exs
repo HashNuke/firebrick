@@ -12,7 +12,7 @@ defmodule Firebrick.Mixfile do
   def application do
     [
       mod: { Firebrick, [] },
-      applications: [:phoenix]
+      applications: [:postgrex, :ecto, :atlas, :phoenix]
     ]
   end
 
