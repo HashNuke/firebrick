@@ -9,7 +9,7 @@ defmodule Mail do
     field :bcc, {:array, :string}
 
     field :message_id
-    field :references
+    field :references, {:array, :string}
 
     field :subject
     field :html_body
