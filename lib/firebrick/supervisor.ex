@@ -8,7 +8,7 @@ defmodule Firebrick.Supervisor do
   def init([]) do
     children = [
       # Define workers and child supervisors to be supervised
-      # worker(Firebrick.Router, [])
+      worker(Repo, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html
