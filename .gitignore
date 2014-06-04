@@ -7,5 +7,4 @@ _build
 .bundle
 .DS_Store
 priv/static/assets
-config.json
-
+config/*.exs

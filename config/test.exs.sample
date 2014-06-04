@@ -1,0 +1,10 @@
+[
+  firebrick: [
+    db_url: "ecto://username:password@localhost/firebrick_test"
+  ],
+
+  bcrypt: [
+    mechanism: :port,
+    pool_size: 4
+  ]
+]

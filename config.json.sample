@@ -1,7 +1,0 @@
-{
-  "db": {
-    "dev":  "ecto://username:password@localhost/firebrick_dev",
-    "prod": "ecto://username:password@localhost/firebrick_prod",
-    "test": "ecto://username:password@localhost/firebrick_test"
-  }
-}
