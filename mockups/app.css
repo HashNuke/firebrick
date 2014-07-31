@@ -1,77 +1,67 @@
+body {
+  background: #FCFCFC;
+  font-family: PT Sans;
+}
+
+.navbar-brand {
+  color: #FFF;
+}
+
 .navbar-custom {
-  background: #FFF;
+  background: #393939;
+  border: none;
+  border-radius: 0em;
+}
+
+.navbar-custom span {
+  color: #f1f1f1;
+}
+
+.section-title {
+  color: #DA1F2A;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
 }
 
 .mail-list {
-  background: #fff;
-  border: 0.1em solid #DDD;
-  margin: 1em 0em;
-}
-
-.mail-list .mail:last-child {
-
 }
 
 .mail-list .mail {
   padding: 0.75em 0.1em;
   border-bottom: 0.1em solid #DDD;
+  color: #646464;
+  font-size: 1.1em;
+}
+
+.mail-list .unread {
+  font-weight: bold;
+}
+
+.mail-list .unread {
+  font-weight: bold;
 }
 
 .mail-list .mail:first-child {
-  border-top-left-radius: 0.3em;
-  border-top-right-radius: 0.3em;
+}
+
+.mail-list .mail:last-child {
 }
 
 .mail-list .mail:last-child {
   border-bottom: none !important;
-  border-bottom-left-radius: 0.3em
-  border-bottom-right-radius: 0.3em
 }
 
-.mail-list .mail .conversation-info {
-
-}
-
-.mail-list .mail .conversation-info .count {
-
-}
-
-.mail-list .unread .conversation-info .sender {
-  font-weight: bold;
-  color: #06c;
-}
-
-.mail-list .unread .conversation-info .person {
-  color: #06c;
-}
-
-.mail-list .unread .conversation-info .count {
-  font-weight: bold;
-  color: #06c;
+.mail-list .mail .time {
+  color: #9C9C9C;
 }
 
 .mail-list .unread .time {
-  font-weight: bold;
-  color: #06c;
+  font-weight: normal;
 }
-
-
-.mail-list .unread .overview .subject {
-  font-weight: bold;
-  color: #06c;
-}
-
-.mail-list .mail .conversation-info {
-
-}
-
-.mail-list .mail .conversation-info .people .person {
-
-}
-
 
 .mail-list .mail .overview .snip {
   color: #AAA;
+  font-weight: normal;
 }
 
 .mail-list .mail:hover {
@@ -82,10 +72,6 @@
 .mail-list .mail .time {
   font-size: 0.9em;
   text-align: right;
-}
-
-.navbar-brand {
-  color: #DA1F2A !important;
 }
 
 
