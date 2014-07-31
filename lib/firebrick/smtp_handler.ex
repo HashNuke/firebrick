@@ -7,10 +7,8 @@ defmodule Firebrick.SmtpHandler do
 #   handle_other/3, handle_AUTH/4, handle_STARTTLS/1, code_change/3, terminate/2]).
 
   @relay true
+  @server_name "Firebrick ESMTP server"
 
-  defrecord State, options: [] do
-    record_type options: list
-  end
 
   @type error_message :: {:error, String.t, State.t}
 
@@ -26,17 +24,17 @@ defmodule Firebrick.SmtpHandler do
 # %% to ALL subsequent calls to the callback module, so it can be used to keep track of the SMTP
 # %% session. You can also return `{stop, Reason, Message}' where the session will exit with Reason
 # %% and send Message to the client.
-  @spec init(binary, non_neg_integer, tuple, list) :: {:ok, String.t, State.t} | {:stop, any, String.t}
+  @spec init(String.t, non_neg_integer, Tuple.t, List.t) :: {:ok, String.t, Map.t} | {:stop, atom, String.t}
   def init(hostname, session_count, address, options) do
     :io.format("peer: ~p~n", [address])
     case session_count > 20 do
       false ->
-        banner = [hostname, " ESMTP smtp_server_example"]
-        state = State[options: options]
+        banner = hostname <> " " <> @server_name
+        state  = put_in(new_state, [:options], options)
         {:ok, banner, state}
       true ->
         :io.format("Connection limit exceeded~n")
-        {:stop, :normal, ["421 ", hostname, " is too busy to accept mail right now"]}
+        {:stop, :normal, "421 #{hostname} is too busy to accept mail right now"}
     end
   end
 
@@ -49,7 +47,7 @@ defmodule Firebrick.SmtpHandler do
   # %% , for example, by looking at the IP address passed in to the init function) and the new callback
   # %% state. You can reject the HELO by returning `{error, Message, State}' and the Message will be
   # %% sent back to the client. The reject message MUST contain the SMTP status code, eg. 554.
-  @spec handle_HELO(binary, State[]) :: {:ok, pos_integer, State} | {:ok, State} | error_message
+  @spec handle_HELO(binary, Map.t) :: {:ok, pos_integer, Map.t} | {:ok, Map.t} | error_message
   def handle_HELO("invalid", state) do
     # contrived example
     {:error, "554 invalid hostname", state}
@@ -258,7 +256,7 @@ defmodule Firebrick.SmtpHandler do
 
 
   defp create_unique_id do
-    ref_list = Kernel.bitstring_to_list(:erlang.md5(term_to_binary(:erlang.now())))
+    ref_list = :erlang.now() |> :erlang.term_to_binary |> :erlang.md5 |> :erlang.bitstring_to_list
     :lists.flatten Enum.map(ref_list, fn(n)-> :io_lib.format("~2.16.0b", [n]) end)
   end
 
@@ -273,4 +271,8 @@ defmodule Firebrick.SmtpHandler do
     relay_mail(from, rest, data)
   end
 
+
+  defp new_state do
+    %{options: %{}}
+  end
 end
