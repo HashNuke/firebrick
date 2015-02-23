@@ -1,9 +1,4 @@
-/ebin
+/_build
 /deps
-/tmp/dev
-/tmp/test
 erl_crash.dump
-_build
-.bundle
-.DS_Store
-priv/static/assets
+*.ez
