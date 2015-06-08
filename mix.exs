@@ -16,10 +16,20 @@ defmodule Firebrick.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [mod: {Firebrick, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex]]
+    [
+      mod: {Firebrick, []},
+      applications: app_list(Mix.env)
+     ]
   end
+
+
+  defp app_list do
+    [:phoenix, :phoenix_html, :cowboy, :logger, :phoenix_ecto, :postgrex]
+  end
+
+  defp app_list(:test), do: [:hound | app_list]
+  defp app_list(_),     do: app_list
+
 
   # Specifies which paths to compile per environment
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
@@ -29,11 +39,14 @@ defmodule Firebrick.Mixfile do
   #
   # Type `mix help deps` for examples and options
   defp deps do
-    [{:phoenix, "~> 0.13.1"},
-     {:phoenix_ecto, "~> 0.4"},
-     {:postgrex, ">= 0.0.0"},
-     {:phoenix_html, "~> 1.0"},
-     {:phoenix_live_reload, "~> 0.4", only: :dev},
-     {:cowboy, "~> 1.0"}]
+    [
+      {:phoenix, "~> 0.13.1"},
+      {:phoenix_ecto, "~> 0.4"},
+      {:postgrex, ">= 0.0.0"},
+      {:phoenix_html, "~> 1.0"},
+      {:phoenix_live_reload, "~> 0.4", only: :dev},
+      {:cowboy, "~> 1.0"},
+      {:hound, "~> 0.7", only: :test}
+    ]
   end
 end
