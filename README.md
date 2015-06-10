@@ -10,9 +10,19 @@ Now you can visit `localhost:4000` from your browser.
 
 ### Notes
 
-#### To setup port forwarding on OS X
+#### To setup SMTP port forwarding on OS X
 
 ```
-sudo bash tools/pf-config.sh
-cp tools/forward-rules.pfconf $HOME/
+# to start pf
+sudo pfctl -evf tools/smtp-port-forward.pfconf
+
+# to stop pf
+sudo pfctl -d
+
+# to dry run the pf.conf
+sudo pfctl -vnf tools/smtp-port-forward.pfconf
 ```
+
+References:
+* <http://www.chrisvanpatten.com/port-forwarding-mavericks>
+* <https://gist.github.com/kujohn/7209628>
