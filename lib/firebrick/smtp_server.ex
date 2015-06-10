@@ -1,4 +1,4 @@
-defmodule Firebrick.Smtp do
+defmodule Firebrick.SmtpServer do
 
   def start_link do
     session_options = [callbackoptions: [parse: true] ]
