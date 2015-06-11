@@ -10,11 +10,15 @@ defmodule Firebrick do
       # Start the endpoint when the application starts
       supervisor(Firebrick.Endpoint, []),
       # Start the Ecto repository
-      worker(Firebrick.Repo, []),
-      worker(Firebrick.SmtpServer, [])
+      worker(Firebrick.Repo, [])
       # Here you could define other workers and supervisors as children
       # worker(Firebrick.Worker, [arg1, arg2, arg3]),
     ]
+
+    # start web server only if Phoenix is serving endpoints
+    if Application.get_env(:phoenix, :serve_endpoints) do
+      children = children ++ [worker(Firebrick.SmtpServer, [])]
+    end
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
