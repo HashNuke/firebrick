@@ -28,4 +28,26 @@ defmodule Firebrick do
     Firebrick.Endpoint.config_change(changed, removed)
     :ok
   end
+
+
+  def send_test_mail() do
+    host = :net_adm.localhost
+    sender_email = "foo@#{host}"
+    recipient_emails = ["bar@#{host}", "zoo@#{host}"]
+    sender = "Foo Tester <#{sender_email}>"
+    recipients = [
+      "Bar Tester <#{Enum.at(recipient_emails, 0)}>",
+      "Zoo Tester <#{Enum.at(recipient_emails, 1)}>"
+    ]
+    client_options = [relay: host, username: sender, password: "dummy", port: 2525]
+    mail = {
+      sender_email,
+      recipient_emails,
+      "Subject: Ahoy Matey\r\nFrom: #{sender} \r\nTo: #{hd(recipients)} \r\n\r\nMy name is Jack Sparrow"
+    }
+
+    :gen_smtp_client.send(mail, client_options)
+  end
+
+
 end
