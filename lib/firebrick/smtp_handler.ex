@@ -97,7 +97,7 @@ defmodule Firebrick.SmtpHandler do
   def handle_DATA(from, to, data, state) do
     unique_id = Utils.create_unique_id()
 
-    Logger.debug("Message from #{from} to [#{Enum.join to, ", "}] with body length #{byte_size(data)} queued as #{unique_id}")
+    Logger.debug("Mail from #{from} to [#{Enum.join to, ", "}] with body length #{byte_size(data)} queued as #{unique_id}")
 
     mail = parse_mail(data, state, unique_id)
     IO.inspect mail
