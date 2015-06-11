@@ -10,7 +10,7 @@ defmodule Firebrick do
       # Start the endpoint when the application starts
       supervisor(Firebrick.Endpoint, []),
       # Start the Ecto repository
-      # worker(Firebrick.Repo, []),
+      worker(Firebrick.Repo, []),
       worker(Firebrick.SmtpServer, [])
       # Here you could define other workers and supervisors as children
       # worker(Firebrick.Worker, [arg1, arg2, arg3]),
