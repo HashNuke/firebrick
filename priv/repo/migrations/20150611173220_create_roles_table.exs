@@ -4,6 +4,8 @@ defmodule Firebrick.Repo.Migrations.CreateRolesTable do
   def change do
     create table(:roles) do
       add :name, :string
+
+      timestamps
     end
   end
 end

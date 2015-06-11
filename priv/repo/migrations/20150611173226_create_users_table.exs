@@ -6,6 +6,8 @@ defmodule Firebrick.Repo.Migrations.CreateUsersTable do
       add :email, :text
       add :encrypted_password, :text
       add :role_id, :integer
+
+      timestamps
     end
   end
 end

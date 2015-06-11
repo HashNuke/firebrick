@@ -6,6 +6,8 @@ defmodule Firebrick.Repo.Migrations.CreateMailboxesTable do
       add :email, :text
       add :domain_id, :integer
       add :mailbox_type, :text
+
+      timestamps
     end
   end
 end
