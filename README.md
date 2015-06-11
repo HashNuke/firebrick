@@ -8,21 +8,55 @@ To start your new Phoenix application:
 Now you can visit `localhost:4000` from your browser.
 
 
-### Notes
+## Development install
 
-#### To setup SMTP port forwarding on OS X
+Clone the project
 
 ```
-# to start pf
-sudo pfctl -evf tools/smtp-port-forward.pfconf
-
-# to stop pf
-sudo pfctl -d
-
-# to dry run the pf.conf
-sudo pfctl -vnf tools/smtp-port-forward.pfconf
+git clone https://github.com/HashNuke/firebrick.git firebrick
+cd firebrick
 ```
 
-References:
+#### Install Erlang, Elixir & Node.js
+
+Install Erlang, Elixir & Node.js versions specified in the `.tool-versions` file.
+
+**OR** If using [asdf](http://github.com/HashNuke/asdf), just run `asdf install` within project dir.
+
+#### Postgres
+
+* Change the postgres credentials in `config/test.exs`.
+  OR
+  Create postgres user called `postgres` with password `postgres`
+  ```
+  TODO
+  ```
+
+* Create postgres database `firebrick_dev`
+
+  ```sh
+  createdb firebrick_dev
+  ```
+
+#### Install dependencies & migrate database
+
+```
+mix deps.get
+mix setup
+cd frontend
+npm install
+cd -
+```
+
+#### Run the app
+
+```
+mix phoenix.server
+```
+
+## References
+
+##### Mac port-forwarding
+
 * <http://www.chrisvanpatten.com/port-forwarding-mavericks>
 * <https://gist.github.com/kujohn/7209628>
