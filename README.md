@@ -12,7 +12,7 @@ Now you can visit `localhost:4000` from your browser.
 
 Clone the project
 
-```
+```sh
 git clone https://github.com/HashNuke/firebrick.git firebrick
 cd firebrick
 ```
@@ -27,9 +27,9 @@ Install Erlang, Elixir & Node.js versions specified in the `.tool-versions` file
 
 * Change the postgres credentials in `config/test.exs`.
   OR
-  Create postgres user called `postgres` with password `postgres`
-  ```
-  TODO
+  Create postgresql user called `postgres` with password `postgres`
+  ```sh
+  createuser -dsP postgres
   ```
 
 * Create postgres database `firebrick_dev`
