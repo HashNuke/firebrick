@@ -3,7 +3,7 @@ defmodule Firebrick.SmtpHandler do
   require Logger
 
   alias Firebrick.SmtpHandler.State
-  alias Firebrick.SmtpHandler.Utils
+  alias Firebrick.Mail.Utils
   alias Firebrick.MailParser
 
   @type error_message :: {:error, String.t, State.t}
@@ -101,8 +101,7 @@ defmodule Firebrick.SmtpHandler do
     Logger.debug("Message from #{from} to #{to} with body length #{byte_size(data)} queued as #{unique_id}")
 
     mail = parse_mail(data, state, unique_id)
-    Firebrick.Mail.process(mail)
-
+    IO.inspect mail
     {:ok, unique_id, state}
   end
 
@@ -131,7 +130,7 @@ defmodule Firebrick.SmtpHandler do
     try do
       # :mimemail.decode/1 is provided by gen_smtp
       :mimemail.decode(data)
-      |> MailParser.parse_mail_data()
+      |> MailParser.parse()
     rescue
       reason ->
         :io.format("Message decode FAILED with ~p:~n", [reason])

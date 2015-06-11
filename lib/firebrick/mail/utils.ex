@@ -1,4 +1,4 @@
-defmodule Firebrick.SmtpHandler.Utils do
+defmodule Firebrick.Mail.Utils do
 
   def send_mail(sender, recipients, subject, body) do
     host = :net_adm.localhost
