@@ -45,7 +45,7 @@ defmodule Firebrick.Jwt do
     {:ok, header} = Base.url_decode64(encoded_header)
     algorithm = jwt_option(options, :algorithm)
 
-    signature(algorithm, "#{encoded_header}.#{encoded_payload}") == decoded_signature
+    signature("#{encoded_header}.#{encoded_payload}", options) == decoded_signature
   end
 
 
