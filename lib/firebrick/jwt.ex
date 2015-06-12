@@ -1,6 +1,6 @@
 defmodule Firebrick.Jwt do
 
-  @token_validity Application.get_env(:firebrick, :jwt_token_validity, 60 * 60 * 24 * 365)
+  @token_validity Application.get_env(:firebrick, :jwt_token_validity, 60 * 60 * 24 * 7)
   @algorithm Application.get_env(:firebrick, :jwt_algorithm, "HS256")
 
   def encode(data) do
