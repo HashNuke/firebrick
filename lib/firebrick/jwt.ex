@@ -82,11 +82,11 @@ defmodule Firebrick.Jwt do
   def jwt_option(options, opt_name) do
     case opt_name do
       :algorithm ->
-        Keyword.fetch(options, opt_name, "HS256")
+        Keyword.get(options, opt_name, "HS256")
       :token_validity ->
-        Keyword.fetch(options, opt_name, 60*60*24*7)
+        Keyword.get(options, opt_name, 60*60*24*7)
       _ ->
-        Keyword.fetch(options, opt_name)
+        Keyword.get(options, opt_name)
     end
   end
 
