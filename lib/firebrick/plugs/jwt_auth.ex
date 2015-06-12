@@ -3,9 +3,10 @@ defmodule Firebrick.Plugs.JwtAuth do
 
   alias Plug.Conn
 
+  @jwt_options Application.get_env(:firebrick, :jwt)
 
   def init(opts) do
-    %{}
+    Enum.into @jwt_options, %{}
   end
 
 
@@ -21,7 +22,7 @@ defmodule Firebrick.Plugs.JwtAuth do
 
 
   defp process_req(conn, jwt) do
-    case Firebrick.Jwt.decode(jwt) do
+    case Firebrick.Jwt.decode(jwt, @jwt_options) do
       {:ok, data} ->
         Conn.assign(conn, :jwt_data, data)
       {:error, reason} ->

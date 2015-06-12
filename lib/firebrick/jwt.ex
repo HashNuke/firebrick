@@ -1,12 +1,11 @@
 defmodule Firebrick.Jwt do
 
-  @token_validity Application.get_env(:firebrick, :jwt_token_validity, 60 * 60 * 24 * 7)
-  @algorithm Application.get_env(:firebrick, :jwt_algorithm, "HS256")
+  def encode(data, options) do
+    encoded_header = %{typ: "JWT", alg: jwt_option(options, :algorithm)}
+    |> encode_part
 
-  def encode(data) do
-    encoded_header = encode_part(%{typ: "JWT", alg: @algorithm})
     current_unix_timestamp = current_time
-    expiry_unix_timestamp  = current_unix_timestamp + @token_validity
+    expiry_unix_timestamp  = current_unix_timestamp + jwt_option(options, :token_validity)
 
     registered_claims = %{
       iat: current_unix_timestamp,
@@ -16,7 +15,7 @@ defmodule Firebrick.Jwt do
     encoded_payload = Map.merge(data, registered_claims)
     |> encode_part
 
-    encoded_signature = signature(@algorithm, "#{encoded_header}.#{encoded_payload}")
+    encoded_signature = signature("#{encoded_header}.#{encoded_payload}", options)
     |> Base.url_encode64
 
     {:ok, "#{encoded_header}.#{encoded_payload}.#{encoded_signature}"}
@@ -29,10 +28,10 @@ defmodule Firebrick.Jwt do
   end
 
 
-  def decode(data) do
+  def decode(data, options) do
     [encoded_header, encoded_payload, encoded_signature] = String.split(data, ".")
 
-    if signature_match?(encoded_header, encoded_payload, encoded_signature) do
+    if signature_match?(encoded_header, encoded_payload, encoded_signature, options) do
       {:ok, json} = Base.url_decode64(encoded_payload)
       Poison.decode(json)
     else
@@ -41,10 +40,10 @@ defmodule Firebrick.Jwt do
   end
 
 
-  defp signature_match?(encoded_header, encoded_payload, encoded_signature) do
+  defp signature_match?(encoded_header, encoded_payload, encoded_signature, options) do
     {:ok, decoded_signature} = Base.url_decode64(encoded_signature)
     {:ok, header} = Base.url_decode64(encoded_header)
-    algorithm = Poison.decode!(header) |> Map.get("alg")
+    algorithm = jwt_option(options, :algorithm)
 
     signature(algorithm, "#{encoded_header}.#{encoded_payload}") == decoded_signature
   end
@@ -57,8 +56,9 @@ defmodule Firebrick.Jwt do
   # "ES256"
   # "ES384"
   # "ES512"
-  defp signature(algorithm, data) do
-    secret = Application.get_env(:firebrick, :jwt_secret)
+  defp signature(data, options) do
+    algorithm = jwt_option options, :algorithm
+    secret = jwt_option options, :secret
 
     case algorithm do
       "HS256" ->
@@ -77,4 +77,17 @@ defmodule Firebrick.Jwt do
     # 1 megasecond is one-million seconds
     seconds + (mega_seconds * 1000000)
   end
+
+
+  def jwt_option(options, opt_name) do
+    case opt_name do
+      :algorithm ->
+        Keyword.fetch(options, opt_name, "HS256")
+      :token_validity ->
+        Keyword.fetch(options, opt_name, 60*60*24*7)
+      _ ->
+        Keyword.fetch(options, opt_name)
+    end
+  end
+
 end

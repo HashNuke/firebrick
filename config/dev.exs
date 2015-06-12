@@ -35,4 +35,4 @@ config :firebrick, Firebrick.Repo,
   size: 10 # The amount of database connections in the pool
 
 
-config :firebrick, :jwt_secret, "E3azkLmEGrWiJB4mDPLlOGKn0Ib5no4iQY1W5lTnKT8="
+config :firebrick, :jwt, [name: "HS256", secret: "E3azkLmEGrWiJB4mDPLlOGKn0Ib5no4iQY1W5lTnKT8="]
