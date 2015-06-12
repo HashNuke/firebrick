@@ -16,3 +16,6 @@ config :firebrick, Firebrick.Repo,
   password: "postgres",
   database: "firebrick_test",
   size: 1 # Use a single connection for transactional tests
+
+
+config :firebrick, :jwt_secret, "E3azkLmEGrWiJB4mDPLlOGKn0Ib5no4iQY1W5lTnKT8="
