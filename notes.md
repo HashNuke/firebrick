@@ -3,7 +3,8 @@ Role
 
 User
 * email
-* password
+* encrypted_password
+* role_id
 
 Domain
 * name
@@ -20,3 +21,19 @@ Mailbox
 
 MailThread
 * mailbox_id
+* subject
+
+Mail
+* mail_thread_id
+* from
+* to
+* cc
+* bcc
+* subject
+* plain_body
+* html_body
+* mail_label_ids
+
+MailLabel
+* name
+* primary
