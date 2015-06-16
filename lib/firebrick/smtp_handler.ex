@@ -80,7 +80,7 @@ defmodule Firebrick.SmtpHandler do
 
   @doc """
   Verify incoming address.
-  This I heard was a security issue since people were able to check which accounts existed on the system. We'll just say yes to all incoming addresses.
+  This I heard, was a security issue since people were able to check which accounts existed on the system. We'll just say yes to all incoming addresses.
   """
   @spec handle_VRFY(binary, State.t) :: {:ok, String.t, State.t} | {:error, String.t, State.t}
   def handle_VRFY(user, state) do
