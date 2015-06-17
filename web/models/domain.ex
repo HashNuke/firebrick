@@ -2,7 +2,7 @@ defmodule Firebrick.Domain do
   use Ecto.Model
 
   schema "domains" do
-    field :name, :text
+    field :name, :string
     has_many :mailboxes, Firebrick.Mailbox
 
     timestamps

@@ -2,7 +2,7 @@ defmodule Firebrick.Role do
   use Ecto.Model
 
   schema "roles" do
-    field :name, :text
+    field :name, :string
     has_many :users, Firebrick.User
 
     timestamps

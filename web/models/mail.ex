@@ -2,13 +2,13 @@ defmodule Firebrick.Mail do
   use Ecto.Model
 
   schema "mails" do
-    field :from, :text
-    field :to, {:array, :text}
-    field :cc, {:array, :text}
-    field :bcc, {:array, :text}
-    field :subject, :text
-    field :plain_body, :text
-    field :html_body, :text
+    field :from, :string
+    field :to, {:array, :string}
+    field :cc, {:array, :string}
+    field :bcc, {:array, :string}
+    field :subject, :string
+    field :plain_body, :string
+    field :html_body, :string
 
     belongs_to :mail_thread, Firebrick.MailThread
 
