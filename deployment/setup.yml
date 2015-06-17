@@ -1,0 +1,8 @@
+# TODO
+# basic packages
+# deployer user OR pass deployer
+# check or make projects dir
+# logrotate
+# monit
+# postgres
+# project-related (asdf, monit, logrotate configs, database)
