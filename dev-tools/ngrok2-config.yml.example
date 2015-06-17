@@ -1,0 +1,6 @@
+authtoken: insert-auth-token-here
+tunnels:
+  firebrick:
+    proto: tcp
+    addr: 2525
+    remote_port: 25
