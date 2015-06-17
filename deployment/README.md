@@ -21,10 +21,21 @@ Replace `1.2.3.4` in the following with your server's IP address
 * To setup: `ansible-playbook setup.yml --extra-vars="target=1.2.3.4"`
 * To update: `ansible-playbook update.yml --extra-vars="target=1.2.3.4"`
 
-### Setup DNS records
+### Setup the following DNS records
 
-TODO MX record to handle mail
-TODO A/CNAME record for app
+When adding records, replace:
+
+* 1.2.3.4 with your own IP address
+* example.com with your own domain/subdomain
+
+Type | Name        | Value
+-----|-------------|---------
+A    | example.com | 1.2.3.4
+
+Type | Value      | Priority
+-----|------------|---------
+MX   | 1.2.3.4    | 10
+
 
 DONE ~!
 
