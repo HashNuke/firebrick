@@ -43,5 +43,5 @@ DONE ~!
 
 ## Advanced usage
 
-* TODO path to custom ssh key
+* Pass the option `--private-key=./path/to/ssh-private-key` if your private key is not at `~/.ssh/id_rsa` or `~/.ssh/id_dsa`
 * **For those familiar with Ansible:** If you have a group of servers in your Ansible inventory file, you can pass an Ansible group name for the `target` variable for the `setup` or `deploy` playbooks.
