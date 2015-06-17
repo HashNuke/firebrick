@@ -127,6 +127,7 @@ defmodule Firebrick.SmtpHandler do
 
   defp parse_mail(data, _state, _unique_id) do
     try do
+      IO.inspect data
       # :mimemail.decode/1 is provided by gen_smtp
       :mimemail.decode(data)
       |> MailParser.parse()
