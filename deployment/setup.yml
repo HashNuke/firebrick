@@ -1,8 +1,53 @@
-# TODO
-# basic packages
-# deployer user OR pass deployer
-# check or make projects dir
-# logrotate
-# monit
-# postgres
-# project-related (asdf, monit, logrotate configs, database)
+---
+- host: "{{ target }}"
+  vars:
+    project_path: "projects/firebrick"
+
+  tasks:
+    - name: "install system packages"
+      apt: name="{{ item }}" update_cache=yes
+      with_items:
+        - automake
+        - autoconf
+        - libreadline-dev
+        - libncurses-dev
+        - libssl-dev
+        - libyaml-dev
+        - libxslt-dev
+        - libffi-dev
+        - libtool
+        - unixodbc-dev
+        - logrotate
+        - monit
+
+    - name: "create deployer user {{deployer}}"
+    - name: "install asdf"
+
+    - name: "add asdf plugins"
+      command: "asdf install {{item}} https://github.com/HashNuke/asdf-{{item}}.git"
+      with_items:
+        - nodejs
+        - erlang
+        - elixir
+
+    - name: "fix github"
+    - name: "ensure projects directory"
+
+    #TODO postgres
+    #TODO project-related (asdf, monit config, logrotate config, database)
+
+    - name: "clone project"
+
+    - name: "install erlang, elixir & nodejs using asdf"
+      command: "asdf install"
+
+    - name: "create database"
+    - name: "project dependencies"
+    - name: "fetch project dependencies"
+      command: "mix deps.get"
+
+    - name: "run database migrations"
+      command: "mix ecto.migrate"
+
+    - name: "copy monit config"
+    - name: "copy logrotate config"
