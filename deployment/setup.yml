@@ -70,5 +70,27 @@
       args:
         chdir: "{{project_path}}"
 
-    # - name: "copy monit config"
+
+    - name: "install frontend dependencies"
+      #TODO skip production flag based on environment
+      command: "npm install --production"
+      remote_user: "{{deployer_user}}"
+      args:
+        chdir: "{{project_path}}/frontend"
+
+
+    - name: "build frontend"
+      command: "npm run build-prod"
+      remote_user: "{{deployer_user}}"
+      args:
+        chdir: "{{project_path}}/frontend"
+
+
+    - name: "copy monit config"
+      template: src="firebrick.monit.j2" dest="/etc/monit/conf/firebrick.monit"
+
+
+    - name: start monit
+      service: name=monit state=started enabled=yes
+
     # - name: "copy logrotate config"
