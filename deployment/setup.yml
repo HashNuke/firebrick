@@ -1,7 +1,9 @@
 ---
 - host: "{{ target }}"
   vars:
-    project_path: "projects/firebrick"
+    deployer_user: "deployer"
+    project_path: "/home/{{deployer_user}}/projects/firebrick"
+    project_version: "stable"
 
   tasks:
     - name: "install system packages"
@@ -21,7 +23,14 @@
         - monit
 
     - name: "create deployer user {{deployer}}"
+      user: name="{{deployer}}"
+
+    # TODO copy authorized_keys from root user to deployer user
+
     - name: "install asdf"
+      git: repo="https://github.com/HashNuke/asdf.git" dest="~/.asdf"
+      remote_user: "{{deployer_user}}"
+
 
     - name: "add asdf plugins"
       command: "asdf install {{item}} https://github.com/HashNuke/asdf-{{item}}.git"
@@ -29,25 +38,37 @@
         - nodejs
         - erlang
         - elixir
+      remote_user: "{{deployer_user}}"
 
-    - name: "fix github"
     - name: "ensure projects directory"
+      file: path="~/projects" state=directory
+      remote_user: "{{deployer_user}}"
 
     #TODO postgres
     #TODO project-related (asdf, monit config, logrotate config, database)
 
-    - name: "clone project"
+    - name: "clone firebrick project"
+      git: repo="https://github.com/HashNuke/firebrick.git" dest="~/projects/firebrick"
+      remote_user: "{{deployer_user}}"
 
     - name: "install erlang, elixir & nodejs using asdf"
       command: "asdf install"
+      remote_user: "{{deployer_user}}"
 
-    - name: "create database"
-    - name: "project dependencies"
+    # - name: "create database"
+    # - name: "project dependencies"
+
     - name: "fetch project dependencies"
       command: "mix deps.get"
+      remote_user: "{{deployer_user}}"
+      args:
+        chdir: "{{project_dir}}"
 
     - name: "run database migrations"
       command: "mix ecto.migrate"
+      remote_user: "{{deployer_user}}"
+      args:
+        chdir: "{{project_path}}"
 
-    - name: "copy monit config"
-    - name: "copy logrotate config"
+    # - name: "copy monit config"
+    # - name: "copy logrotate config"
