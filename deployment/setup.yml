@@ -56,19 +56,23 @@
       remote_user: "{{deployer_user}}"
 
     # - name: "create database"
-    # - name: "project dependencies"
+    # based on environment
+
 
     - name: "fetch project dependencies"
       command: "mix deps.get"
       remote_user: "{{deployer_user}}"
       args:
         chdir: "{{project_dir}}"
+        environment: "MIX_ENV={{ mix_env }}"
+
 
     - name: "run database migrations"
       command: "mix ecto.migrate"
       remote_user: "{{deployer_user}}"
       args:
         chdir: "{{project_path}}"
+        environment: "MIX_ENV={{ mix_env }}"
 
 
     - name: "install frontend dependencies"
@@ -77,6 +81,7 @@
       remote_user: "{{deployer_user}}"
       args:
         chdir: "{{project_path}}/frontend"
+        environment: "NODE_ENV={{ node_env }}"
 
 
     - name: "build frontend"
@@ -84,6 +89,7 @@
       remote_user: "{{deployer_user}}"
       args:
         chdir: "{{project_path}}/frontend"
+        environment: "NODE_ENV={{ node_env }}"
 
 
     - name: "copy monit config"
