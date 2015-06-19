@@ -8,4 +8,19 @@ defmodule Firebrick.User do
 
     timestamps
   end
+
+
+  def valid_password?(model, password) do
+    salt = String.slice(model.encrypted_password, 0, 29)
+    {:ok, hashed_password} = :bcrypt.hashpw(password, salt)
+    "#{hashed_password}" == model.encrypted_password
+  end
+
+
+  def encrypt_password(model) do
+    {:ok, salt} = :bcrypt.gen_salt()
+    {:ok, hashed_password} = :bcrypt.hashpw(record.password, salt)
+    model.encrypted_password(hashed_password)
+  end
+
 end
