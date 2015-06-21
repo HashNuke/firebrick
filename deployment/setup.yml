@@ -24,7 +24,7 @@
         - monit
 
     - name: "create deployer user {{deployer}}"
-      user: name="{{deployer}}"
+      user: name="{{deployer}}" shell=/bin/bash
 
 
     - name: "read authorized keys from root user"
@@ -33,14 +33,14 @@
 
     - debug: msg="{{ root_authorized_keys.stdout}}"
 
-    - file: path="/home/{{deployer}}/.ssh" mode=0600 owner="{{deployer}}" state=directory
+    - name: "create .ssh dir for {{deployer}}"
+      file: path="/home/{{deployer}}/.ssh" mode=0700 owner="{{deployer}}" state=directory
 
-    # copy authorized_keys from root user to deployer user
     - name: "copy authorized keys to deployer user"
       shell: "echo '{{root_authorized_keys.stdout}}' >> /home/{{deployer}}/.ssh/authorized_keys"
 
     - name: "chown the authorized_keys file"
-      file: path="/home/{{deployer}}/.ssh/authorized_keys" mode=0600 owner="{{deployer}}"
+      file: path="/home/{{deployer}}/.ssh/authorized_keys" mode=0700 owner="{{deployer}}"
 
     - name: "install asdf"
       git: repo="https://github.com/HashNuke/asdf.git" dest="~/.asdf"
