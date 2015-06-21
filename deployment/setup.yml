@@ -1,5 +1,5 @@
 ---
-- host: firebrick-servers
+- hosts: firebrick-servers
   vars:
     deployer_user: "deployer"
     project_path: "/home/{{deployer_user}}/projects/firebrick"
