@@ -13,13 +13,20 @@ pip install ansible
 
 * You have a remote server
 * You can SSH into the remote server as `root` user with your SSH key located at `~/.ssh/id_rsa` or `~/.ssh/id_dsa`
+* You have this `deployment` directory as your working directory
 
-## Setup/update Firebrick
+## Usage
 
-Replace `1.2.3.4` in the following with your server's IP address
+### Setup an inventory file
 
-* To setup: `ansible-playbook setup.yml --extra-vars="target=1.2.3.4"`
-* To update: `ansible-playbook update.yml --extra-vars="target=1.2.3.4"`
+Edit the text file called `inventory` in this directory and replace the example IP addresses with your own. Add one IP per line.
+
+### Setup/Update
+
+Assuming the path to the inventory file is `/foo/bar/inventory`
+
+* To setup: `ansible-playbook setup.yml`
+* To update: `ansible-playbook update.yml`
 
 ### Setup the following DNS records
 
