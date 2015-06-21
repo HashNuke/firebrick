@@ -1,7 +1,8 @@
 ---
 - hosts: firebrick-servers
+  remote_user: root
   vars:
-    deployer_user: "deployer"
+    deployer: "deployer"
     project_path: "/home/{{deployer_user}}/projects/firebrick"
     project_version: "master"
 
@@ -28,16 +29,22 @@
 
     - name: "read authorized keys from root user"
       command: "cat ~/.ssh/authorized_keys"
-      register: root_authorized_keys"
+      register: "root_authorized_keys"
 
-    - debug: "{{ root_authorized_keys.stdout}}"
+    - debug: msg="{{ root_authorized_keys.stdout}}"
 
-    # TODO copy authorized_keys from root user to deployer user
+    - file: path="/home/{{deployer}}/.ssh" mode=0600 owner="{{deployer}}" state=directory
 
-    # - name: "install asdf"
-    #   git: repo="https://github.com/HashNuke/asdf.git" dest="~/.asdf"
-    #   remote_user: "{{deployer_user}}"
+    # copy authorized_keys from root user to deployer user
+    - name: "copy authorized keys to deployer user"
+      shell: "echo '{{root_authorized_keys.stdout}}' >> /home/{{deployer}}/.ssh/authorized_keys"
 
+    - name: "chown the authorized_keys file"
+      file: path="/home/{{deployer}}/.ssh/authorized_keys" mode=0600 owner="{{deployer}}"
+
+    - name: "install asdf"
+      git: repo="https://github.com/HashNuke/asdf.git" dest="~/.asdf"
+      remote_user: "{{deployer}}"
 
     # - name: "add asdf plugins"
     #   command: "asdf install {{item}} https://github.com/HashNuke/asdf-{{item}}.git"
@@ -45,22 +52,22 @@
     #     - nodejs
     #     - erlang
     #     - elixir
-    #   remote_user: "{{deployer_user}}"
+    #   remote_user: "{{deployer}}"
 
     # - name: "ensure projects directory"
     #   file: path="~/projects" state=directory
-    #   remote_user: "{{deployer_user}}"
+    #   remote_user: "{{deployer}}"
 
     # #TODO postgres
     # #TODO project-related (asdf, monit config, logrotate config, database)
 
     # - name: "clone firebrick project"
     #   git: repo="https://github.com/HashNuke/firebrick.git" dest="~/projects/firebrick"
-    #   remote_user: "{{deployer_user}}"
+    #   remote_user: "{{deployer}}"
 
     # - name: "install erlang, elixir & nodejs using asdf"
     #   command: "asdf install"
-    #   remote_user: "{{deployer_user}}"
+    #   remote_user: "{{deployer}}"
 
     # # - name: "create database"
     # # based on environment
@@ -68,7 +75,7 @@
 
     # - name: "fetch project dependencies"
     #   command: "mix deps.get"
-    #   remote_user: "{{deployer_user}}"
+    #   remote_user: "{{deployer}}"
     #   args:
     #     chdir: "{{project_dir}}"
     #     environment: "MIX_ENV={{ mix_env }}"
@@ -76,7 +83,7 @@
 
     # - name: "run database migrations"
     #   command: "mix ecto.migrate"
-    #   remote_user: "{{deployer_user}}"
+    #   remote_user: "{{deployer}}"
     #   args:
     #     chdir: "{{project_path}}"
     #     environment: "MIX_ENV={{ mix_env }}"
@@ -85,7 +92,7 @@
     # - name: "install frontend dependencies"
     #   #TODO skip production flag based on environment
     #   command: "npm install --production"
-    #   remote_user: "{{deployer_user}}"
+    #   remote_user: "{{deployer}}"
     #   args:
     #     chdir: "{{project_path}}/frontend"
     #     environment: "NODE_ENV={{ node_env }}"
@@ -93,7 +100,7 @@
 
     # - name: "build frontend"
     #   command: "npm run build-prod"
-    #   remote_user: "{{deployer_user}}"
+    #   remote_user: "{{deployer}}"
     #   args:
     #     chdir: "{{project_path}}/frontend"
     #     environment: "NODE_ENV={{ node_env }}"
