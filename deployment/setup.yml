@@ -26,7 +26,6 @@
     - name: "create deployer user {{deployer}}"
       user: name="{{deployer}}" shell=/bin/bash
 
-
     - name: "read authorized keys from root user"
       command: "cat ~/.ssh/authorized_keys"
       register: "root_authorized_keys"
@@ -40,7 +39,7 @@
       shell: "echo '{{root_authorized_keys.stdout}}' >> /home/{{deployer}}/.ssh/authorized_keys"
 
     - name: "chown the authorized_keys file"
-      file: path="/home/{{deployer}}/.ssh" recursive=yes mode=0700 owner="{{deployer}}"
+      file: path="/home/{{deployer}}/.ssh" recurse=yes mode=0700 owner="{{deployer}}"
 
     - name: "install asdf"
       git: repo="https://github.com/HashNuke/asdf.git" dest="~/.asdf"
