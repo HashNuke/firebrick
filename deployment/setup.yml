@@ -73,56 +73,57 @@
 
     # #TODO project-related (monit config, logrotate config, database)
 
-    # - name: "clone firebrick project"
-    #   git: repo="https://github.com/HashNuke/firebrick.git" dest="~/projects/firebrick"
-    #   remote_user: "{{deployer}}"
+    - name: "clone firebrick project"
+      git: repo="https://github.com/HashNuke/firebrick.git" dest="~/projects/firebrick"
+      remote_user: "{{deployer}}"
 
-    # - name: "install erlang, elixir & nodejs using asdf"
-    #   command: "asdf install"
-    #   remote_user: "{{deployer}}"
+
+    - name: "install erlang, elixir & nodejs using asdf"
+      command: 'bash -lc "asdf install"'
+      remote_user: "{{deployer}}"
 
     # # - name: "create database"
     # # based on environment
 
 
-    # - name: "fetch project dependencies"
-    #   command: "mix deps.get"
-    #   remote_user: "{{deployer}}"
-    #   args:
-    #     chdir: "{{project_dir}}"
-    #     environment: "MIX_ENV={{ mix_env }}"
+    - name: "fetch project dependencies"
+      command: 'bash -lc "mix deps.get"'
+      remote_user: "{{deployer}}"
+      args:
+        chdir: "{{project_dir}}"
+        environment: "MIX_ENV={{ mix_env }}"
 
 
-    # - name: "run database migrations"
-    #   command: "mix ecto.migrate"
-    #   remote_user: "{{deployer}}"
-    #   args:
-    #     chdir: "{{project_path}}"
-    #     environment: "MIX_ENV={{ mix_env }}"
+    - name: "run database migrations"
+      command: 'bash -lc "mix ecto.migrate"'
+      remote_user: "{{deployer}}"
+      args:
+        chdir: "{{project_path}}"
+        environment: "MIX_ENV={{ mix_env }}"
 
 
-    # - name: "install frontend dependencies"
-    #   #TODO skip production flag based on environment
-    #   command: "npm install --production"
-    #   remote_user: "{{deployer}}"
-    #   args:
-    #     chdir: "{{project_path}}/frontend"
-    #     environment: "NODE_ENV={{ node_env }}"
+    - name: "install frontend dependencies"
+      #TODO skip production flag based on environment
+      command: 'bash -lc "npm install --production"'
+      remote_user: "{{deployer}}"
+      args:
+        chdir: "{{project_path}}/frontend"
+        environment: "NODE_ENV={{ node_env }}"
 
 
-    # - name: "build frontend"
-    #   command: "npm run build-prod"
-    #   remote_user: "{{deployer}}"
-    #   args:
-    #     chdir: "{{project_path}}/frontend"
-    #     environment: "NODE_ENV={{ node_env }}"
+    - name: "build frontend"
+      command: 'bash -lc  "npm run build-prod"'
+      remote_user: "{{deployer}}"
+      args:
+        chdir: "{{project_path}}/frontend"
+        environment: "NODE_ENV={{ node_env }}"
 
 
-    # - name: "copy monit config"
-    #   template: src="firebrick.monit.j2" dest="/etc/monit/conf/firebrick.monit"
+    - name: "copy monit config"
+      template: src="firebrick.monit.j2" dest="/etc/monit/conf/firebrick.monit"
 
 
-    # - name: start monit
-    #   service: name=monit state=started enabled=yes
+    - name: start monit
+      service: name=monit state=started enabled=yes
 
     # # - name: "copy logrotate config"
