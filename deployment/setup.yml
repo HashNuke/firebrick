@@ -45,21 +45,33 @@
     - name: "install asdf"
       git: repo="https://github.com/HashNuke/asdf.git" dest="~/.asdf"
       remote_user: "{{deployer}}"
+      tags:
+        - asdf
 
-    # - name: "add asdf plugins"
-    #   command: "asdf install {{item}} https://github.com/HashNuke/asdf-{{item}}.git"
-    #   with_items:
-    #     - nodejs
-    #     - erlang
-    #     - elixir
-    #   remote_user: "{{deployer}}"
+    - name: "source asdf in bashrc"
+      lineinfile: dest="~/.bash_profile" create=yes line="source ~/.asdf/asdf.sh"
+      remote_user: "{{deployer}}"
+      tags:
+        - asdf
 
-    # - name: "ensure projects directory"
-    #   file: path="~/projects" state=directory
-    #   remote_user: "{{deployer}}"
+    - name: "add asdf plugins"
+      command: "bash -lc 'asdf plugin-add {{item}} https://github.com/HashNuke/asdf-{{item}}.git'"
+      with_items:
+        - nodejs
+        - erlang
+        - elixir
+      remote_user: "{{deployer}}"
+      tags:
+        - asdf
+
+    - name: "ensure projects directory"
+      file: path="~/projects" state=directory
+      remote_user: "{{deployer}}"
 
     # #TODO postgres
-    # #TODO project-related (asdf, monit config, logrotate config, database)
+    # https://wiki.postgresql.org/wiki/Apt
+
+    # #TODO project-related (monit config, logrotate config, database)
 
     # - name: "clone firebrick project"
     #   git: repo="https://github.com/HashNuke/firebrick.git" dest="~/projects/firebrick"
