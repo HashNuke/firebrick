@@ -85,6 +85,7 @@
     #TODO choose name based on environment
     - name: "create database"
       postgresql_db: name=firebrick-prod encoding='UTF-8'
+      remote_user: "{{deployer}}"
 
 
     - name: "fetch project dependencies"
