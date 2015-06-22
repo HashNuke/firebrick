@@ -10,6 +10,7 @@
     - name: "install system packages"
       apt: name="{{ item }}" update_cache=yes
       with_items:
+        - git
         - automake
         - autoconf
         - libreadline-dev
@@ -36,7 +37,7 @@
       file: path="/home/{{deployer}}/.ssh" state=directory
 
     - name: "copy authorized keys to deployer user"
-      shell: "echo '{{root_authorized_keys.stdout}}' >> /home/{{deployer}}/.ssh/authorized_keys"
+      shell: "echo '{{root_authorized_keys.stdout}}' > /home/{{deployer}}/.ssh/authorized_keys"
 
     - name: "chown the authorized_keys file"
       file: path="/home/{{deployer}}/.ssh" recurse=yes mode=0700 owner="{{deployer}}"
