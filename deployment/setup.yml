@@ -82,8 +82,9 @@
       command: 'bash -lc "asdf install"'
       remote_user: "{{deployer}}"
 
-    # # - name: "create database"
-    # # based on environment
+    #TODO choose name based on environment
+    - name: "create database"
+      postgresql_db: name=firebrick-prod encoding='UTF-8'
 
 
     - name: "fetch project dependencies"
