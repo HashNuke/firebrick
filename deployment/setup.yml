@@ -60,7 +60,7 @@
 
 
     - name: "install asdf"
-      git: repo="https://github.com/HashNuke/asdf.git" dest="~/.asdf"
+      git: repo="https://github.com/HashNuke/asdf.git" dest="~/.asdf" update=yes
       remote_user: "{{deployer}}"
 
 
