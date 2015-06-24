@@ -10,8 +10,10 @@
     - name: "add postgres repository"
       apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
 
+
     - name: "add postgres repository key"
       apt_key: url="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+
 
     - name: "install system packages"
       apt: name="{{ item }}" update_cache=yes
@@ -34,35 +36,37 @@
         - logrotate
         - monit
 
+
     - name: "create deployer user {{deployer}}"
       user: name="{{deployer}}" shell=/bin/bash
+
 
     - name: "read authorized keys from root user"
       command: "cat ~/.ssh/authorized_keys"
       register: "root_authorized_keys"
 
-    - debug: msg="{{ root_authorized_keys.stdout}}"
 
     - name: "create .ssh dir for {{deployer}}"
       file: path="/home/{{deployer}}/.ssh" state=directory
 
+
     - name: "copy authorized keys to deployer user"
       shell: "echo '{{root_authorized_keys.stdout}}' > /home/{{deployer}}/.ssh/authorized_keys"
+
 
     - name: "chown the authorized_keys file"
       file: path="/home/{{deployer}}/.ssh" recurse=yes mode=0700 owner="{{deployer}}"
 
+
     - name: "install asdf"
       git: repo="https://github.com/HashNuke/asdf.git" dest="~/.asdf"
       remote_user: "{{deployer}}"
-      tags:
-        - asdf
+
 
     - name: "source asdf in bashrc"
       lineinfile: dest="~/.bash_profile" create=yes line="source ~/.asdf/asdf.sh"
       remote_user: "{{deployer}}"
-      tags:
-        - asdf
+
 
     - name: "add asdf plugins"
       command: "bash -lc 'asdf plugin-add {{item}} https://github.com/HashNuke/asdf-{{item}}.git'"
@@ -71,8 +75,7 @@
         - erlang
         - elixir
       remote_user: "{{deployer}}"
-      tags:
-        - asdf
+
 
     - name: "ensure projects directory"
       file: path="~/projects" state=directory
@@ -133,11 +136,11 @@
         environment: "NODE_ENV={{ node_env }}"
 
 
-    - name: "copy monit config"
-      template: src="firebrick.monit.j2" dest="/etc/monit/conf/firebrick.monit"
+    # - name: "copy monit config"
+    #   template: src="firebrick.monit.j2" dest="/etc/monit/conf/firebrick.monit"
 
 
-    - name: start monit
-      service: name=monit state=started enabled=yes
+    # - name: start monit
+    #   service: name=monit state=started enabled=yes
 
-    # # - name: "copy logrotate config"
+    # - name: "copy logrotate config"
