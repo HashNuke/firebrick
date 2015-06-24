@@ -19,7 +19,7 @@ defmodule Firebrick.User do
 
   def encrypt_password(model) do
     {:ok, salt} = :bcrypt.gen_salt()
-    {:ok, hashed_password} = :bcrypt.hashpw(record.password, salt)
+    {:ok, hashed_password} = :bcrypt.hashpw(model.password, salt)
     model.encrypted_password(hashed_password)
   end
 
