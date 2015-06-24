@@ -5,6 +5,7 @@
     deployer: "deployer"
     project_path: "/home/{{deployer_user}}/projects/firebrick"
     project_version: "master"
+    mix_env: "prod"
 
   tasks:
     - name: "add postgres repository"
@@ -81,12 +82,6 @@
       file: path="~/projects" state=directory
       remote_user: "{{deployer}}"
 
-    # #TODO postgres
-    # https://wiki.postgresql.org/wiki/Apt
-
-    # #TODO project-related (monit config, logrotate config, database)
-
-    #
 
     - name: "clone firebrick project"
       git: repo="https://github.com/HashNuke/firebrick.git" dest="~/projects/firebrick"
@@ -97,9 +92,8 @@
       command: 'bash -lc "asdf install"'
       remote_user: "{{deployer}}"
 
-    #TODO choose name based on environment
     - name: "create database"
-      postgresql_db: name=firebrick-prod encoding='UTF-8'
+      postgresql_db: name="firebrick-prod" encoding='UTF-8'
       remote_user: "{{deployer}}"
 
 
@@ -120,20 +114,17 @@
 
 
     - name: "install frontend dependencies"
-      #TODO skip production flag based on environment
       command: 'bash -lc "npm install --production"'
       remote_user: "{{deployer}}"
       args:
         chdir: "{{project_path}}/frontend"
-        environment: "NODE_ENV={{ node_env }}"
 
 
     - name: "build frontend"
-      command: 'bash -lc  "npm run build-prod"'
+      command: 'bash -lc "npm run build -prod"'
       remote_user: "{{deployer}}"
       args:
         chdir: "{{project_path}}/frontend"
-        environment: "NODE_ENV={{ node_env }}"
 
 
     # - name: "copy monit config"
