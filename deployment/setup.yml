@@ -91,6 +91,9 @@
     - name: "install erlang, elixir & nodejs using asdf"
       command: 'bash -lc "asdf install"'
       remote_user: "{{deployer}}"
+      args:
+        chdir: "{{project_dir}}"
+
 
     - name: "create database"
       postgresql_db: name="firebrick-prod" encoding='UTF-8'
