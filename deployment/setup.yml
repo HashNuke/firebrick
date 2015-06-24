@@ -7,10 +7,19 @@
     project_version: "master"
 
   tasks:
+    - name: "add postgres repository"
+      apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
+
+    - name: "add postgres repository key"
+      apt_key: url="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+
     - name: "install system packages"
       apt: name="{{ item }}" update_cache=yes
       with_items:
         - git
+        - curl
+        - wget
+        - python-apt
         - automake
         - autoconf
         - libreadline-dev
@@ -72,6 +81,8 @@
     # https://wiki.postgresql.org/wiki/Apt
 
     # #TODO project-related (monit config, logrotate config, database)
+
+    #
 
     - name: "clone firebrick project"
       git: repo="https://github.com/HashNuke/firebrick.git" dest="~/projects/firebrick"
