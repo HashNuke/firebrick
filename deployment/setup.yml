@@ -30,6 +30,7 @@
         - libffi-dev
         - libtool
         - unixodbc-dev
+        - postgresql-9.4
         - logrotate
         - monit
 
