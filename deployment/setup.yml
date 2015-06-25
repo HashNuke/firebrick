@@ -3,23 +3,22 @@
   remote_user: root
   vars:
     deployer: "deployer"
-    project_path: "/home/{{deployer_user}}/projects/firebrick"
+    project_path: "/home/{{deployer}}/projects/firebrick"
     project_version: "master"
     mix_env: "prod"
 
-  tasks:
-    - name: "add postgres repository"
-      apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
 
 
     - name: "add postgres repository key"
       apt_key: url="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 
 
+  tasks:
     - name: "install system packages"
       apt: name="{{ item }}" update_cache=yes
       with_items:
         - git
+        - unzip
         - curl
         - wget
         - python-apt
@@ -33,12 +32,35 @@
         - libffi-dev
         - libtool
         - unixodbc-dev
-        - postgresql-9.4
         - logrotate
         - monit
 
 
-    - name: "create deployer user {{deployer}}"
+    - name: "download pip installer script"
+      get_url: url="https://bootstrap.pypa.io/get-pip.py" dest="/tmp/get-pip.py" mode=0777
+
+
+    - name: "install pip"
+      command: "python /tmp/get-pip.py"
+
+
+    - name: "add postgres repository"
+      apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
+
+
+    - name: "add postgres repository key"
+      apt_key: url="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+
+
+    - name: "install postgres"
+      apt: name=postgresql-9.4
+
+
+    - name: install psycopg2 python module
+      pip: name=psycopg2
+
+
+    - name: "create deployer user"
       user: name="{{deployer}}" shell=/bin/bash
 
 
@@ -47,7 +69,7 @@
       register: "root_authorized_keys"
 
 
-    - name: "create .ssh dir for {{deployer}}"
+    - name: "create .ssh dir for deployer"
       file: path="/home/{{deployer}}/.ssh" state=directory
 
 
@@ -84,7 +106,7 @@
 
 
     - name: "clone firebrick project"
-      git: repo="https://github.com/HashNuke/firebrick.git" dest="~/projects/firebrick"
+      git: repo="https://github.com/HashNuke/firebrick.git" dest="{{project_path}}"
       remote_user: "{{deployer}}"
 
 
@@ -92,7 +114,9 @@
       command: 'bash -lc "asdf install"'
       remote_user: "{{deployer}}"
       args:
-        chdir: "{{project_dir}}"
+        chdir: "{{project_path}}"
+      tags:
+        - asdfinstall
 
 
     - name: "create database"
@@ -104,7 +128,7 @@
       command: 'bash -lc "mix deps.get"'
       remote_user: "{{deployer}}"
       args:
-        chdir: "{{project_dir}}"
+        chdir: "{{project_path}}"
         environment: "MIX_ENV={{ mix_env }}"
 
 
