@@ -1,0 +1,25 @@
+---
+- name: "create deployer user"
+  user: name="{{user_to_create}}" shell=/bin/bash
+
+
+- name: "read authorized keys from root user"
+  command: "cat ~/.ssh/authorized_keys"
+  register: "root_authorized_keys"
+
+
+- name: "create .ssh dir for deployer"
+  file: path="/home/{{user_to_create}}/.ssh" state=directory
+
+
+- name: "copy authorized keys to deployer user"
+  shell: "echo '{{root_authorized_keys.stdout}}' > /home/{{user_to_create}}/.ssh/authorized_keys"
+
+
+- name: "chown the authorized_keys file"
+  file: path="/home/{{user_to_create}}/.ssh" recurse=yes mode=0700 owner="{{user_to_create}}"
+
+
+- name: "ensure projects directory"
+  file: path="~/projects" state=directory
+  remote_user: "{{user_to_create}}"

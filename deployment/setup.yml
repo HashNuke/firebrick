@@ -3,110 +3,29 @@
   remote_user: root
   vars:
     deployer: "deployer"
+    project_repo: https://github.com/HashNuke/firebrick.git
     project_path: "/home/{{deployer}}/projects/firebrick"
     project_version: "master"
     mix_env: "prod"
 
+    #TODO decide using mix_env or rails_env or node_env
+    database_name: "firebrick-{{mix_env}}"
 
 
-    - name: "add postgres repository key"
-      apt_key: url="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+  roles:
+    - common
+    - {role: "deployer-user", user_to_create: "{{deployer}}" }
+    - pip
+    - postgres
+    - {role: "asdf", run_as_user: "{{deployer}}"}
+    - {role: "elixir-project", run_as_user: "{{deployer}}" }
+    # TODO monit
+    # TODO logrotate
 
 
   tasks:
-    - name: "install system packages"
-      apt: name="{{ item }}" update_cache=yes
-      with_items:
-        - git
-        - unzip
-        - curl
-        - wget
-        - python-apt
-        - automake
-        - autoconf
-        - libreadline-dev
-        - libncurses-dev
-        - libssl-dev
-        - libyaml-dev
-        - libxslt-dev
-        - libffi-dev
-        - libtool
-        - unixodbc-dev
-        - logrotate
-        - monit
-
-
-    - name: "download pip installer script"
-      get_url: url="https://bootstrap.pypa.io/get-pip.py" dest="/tmp/get-pip.py" mode=0777
-
-
-    - name: "install pip"
-      command: "python /tmp/get-pip.py"
-
-
-    - name: "add postgres repository"
-      apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
-
-
-    - name: "add postgres repository key"
-      apt_key: url="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
-
-
-    - name: "install postgres"
-      apt: name=postgresql-9.4
-
-
-    - name: install psycopg2 python module
-      pip: name=psycopg2
-
-
-    - name: "create deployer user"
-      user: name="{{deployer}}" shell=/bin/bash
-
-
-    - name: "read authorized keys from root user"
-      command: "cat ~/.ssh/authorized_keys"
-      register: "root_authorized_keys"
-
-
-    - name: "create .ssh dir for deployer"
-      file: path="/home/{{deployer}}/.ssh" state=directory
-
-
-    - name: "copy authorized keys to deployer user"
-      shell: "echo '{{root_authorized_keys.stdout}}' > /home/{{deployer}}/.ssh/authorized_keys"
-
-
-    - name: "chown the authorized_keys file"
-      file: path="/home/{{deployer}}/.ssh" recurse=yes mode=0700 owner="{{deployer}}"
-
-
-    - name: "install asdf"
-      git: repo="https://github.com/HashNuke/asdf.git" dest="~/.asdf" update=yes
-      remote_user: "{{deployer}}"
-
-
-    - name: "source asdf in bashrc"
-      lineinfile: dest="~/.bash_profile" create=yes line="source ~/.asdf/asdf.sh"
-      remote_user: "{{deployer}}"
-
-
-    - name: "add asdf plugins"
-      command: "bash -lc 'asdf plugin-add {{item}} https://github.com/HashNuke/asdf-{{item}}.git'"
-      with_items:
-        - nodejs
-        - erlang
-        - elixir
-      remote_user: "{{deployer}}"
-
-
-    - name: "ensure projects directory"
-      file: path="~/projects" state=directory
-      remote_user: "{{deployer}}"
-
-
     - name: "clone firebrick project"
-      git: repo="https://github.com/HashNuke/firebrick.git" dest="{{project_path}}"
+      git: repo="{{project_repo}}" dest="{{project_path}}"
       remote_user: "{{deployer}}"
 
 
@@ -115,12 +34,10 @@
       remote_user: "{{deployer}}"
       args:
         chdir: "{{project_path}}"
-      tags:
-        - asdfinstall
 
 
     - name: "create database"
-      postgresql_db: name="firebrick-prod" encoding='UTF-8'
+      postgresql_db: name="{{database_name}}" encoding='UTF-8'
       remote_user: "{{deployer}}"
 
 
