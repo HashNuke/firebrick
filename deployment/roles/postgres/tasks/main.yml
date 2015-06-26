@@ -13,3 +13,8 @@
 
 - name: install psycopg2 python module
   pip: name=psycopg2
+
+
+- name: "create database"
+  postgresql_db: name="{{database_name}}" encoding='UTF-8'
+  remote_user: "{{database_owner}}"
