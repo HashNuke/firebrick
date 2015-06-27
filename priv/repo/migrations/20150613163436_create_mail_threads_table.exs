@@ -3,7 +3,7 @@ defmodule Firebrick.Repo.Migrations.CreateMailThreadsTable do
 
   def change do
     create table(:mail_threads) do
-      add :mailbox_id, :integer
+      add :user_id, :integer
       add :subject
 
       timestamps

@@ -3,7 +3,7 @@ defmodule Firebrick.MailThread do
 
   schema "mail_threads" do
     field :subject, :string
-    belongs_to :mailbox, Firebrick.Mailbox
+    belongs_to :user, Firebrick.User
     has_many :mails, Firebrick.Mail
   end
 end

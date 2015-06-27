@@ -5,6 +5,7 @@ defmodule Firebrick.User do
     field :email, :string
     field :encrypted_password, :string
     belongs_to :role, Firebrick.Role
+    belongs_to :domain, Firebrick.Domain
 
     timestamps
   end
