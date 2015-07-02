@@ -44,6 +44,7 @@ defmodule Firebrick.Mixfile do
       {:phoenix_ecto, "~> 0.4"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 1.0"},
+      {:exrm, "~> 0.17.3"},
       {:phoenix_live_reload, "~> 0.4", only: :dev},
       {:cowboy, "~> 1.0"},
       {:gen_smtp, github: "Vagabond/gen_smtp"},
