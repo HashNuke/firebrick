@@ -22,11 +22,11 @@ defmodule Firebrick.Mixfile do
      ]
   end
 
-
   defp app_list do
     [:phoenix, :phoenix_html, :cowboy, :logger, :phoenix_ecto, :postgrex]
   end
 
+  defp app_list(:dev),  do: [:phoenix_live_reload | app_list]
   defp app_list(:test), do: [:hound | app_list]
   defp app_list(_),     do: app_list
 
@@ -44,7 +44,7 @@ defmodule Firebrick.Mixfile do
       {:phoenix_ecto, "~> 0.4"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 1.0"},
-      {:exrm, "~> 0.17.3"},
+      {:exrm, github: "HashNuke/exrm", branch: "fix-lib-path-detection"},
       {:phoenix_live_reload, "~> 0.4", only: :dev},
       {:cowboy, "~> 1.0"},
       {:gen_smtp, github: "Vagabond/gen_smtp"},
