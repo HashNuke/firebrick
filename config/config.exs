@@ -21,4 +21,9 @@ config :logger, :console,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
+
+if System.get_env("SERVER") do
+  config :phoenix, :serve_endpoints, true
+end
+
 import_config "#{Mix.env}.exs"
