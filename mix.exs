@@ -3,7 +3,7 @@ defmodule Firebrick.Mixfile do
 
   def project do
     [app: :firebrick,
-     version: "0.0.1",
+     version: "0.0.2",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix] ++ Mix.compilers,
@@ -23,7 +23,7 @@ defmodule Firebrick.Mixfile do
   end
 
   defp app_list do
-    [:phoenix, :phoenix_html, :cowboy, :logger, :phoenix_ecto, :postgrex]
+    [:phoenix, :phoenix_html, :gen_smtp, :cowboy, :logger, :phoenix_ecto, :postgrex]
   end
 
   defp app_list(:dev),  do: [:phoenix_live_reload | app_list]
@@ -44,7 +44,7 @@ defmodule Firebrick.Mixfile do
       {:phoenix_ecto, "~> 0.4"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 1.0"},
-      {:exrm, "~> 0.18.0"},
+      {:exrm, "~> 0.18.1"},
       {:phoenix_live_reload, "~> 0.4", only: :dev},
       {:cowboy, "~> 1.0"},
       {:gen_smtp, github: "Vagabond/gen_smtp"},
