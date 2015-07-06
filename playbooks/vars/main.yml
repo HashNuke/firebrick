@@ -1,0 +1,4 @@
+---
+project_name: firebrick
+project_repo: "https://github.com/HashNuke/firebrick.git"
+app_port: 3001
