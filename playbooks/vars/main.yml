@@ -1,0 +1,6 @@
+---
+project_name: firebrick
+project_repo: "https://github.com/HashNuke/firebrick.git"
+app_port: 3001
+frontend_dir: "frontend"
+frontend_build_command: "npm run build"

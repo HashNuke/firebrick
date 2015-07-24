@@ -24,6 +24,7 @@ config :logger, :console,
 
 import_config "#{Mix.env}.exs"
 
+
 # This line was automatically added by ansible-elixir-stack setup script
 if System.get_env("SERVER") do
   config :phoenix, :serve_endpoints, true
