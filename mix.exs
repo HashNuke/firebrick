@@ -43,7 +43,7 @@ defmodule Firebrick.Mixfile do
       {:phoenix, "~> 0.15"},
       {:phoenix_ecto, "~> 0.8"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 1.4"},
+      {:phoenix_html, "~> 2.0"},
       {:exrm, "~> 0.18.1"},
       {:phoenix_live_reload, "~> 0.5", only: :dev},
       {:cowboy, "~> 1.0"},
