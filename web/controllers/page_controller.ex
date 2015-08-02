@@ -4,7 +4,6 @@ defmodule Firebrick.PageController do
   @jwt_options Application.get_env(:firebrick, :jwt)
 
   plug Firebrick.Plugs.JwtAuth when action in [:verify]
-  plug :action
 
   def index(conn, _params) do
     # render conn, "index.html"
