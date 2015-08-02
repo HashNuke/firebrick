@@ -11,6 +11,7 @@
     "ember-resolver": "~0.1.15",
     "jquery": "^1.11.1",
     "loader.js": "ember-cli/loader.js#3.2.0",
-    "qunit": "~1.17.1"
+    "qunit": "~1.17.1",
+    "phoenix": "https://raw.githubusercontent.com/phoenixframework/phoenix/f6ffac8e040f764bd365325fd1fcf54db06f7749/priv/static/phoenix.js"
   }
 }
