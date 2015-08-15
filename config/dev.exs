@@ -11,7 +11,7 @@ config :firebrick, Firebrick.Endpoint,
   debug_errors: true,
   code_reloader: true,
   cache_static_lookup: false,
-  watchers: []
+  watchers: [bash: ["ember-server.sh"]]
 
 # Watch static and templates for browser reloading.
 config :firebrick, Firebrick.Endpoint,
@@ -24,7 +24,7 @@ config :firebrick, Firebrick.Endpoint,
   ]
 
 # Do not include metadata nor timestamps in development logs
-config :logger, :console, format: "[$level] $message\n"
+config :logger, :console, default_format: "[$level] $message\n"
 
 # Configure your database
 config :firebrick, Firebrick.Repo,

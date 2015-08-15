@@ -31,5 +31,5 @@ defmodule Firebrick.Endpoint do
     key: "_firebrick_key",
     signing_salt: "ONNgPxZQ"
 
-  plug :router, Firebrick.Router
+  plug Firebrick.Router
 end

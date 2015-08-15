@@ -15,3 +15,5 @@ erl_crash.dump
 /config/prod.secret.exs
 .vagrant
 rel
+
+priv/static/*
