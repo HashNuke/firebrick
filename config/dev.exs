@@ -11,7 +11,7 @@ config :firebrick, Firebrick.Endpoint,
   debug_errors: true,
   code_reloader: true,
   cache_static_lookup: false,
-  watchers: [bash: ["ember-server.sh"]]
+  watchers: []
 
 # Watch static and templates for browser reloading.
 config :firebrick, Firebrick.Endpoint,

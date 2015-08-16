@@ -17,16 +17,16 @@ defmodule Mix.Tasks.Firebrick.Setup do
   def ensure_roles do
     roles = ["admin", "member"]
     Enum.each roles, fn(role_name)->
-      query = from role in Firebrick.Role, where: role.name == ^role_name
+      query = from role in Firebrick.UserRole, where: role.name == ^role_name
       if Repo.all(query) == [] do
-        Repo.insert %Firebrick.Role{name: role_name}
+        Repo.insert %Firebrick.UserRole{name: role_name}
       end
     end
   end
 
 
   def ensure_admin_user do
-    admin_users = Repo.all(from role in Firebrick.Role, where: role.name == "admin", select: role)
+    admin_users = Repo.all(from role in Firebrick.UserRole, where: role.name == "admin", select: role)
     |> assoc(:users)
     |> Repo.all
 
