@@ -1,4 +1,4 @@
-defmodule Firebrick.Repo.Migrations.CreateRolesTable do
+defmodule Firebrick.Repo.Migrations.CreateUserRolesTable do
   use Ecto.Migration
 
   def change do

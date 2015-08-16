@@ -4,14 +4,22 @@ defmodule Firebrick.Repo.Migrations.CreateMailsTable do
   def change do
     create table(:mails) do
       add :mail_thread_id, :integer
-      add :from, :text
-      add :to, :text
-      add :cc, {:array, :text}
-      add :bcc, {:array, :text}
+
+      field :from_id, :integer
+      field :to_ids, {:array, :integer}
+      field :cc_ids, {:array, :integer}
+      field :bcc_ids, {:array, :integer}
+
+      add :raw_from, :text
+      add :raw_to, {:array, :text}
+      add :raw_from, {:array, :text}
+      add :raw_bcc, {:array, :text}
+
       add :subject, :text
       add :plain_body, :text
       add :html_body, :text
-      add :mail_label_ids, {:array, :integer}
+
+      add :unique_mail_id, :string
 
       timestamps
     end

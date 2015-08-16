@@ -15,6 +15,7 @@ defmodule Firebrick.Mail do
     field :subject, :string
     field :plain_body, :string
     field :html_body, :string
+    field :unique_mail_id, :string
 
     belongs_to :mail_thread, Firebrick.MailThread
 
