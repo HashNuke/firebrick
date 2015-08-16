@@ -1,4 +1,4 @@
-defmodule Firebrick.Role do
+defmodule Firebrick.UserRole do
   use Ecto.Model
 
   schema "roles" do

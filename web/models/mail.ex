@@ -2,10 +2,16 @@ defmodule Firebrick.Mail do
   use Ecto.Model
 
   schema "mails" do
-    field :from, :string
-    field :to, {:array, :string}
-    field :cc, {:array, :string}
-    field :bcc, {:array, :string}
+    belongs_to :contact, Firebrick.Contact, foreign_key: :from_id
+    field :to_ids, {:array, :integer}
+    field :cc_ids, {:array, :integer}
+    field :bcc_ids, {:array, :integer}
+
+    field :raw_from, :string
+    field :raw_to, {:array, :string}
+    field :raw_cc, {:array, :string}
+    field :raw_bcc, {:array, :string}
+
     field :subject, :string
     field :plain_body, :string
     field :html_body, :string

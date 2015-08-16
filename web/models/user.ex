@@ -4,7 +4,8 @@ defmodule Firebrick.User do
   schema "users" do
     field :email, :string
     field :encrypted_password, :string
-    belongs_to :role, Firebrick.Role
+
+    belongs_to :user_role, Firebrick.UserRole
     belongs_to :domain, Firebrick.Domain
 
     timestamps
