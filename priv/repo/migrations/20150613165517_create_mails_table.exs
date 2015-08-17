@@ -5,14 +5,14 @@ defmodule Firebrick.Repo.Migrations.CreateMailsTable do
     create table(:mails) do
       add :mail_thread_id, :integer
 
-      field :from_id, :integer
-      field :to_ids, {:array, :integer}
-      field :cc_ids, {:array, :integer}
-      field :bcc_ids, {:array, :integer}
+      add :from_id, :integer
+      add :to_ids, {:array, :integer}
+      add :cc_ids, {:array, :integer}
+      add :bcc_ids, {:array, :integer}
 
       add :raw_from, :text
       add :raw_to, {:array, :text}
-      add :raw_from, {:array, :text}
+      add :raw_cc, {:array, :text}
       add :raw_bcc, {:array, :text}
 
       add :subject, :text
