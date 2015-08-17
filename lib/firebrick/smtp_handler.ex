@@ -6,6 +6,9 @@ defmodule Firebrick.SmtpHandler do
   alias Firebrick.Mail
   alias Firebrick.Mail.Utils
   alias Firebrick.MailParser
+  alias Firebrick.Services
+
+  alias Ecto.Query
 
   @type error_message :: {:error, String.t, State.t}
 
@@ -67,8 +70,20 @@ defmodule Firebrick.SmtpHandler do
 
   @doc "Accept or reject mail to incoming addresses here"
   @spec handle_MAIL(binary, State.t) :: {:ok, State.t} | error_message
-  def handle_MAIL(_sender, state) do
-    {:ok, state}
+  def handle_MAIL(sender, state) do
+
+    #TODO look into this.
+    # Do we send a bounce notice email later about non-existent user
+    # OR reveal it right away?
+    case Services.Identity.find_by_address(sender) do
+      nil ->
+        {:error, "No user found", state}
+
+      identity ->
+        new_options = Keyword.put state.options, :identity, identity
+        new_state = %{state | options: new_options}
+        {:ok, new_state}
+    end
   end
 
 
