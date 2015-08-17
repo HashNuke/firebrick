@@ -30,14 +30,15 @@ defmodule Firebrick.Mail.Service do
       html_body: data["html_body"],
       unique_mail_id: data["Message-ID"]
     }
-    Repo.insert Mail, mail
+
+    Repo.insert mail
   end
 
 
   def find_or_create_participant(%{name: name, email: email}) do
     # If only outgoing mail sent, update name from incoming email
     # if incoming for the first time, create new contact
-    Repo.insert(Contact)
+    # Repo.insert()
   end
 
 
