@@ -47,9 +47,13 @@ cd -
 
 ```
 mix phoenix.server
+# OR
+iex -S mix phoenix.server
 ```
 
-TODO write about releases
+If starting using `iex`, use `Firebrick.send_test_mail` to send a test mail.
+
+> Running just `iex -S mix` won't start the mail server. The mail server is not started if the Phoenix server isn't started.
 
 ## References
 
