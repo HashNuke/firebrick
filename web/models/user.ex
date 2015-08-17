@@ -7,6 +7,7 @@ defmodule Firebrick.User do
 
     belongs_to :user_role, Firebrick.UserRole
     belongs_to :domain, Firebrick.Domain
+    has_many :contacts, Firebrick.Contact
 
     timestamps
   end
