@@ -1,4 +1,4 @@
-defmodule Firebrick.Mail.Service do
+defmodule Firebrick.Services.Mail do
 
   alias Firebrick.Repo
   alias Firebrick.Mail
