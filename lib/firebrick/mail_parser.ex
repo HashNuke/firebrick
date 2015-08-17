@@ -1,6 +1,7 @@
 defmodule Firebrick.MailParser do
   alias Firebrick.Mail.Utils
 
+
   def parse({"multipart" = content_type_name, content_subtype_name, mail_meta, _, body}) do
     parse_mail_bodies(body)
     |> Map.merge extract_mail_meta(mail_meta)
@@ -12,8 +13,8 @@ defmodule Firebrick.MailParser do
 
     meta_data = extract_mail_meta(mail_meta)
     case content_subtype_name do
-      "html"  -> %{"html_body"  => body}
-      "plain" -> %{"plain_body" => body}
+      "html"  -> %{html_body:  body}
+      "plain" -> %{plain_body: body}
     end
     |> Map.merge(meta_data)
   end

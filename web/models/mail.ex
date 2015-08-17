@@ -22,4 +22,5 @@ defmodule Firebrick.Mail do
     #TODO has_many_in_array :mail_labels, Firebrick.MailLabel
     # use the mail_label_ids field
   end
+
 end
