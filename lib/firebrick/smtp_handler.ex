@@ -120,7 +120,6 @@ defmodule Firebrick.SmtpHandler do
     Logger.debug("Mail from #{from} to [#{Enum.join to, ", "}] with body length #{byte_size(data)} queued as #{unique_id}")
 
     mail = process_mail(data, state, unique_id)
-    #TODO unique ID for mail
     {:ok, unique_id, state}
   end
 
@@ -145,11 +144,12 @@ defmodule Firebrick.SmtpHandler do
   end
 
 
-  defp process_mail(data, _state, _unique_id) do
+  defp process_mail(raw_data, state, unique_id) do
     try do
       # :mimemail.decode/1 is provided by gen_smtp
-      :mimemail.decode(data)
-      |> Mail.Service.save
+      :mimemail.decode(raw_data)
+      |> MailParser.parse
+      |> Mail.Service.save(unique_id, state[:options][:identity])
     rescue
       reason ->
         :io.format("Message decode FAILED with ~p:~n", [reason])

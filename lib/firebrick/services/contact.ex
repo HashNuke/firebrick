@@ -4,6 +4,12 @@ defmodule Firebrick.Services.Contact do
   alias Firebrick.Repo
   alias Firebrick.Contact
 
+
+  def find_or_create(user, details) do
+    find_or_create user, [details], []
+  end
+
+
   def find_or_create(user, details_list) do
     find_or_create user, details_list, []
   end
