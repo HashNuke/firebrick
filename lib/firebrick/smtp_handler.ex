@@ -145,11 +145,12 @@ defmodule Firebrick.SmtpHandler do
 
 
   defp process_mail(raw_data, state, unique_id) do
+    identity = get_in state, [:options][:identity]
     try do
       # :mimemail.decode/1 is provided by gen_smtp
       :mimemail.decode(raw_data)
       |> MailParser.parse
-      |> Mail.Service.save(unique_id, state[:options][:identity])
+      |> Mail.Service.save(unique_id, identity)
     rescue
       reason ->
         :io.format("Message decode FAILED with ~p:~n", [reason])
