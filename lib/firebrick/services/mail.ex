@@ -12,10 +12,11 @@ defmodule Firebrick.Services.Mail do
     parsed = MailParser.parse(data)
 
     subject = parsed["Subject"]
-    from_id = Services.Contact.find_or_create identity, [parsed["From"]]
-    to_ids = Services.Contact.find_or_create identity, parsed["To"]
-    cc_ids = Services.Contact.find_or_create identity, parsed["Cc"]
-    bcc_ids = Services.Contact.find_or_create identity, parsed["Bcc"]
+    user = identity.user
+    from_id = Services.Contact.find_or_create user, [parsed["From"]]
+    to_ids = Services.Contact.find_or_create user, parsed["To"]
+    cc_ids = Services.Contact.find_or_create user, parsed["Cc"]
+    bcc_ids = Services.Contact.find_or_create user, parsed["Bcc"]
 
     mail = %Mail{
       raw_from: data["From"],
