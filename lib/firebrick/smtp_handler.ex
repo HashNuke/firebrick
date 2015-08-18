@@ -2,7 +2,11 @@ defmodule Firebrick.SmtpHandler do
   @behaviour :gen_smtp_server_session
   require Logger
 
-  alias Firebrick.SmtpHandler.State
+
+  defmodule State do
+    defstruct options: []
+  end
+
   alias Firebrick.Mail
   alias Firebrick.Mail.Utils
   alias Firebrick.MailParser
