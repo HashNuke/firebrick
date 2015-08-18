@@ -10,9 +10,10 @@ defmodule Firebrick.Services.Identity do
 
 
   def find_by_address(address) do
-    [username, domain_name] = String.downcase(address) |> String.split("@")
+    [username_with_label, domain_name] = String.downcase(address) |> String.split("@")
+    [username, label] = String.split(username_with_label, "+")
 
-    %Firebrick.Identity{}
+    %Firebrick.Identity{options: [label: label]}
     |> find_domain_for_identity(domain_name)
     |> find_user_for_identity(username)
   end
