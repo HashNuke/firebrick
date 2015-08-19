@@ -15,6 +15,7 @@ config :firebrick, Firebrick.Repo,
   username: "postgres",
   password: "postgres",
   database: "firebrick_test",
+  pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 1 # Use a single connection for transactional tests
 
 
