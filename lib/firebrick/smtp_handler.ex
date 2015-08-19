@@ -1,18 +1,16 @@
 defmodule Firebrick.SmtpHandler do
   @behaviour :gen_smtp_server_session
-  require Logger
-
 
   defmodule State do
     defstruct options: []
   end
 
+
+  require Logger
   alias Firebrick.Mail
   alias Firebrick.Mail.Utils
-  alias Firebrick.MailParser
   alias Firebrick.Services
 
-  alias Ecto.Query
 
   @type error_message :: {:error, String.t, State.t}
 
@@ -114,6 +112,7 @@ defmodule Firebrick.SmtpHandler do
     {:error, "#{@smtp_mail_action_abort} Message too small", state}
   end
 
+
   def handle_DATA(from, to, data, state) do
     unique_id = Utils.create_unique_id()
 
@@ -149,8 +148,8 @@ defmodule Firebrick.SmtpHandler do
     try do
       # :mimemail.decode/1 is provided by gen_smtp
       :mimemail.decode(raw_data)
-      |> MailParser.parse
-      |> Mail.Service.save(unique_id, identity)
+      |> Mail.Parser.parse
+      |> Services.Mail.save(unique_id, identity)
     rescue
       reason ->
         :io.format("Message decode FAILED with ~p:~n", [reason])

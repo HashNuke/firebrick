@@ -1,4 +1,4 @@
-defmodule Firebrick.MailParser do
+defmodule Firebrick.Mail.Parser do
   alias Firebrick.Mail.Utils
 
 
