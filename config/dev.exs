@@ -32,7 +32,7 @@ config :firebrick, Firebrick.Repo,
   username: "postgres",
   password: "postgres",
   database: "firebrick_dev",
-  size: 10 # The amount of database connections in the pool
+  pool_size: 10 # The amount of database connections in the pool
 
 
 config :firebrick, :jwt, [name: "HS256", secret: "E3azkLmEGrWiJB4mDPLlOGKn0Ib5no4iQY1W5lTnKT8="]

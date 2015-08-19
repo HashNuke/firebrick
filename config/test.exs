@@ -15,7 +15,7 @@ config :firebrick, Firebrick.Repo,
   username: "postgres",
   password: "postgres",
   database: "firebrick_test",
-  size: 1 # Use a single connection for transactional tests
+  pool_size: 1 # Use a single connection for transactional tests
 
 
 config :firebrick, :jwt, [name: "HS256", secret: "E3azkLmEGrWiJB4mDPLlOGKn0Ib5no4iQY1W5lTnKT8="]
