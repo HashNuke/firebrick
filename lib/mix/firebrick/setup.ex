@@ -9,6 +9,7 @@ defmodule Mix.Tasks.Firebrick.Setup do
   def run(_) do
     Mix.Task.run "app.start", []
 
+    ensure_example_domain
     ensure_roles
     ensure_admin_user
   end
@@ -25,16 +26,20 @@ defmodule Mix.Tasks.Firebrick.Setup do
   end
 
 
+  def ensure_example_domain do
+    domain_count = Repo.one(from d in Firebrick.Domain, select: count(d.id))
+    if domain_count == 0 do
+      Repo.insert %Firebrick.Domain{name: "example.com"}
+    end
+  end
+
+
   def ensure_admin_user do
-    admin_users = Repo.all(from role in Firebrick.UserRole, where: role.name == "admin", select: role)
-    |> assoc(:users)
-    |> Repo.all
+    admin_role = Repo.one(from r in Firebrick.UserRole, where: r.name == "admin")
+    admin_user = Repo.one(from u in Firebrick.User, where: u.user_role_id == ^admin_role.id)
 
-
-    if admin_users == [] do
-      # TODO create user admin@example.com:password
-      # Create associated mailbox
-      # User.create(email, password)
+    if !admin_user do
+      Repo.insert %Firebrick.User{username: "admin", password: "password", user_role_id: admin_role.id}
     end
   end
 end
