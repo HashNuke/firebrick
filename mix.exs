@@ -23,7 +23,7 @@ defmodule Firebrick.Mixfile do
   end
 
   defp app_list do
-    [:phoenix, :phoenix_html, :gen_smtp, :cowboy, :logger, :phoenix_ecto, :postgrex]
+    [:comeonin, :phoenix, :phoenix_html, :gen_smtp, :cowboy, :logger, :phoenix_ecto, :postgrex]
   end
 
   defp app_list(:dev),  do: [:phoenix_live_reload | app_list]
@@ -44,6 +44,7 @@ defmodule Firebrick.Mixfile do
       {:phoenix_ecto, "~> 0.8"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.0"},
+      {:comeonin, "~> 1.1.2"},
       {:exrm, "~> 0.19.2"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:cowboy, "~> 1.0"},
