@@ -3,9 +3,9 @@ defmodule Firebrick.Repo.Migrations.CreateUsersTable do
 
   def change do
     create table(:users) do
-      add :email, :text
+      add :username, :text
       add :encrypted_password, :text
-      add :role_id, :integer
+      add :user_role_id, :integer
       add :domain_id, :integer
 
       timestamps
