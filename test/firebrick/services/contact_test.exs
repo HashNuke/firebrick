@@ -30,6 +30,7 @@ defmodule Firebrick.Services.ContactTest do
     ]
   end
 
+
   test "create contacts for user if details are provided" do
     user = create(:user)
     assert contacts_count(user) == 0
@@ -39,7 +40,7 @@ defmodule Firebrick.Services.ContactTest do
   end
 
 
-  test "create contacts for user if contacts don't exist" do
+  test "create contacts for user only if contacts don't exist" do
     user = create(:user)
 
     {:ok, _contact} = %Contact{user_id: user.id}
