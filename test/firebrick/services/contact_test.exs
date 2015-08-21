@@ -22,6 +22,7 @@ defmodule Firebrick.Services.ContactTest do
     Firebrick.Services.Contact
   end
 
+
   def details_list do
     [
       %{name: "Foo", email: "foo@example.com"},
