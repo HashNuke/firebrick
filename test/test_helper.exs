@@ -22,7 +22,7 @@ defmodule Firebrick.TestHelpers do
   end
 
 
-  def clean_db do
+  def clear_db do
     [
       Firebrick.Contact,
       Firebrick.MailThread,
@@ -53,7 +53,7 @@ defmodule Firebrick.TestHelpers do
 
     %Firebrick.User{}
     |> Map.merge(attrs)
-    |> Repo.insert
+    |> Repo.insert!
   end
 
 
@@ -65,20 +65,20 @@ defmodule Firebrick.TestHelpers do
 
     %Firebrick.Domain{}
     |> Map.merge(attrs)
-    |> Repo.insert
+    |> Repo.insert!
   end
 
 
   def create(:mail_label, opts) do
     %Firebrick.MailLabel{}
     |> Map.merge(opts)
-    |> Repo.insert
+    |> Repo.insert!
   end
 
 
   def create(:contact, opts) do
     %Firebrick.Contact{}
     |> Map.merge(opts)
-    |> Repo.insert
+    |> Repo.insert!
   end
 end
