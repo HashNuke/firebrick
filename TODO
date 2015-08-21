@@ -1,0 +1,2 @@
+* Difference between unique_mail_id created in smtp_handler.ex and Message-ID received
+* Sending emails with BCC: use all headers but only send to the BCC email
