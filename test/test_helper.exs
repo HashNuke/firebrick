@@ -13,15 +13,6 @@ defmodule Firebrick.TestHelpers do
   import Ecto.Query
 
 
-  def clean_db_for_each_test do
-    quote do
-      setup do
-        Firebrick.TestHelpers.clean_db
-      end
-    end
-  end
-
-
   def clear_db do
     [
       Firebrick.Contact,
