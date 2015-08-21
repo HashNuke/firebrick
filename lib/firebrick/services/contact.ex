@@ -24,7 +24,7 @@ defmodule Firebrick.Services.Contact do
     contact = case Repo.all(from c in Contact, where: c.email == ^email) do
       [] ->
         %Contact{name: name, email: email, user_id: user.id}
-        |> Repo.insert
+        |> Repo.insert!
       contact_record ->
         contact_record
     end
