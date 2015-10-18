@@ -5,12 +5,12 @@ defmodule Firebrick.Services.Contact do
   alias Firebrick.Contact
 
 
-  def find_or_create(user, details) do
+  def find_or_create(user, details) when is_map(details) do
     find_or_create user, [details], []
   end
 
 
-  def find_or_create(user, details_list) do
+  def find_or_create(user, details_list) when is_list(details_list) do
     find_or_create user, details_list, []
   end
 
@@ -21,10 +21,10 @@ defmodule Firebrick.Services.Contact do
 
 
   def find_or_create(user, [%{name: name, email: email} | rest], contacts) do
-    contact = case Repo.query(from ct in Contact, where: ct.email == ^email) do
-      nil ->
+    contact = case Repo.all(from c in Contact, where: c.email == ^email) do
+      [] ->
         %Contact{name: name, email: email, user_id: user.id}
-        |> Repo.insert
+        |> Repo.insert!
       contact_record ->
         contact_record
     end
