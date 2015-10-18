@@ -47,7 +47,7 @@ defmodule Firebrick.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 1.1.2"},
-      {:exrm, "~> 0.19.2"},
+      {:exrm, "~> 0.19.9"},
       {:gen_smtp, github: "Vagabond/gen_smtp"},
       {:hound, "~> 0.7", only: :test},
       {:faker, "~> 0.5", only: :test}
