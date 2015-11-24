@@ -40,14 +40,13 @@ defmodule Firebrick.Mixfile do
   # Type `mix help deps` for examples and options
   defp deps do
     [
-      {:phoenix, "~> 1.0.0"},
+      {:phoenix, "~> 1.0.3"},
       {:phoenix_ecto, "~> 1.1"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.1"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 1.1.2"},
-      {:exrm, "~> 0.19.9"},
       {:gen_smtp, github: "Vagabond/gen_smtp"},
       {:hound, "~> 0.7", only: :test},
       {:faker, "~> 0.5", only: :test}
